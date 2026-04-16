@@ -6,11 +6,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
+
+
+<body class="bg-gray-900 text-gray-200 font-sans">
+
 <div id="toast"
   class="fixed top-5 right-5 z-[9999] text-white px-5 py-3 rounded-xl shadow-lg opacity-0 -translate-y-3 transition-all duration-300">
 </div>
-
-<body class="bg-gray-900 text-gray-200 font-sans">
 
 <div class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800">
 
@@ -73,9 +75,9 @@
         <tr>
           <th class="p-4 cursor-pointer" onclick="sortTable('stock', event)">Stock ⬍</th>
           <th>CMP</th>
-          <th class="cursor-pointer" onclick="sortTable('dividend')">Dividend ⬍</th>
+          <th class="cursor-pointer" onclick="sortTable('dividend', event)">Dividend ⬍</th>
           <th>Shares</th>
-          <th class="text-right pr-6 cursor-pointer" onclick="sortTable('income')">Income ⬍</th>
+          <th class="text-right pr-6 cursor-pointer" onclick="sortTable('income', event)">Income ⬍</th>
           <th class="text-right pr-4">Action</th>
         </tr>
       </thead>
@@ -88,7 +90,32 @@
 
 </div>
 
-<script>
+
+
+<script type="module">
+
+// ✅ 1. IMPORT FIREBASE
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ✅ 2. PASTE YOUR CONFIG HERE
+const firebaseConfig = {
+  apiKey: "AIzaSyCqhcJC6m4qdETVgDCIVlZX55451UYRq1o",
+  authDomain: "divtracker-f5c6e.firebaseapp.com",
+  projectId: "divtracker-f5c6e",
+  storageBucket: "divtracker-f5c6e.firebasestorage.app",
+  messagingSenderId: "770036346665",
+  appId: "1:770036346665:web:b9d0e584566d8d4bb21138",
+  measurementId: "G-E244PEKHVN"
+};
+
+// ✅ 3. INITIALIZE FIREBASE
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function saveToFirebase(stock) {
+  await addDoc(collection(db, "portfolio"), stock);
+}
 
 let highlightedIndex = -1;
 let currentMatches = [];
@@ -122,9 +149,18 @@ fetch("https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8
     });
 
     console.log("Loaded Stocks:", masterStocks);
+    loadPortfolioFromFirebase();
   });
 
-function updateIncome(input, dividend, index) {
+async function loadPortfolioFromFirebase() {
+  const querySnapshot = await getDocs(collection(db, "portfolio"));
+
+  querySnapshot.forEach((docSnap) => {
+    addStockFromSaved(docSnap.data());
+  });
+}
+
+function updateIncome(input, dividend, index, symbol) {
   let shares = parseFloat(input.value) || 0;
 
 if (shares < 0 || isNaN(shares)) {
@@ -140,7 +176,8 @@ input.value = shares;
 
   updateTotal();
 
-  savePortfolio();
+  updateSharesInFirebase(symbol, shares);
+
 }
 
 function updateTotal() {
@@ -190,15 +227,15 @@ function addStock() {
     <td>
   <div class="flex items-center gap-1 bg-gray-700 rounded px-2 py-1 w-fit">
 
-    <button onclick="changeShares(this, -1, ${data.dividend}, ${index})"
+    <button onclick="changeShares(this, -1, ${data.dividend}, ${index}, '${symbol}')"
       class="text-gray-300 hover:text-white px-1">−</button>
 
     <input type="text" value="0"
       class="bg-transparent text-white text-center outline-none w-6"
       oninput="resizeInput(this)"
-      onchange="updateIncome(this, ${data.dividend}, ${index})">
+      onchange="updateIncome(this, ${data.dividend}, ${index}, '${symbol}')">
 
-    <button onclick="changeShares(this, 1, ${data.dividend}, ${index})"
+    <button onclick="changeShares(this, 1, ${data.dividend}, ${index}, '${symbol}')"
       class="text-gray-300 hover:text-white px-1">+</button>
 
   </div>
@@ -217,7 +254,12 @@ function addStock() {
 
     tbody.innerHTML += newRow;
 
-    savePortfolio();
+    saveToFirebase({
+  symbol,
+  cmp: data.cmp,
+  dividend: data.dividend,
+  shares: 0
+});
 
     addedStocks.add(symbol);
 
@@ -231,7 +273,7 @@ function addStock() {
     document.getElementById("symbol").value = "";
 }
 
-function changeShares(btn, delta, dividend, index) {
+function changeShares(btn, delta, dividend, index, symbol) {
   let container = btn.parentElement;
   let input = container.querySelector("input");
 
@@ -244,7 +286,7 @@ function changeShares(btn, delta, dividend, index) {
   input.value = value;
 
   resizeInput(input);
-  updateIncome(input, dividend, index);
+  updateIncome(input, dividend, index, symbol);
 }
 
 function resizeInput(input) {
@@ -324,7 +366,17 @@ function deleteRow(btn, symbol) {
 
   showToast(symbol + " removed ❌", "error");
 
-  savePortfolio();
+  deleteFromFirebase(symbol);
+}
+
+async function deleteFromFirebase(symbol) {
+  const querySnapshot = await getDocs(collection(db, "portfolio"));
+
+  querySnapshot.forEach(async (docSnap) => {
+    if (docSnap.data().symbol === symbol) {
+      await deleteDoc(doc(db, "portfolio", docSnap.id));
+    }
+  });
 }
 
 function handleSearch() {
@@ -371,15 +423,15 @@ function addStockFromSaved(stock) {
       <td>
   <div class="flex items-center gap-1 bg-gray-700 rounded px-2 py-1 w-fit">
 
-    <button onclick="changeShares(this, -1, ${stock.dividend}, ${index})"
+    <button onclick="changeShares(this, -1, ${stock.dividend}, ${index}, '${symbol}')"
       class="text-gray-300 hover:text-white px-1">−</button>
 
     <input type="text" value="${stock.shares}"
       class="bg-transparent text-white text-center outline-none w-6"
       oninput="resizeInput(this)"
-      onchange="updateIncome(this, ${stock.dividend}, ${index})">
+      onchange="updateIncome(this, ${stock.dividend}, ${index}, '${stock.symbol}')">
 
-    <button onclick="changeShares(this, 1, ${stock.dividend}, ${index})"
+    <button onclick="changeShares(this, 1, ${stock.dividend}, ${index}, '${symbol}')"
       class="text-gray-300 hover:text-white px-1">+</button>
 
   </div>
@@ -516,12 +568,14 @@ let sortState = {
   income: true
 };
 
-function sortTable(type) {
+function sortTable(type, event) {
   const tbody = document.getElementById("tableBody");
   let rows = Array.from(tbody.querySelectorAll("tr"));
 
   document.querySelectorAll("th").forEach(th => th.classList.remove("text-green-400"));
-event.target.classList.add("text-green-400");
+if (event) {
+  event.target.classList.add("text-green-400");
+}
 
   rows.sort((a, b) => {
     let valA, valB;
@@ -553,6 +607,18 @@ event.target.classList.add("text-green-400");
   // re-render rows
   tbody.innerHTML = "";
   rows.forEach(row => tbody.appendChild(row));
+}
+
+async function updateSharesInFirebase(symbol, shares) {
+  const querySnapshot = await getDocs(collection(db, "portfolio"));
+
+  querySnapshot.forEach(async (docSnap) => {
+    if (docSnap.data().symbol === symbol) {
+      await updateDoc(doc(db, "portfolio", docSnap.id), {
+        shares: shares
+      });
+    }
+  });
 }
 
 function selectStock(index) {
@@ -604,22 +670,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-window.onload = function () {
-  let saved = localStorage.getItem("portfolio");
-
-  if (!saved) return;
-
-  let portfolio = JSON.parse(saved);
-
-  portfolio.forEach(stock => {
-    addStockFromSaved(stock);
-  });
-};
-
 document.getElementById("symbol").addEventListener("focus", function () {
   showAllStocks();
 });
 
+window.addStock = addStock;
+window.changeShares = changeShares;
+window.deleteRow = deleteRow;
+window.sortTable = sortTable;
+window.quickAdd = quickAdd;
+window.selectStock = selectStock;
 
 
 
