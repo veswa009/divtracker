@@ -423,7 +423,7 @@ function addStockFromSaved(stock) {
       <td>
   <div class="flex items-center gap-1 bg-gray-700 rounded px-2 py-1 w-fit">
 
-    <button onclick="changeShares(this, -1, ${stock.dividend}, ${index}, '${symbol}')"
+    <button onclick="changeShares(this, -1, ${stock.dividend}, ${index}, '${stock.symbol}')"
       class="text-gray-300 hover:text-white px-1">−</button>
 
     <input type="text" value="${stock.shares}"
@@ -431,7 +431,7 @@ function addStockFromSaved(stock) {
       oninput="resizeInput(this)"
       onchange="updateIncome(this, ${stock.dividend}, ${index}, '${stock.symbol}')">
 
-    <button onclick="changeShares(this, 1, ${stock.dividend}, ${index}, '${symbol}')"
+    <button onclick="changeShares(this, 1, ${stock.dividend}, ${index}, '${stock.symbol}')"
       class="text-gray-300 hover:text-white px-1">+</button>
 
   </div>
