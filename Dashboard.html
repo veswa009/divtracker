@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dividend Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<div id="toast"
+  class="fixed top-5 right-5 z-[9999] text-white px-5 py-3 rounded-xl shadow-lg opacity-0 -translate-y-3 transition-all duration-300">
+</div>
+
+<body class="bg-gray-900 text-gray-200 font-sans">
+
+<div class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800">
+
+  <div class="max-w-7xl mx-auto px-6 py-3">
+
+    <!-- HEADER ROW -->
+    <div class="flex items-center">
+
+      <h1 class="text-2xl font-bold text-white">
+        Dividend Tracker 🌙
+      </h1>
+
+      <div class="ml-auto flex items-center gap-4">
+
+        <div class="bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-800/40">
+          <p class="text-gray-500 text-xs">Total Stocks</p>
+          <p id="count" class="text-sm font-semibold text-blue-400">0</p>
+        </div>
+
+        <div class="bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-800/40">
+          <p class="text-gray-500 text-xs">Total Dividend</p>
+          <p id="total" class="text-sm font-semibold text-green-400">₹0</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SEARCH -->
+    <div class="mt-3">
+      <form onsubmit="event.preventDefault(); addStock();" class="flex gap-3 relative w-full">
+        
+        <input id="symbol" placeholder="Search stock (ITC, TCS)"
+          oninput="handleSearch()"
+          class="flex-1 bg-gray-800 border border-gray-700 rounded-2xl px-4 py-2.5 text-white text-base focus:outline-none focus:ring-2 focus:ring-green-500">
+
+        <button type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-2xl font-semibold">
+          Add
+        </button>
+
+        <div id="dropdown"
+          class="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded-xl mt-2 hidden max-h-60 overflow-y-auto z-50">
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- Table -->
+  <div class="max-w-7xl mx-auto px-6">
+
+  <div class="bg-gray-800 rounded-2xl shadow border border-gray-700 mt-4">
+
+    <table class="w-full text-left">
+      <thead class="bg-gray-700 text-gray-300 text-sm sticky top-[130px] z-30">
+        <tr>
+          <th class="p-4 cursor-pointer" onclick="sortTable('stock', event)">Stock ⬍</th>
+          <th>CMP</th>
+          <th class="cursor-pointer" onclick="sortTable('dividend')">Dividend ⬍</th>
+          <th>Shares</th>
+          <th class="text-right pr-6 cursor-pointer" onclick="sortTable('income')">Income ⬍</th>
+          <th class="text-right pr-4">Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+<script>
+
+let highlightedIndex = -1;
+let currentMatches = [];
+
+let addedStocks = new Set();
+
+let masterStocks = {};
+
+fetch("https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json")
+  .then(res => res.text())
+  .then(text => {
+    const json = JSON.parse(text.substring(47, text.length - 2));
+
+    const rows = json.table.rows;
+
+    rows.forEach(row => {
+      const cols = row.c;
+
+      const name = cols[4]?.v;       // E column
+      const symbol = cols[5]?.v;     // F column
+      const cmp = cols[6]?.v;        // G column
+      const dividend = cols[8]?.v;   // I column
+
+      if (symbol) {
+        masterStocks[symbol.toUpperCase()] = {
+          name: name || "",
+          cmp: cmp,
+          dividend: dividend
+        };
+      }
+    });
+
+    console.log("Loaded Stocks:", masterStocks);
+  });
+
+function updateIncome(input, dividend, index) {
+  let shares = parseFloat(input.value) || 0;
+
+if (shares < 0 || isNaN(shares)) {
+    shares = 0;
+}
+
+shares = Math.floor(shares); // remove decimals
+input.value = shares;   
+
+  const income = (shares * dividend).toFixed(2);
+
+  document.getElementById(`income-${index}`).innerText = "₹" + income;
+
+  updateTotal();
+
+  savePortfolio();
+}
+
+function updateTotal() {
+  let incomes = document.querySelectorAll("[id^='income-']");
+  let total = 0;
+
+  incomes.forEach(el => {
+    total += parseFloat(el.innerText.replace("₹", "")) || 0;
+  });
+
+  document.getElementById("total").innerText = "₹" + total.toFixed(2);
+}
+
+function addStock() {
+  
+    const symbol = document.getElementById("symbol").value.trim().toUpperCase();
+      
+    if (!symbol) return;
+  
+    if (Object.keys(masterStocks).length === 0) {
+        showToast("Loading stock data... ⏳");
+        return;
+    }
+
+    if (addedStocks.has(symbol)) {
+         showToast(symbol + " already added ⚠️", "warning");
+        return;
+    }
+    
+    if (!masterStocks[symbol]) {
+        showToast("Stock not found ❌", "error");
+        return;
+    }
+
+    let tbody = document.getElementById("tableBody");
+    let index = Date.now();
+    
+    let data = masterStocks[symbol];
+    let shares = 0;
+
+    let newRow = `
+  <tr class="border-b border-gray-700 hover:bg-gray-700/40 transition">
+    <td class="p-4 font-medium text-white">${symbol}</td>
+    <td class="text-gray-300">₹${data.cmp}</td>
+    <td class="text-gray-300">₹${data.dividend}</td>
+    
+    <td>
+  <div class="flex items-center gap-1 bg-gray-700 rounded px-2 py-1 w-fit">
+
+    <button onclick="changeShares(this, -1, ${data.dividend}, ${index})"
+      class="text-gray-300 hover:text-white px-1">−</button>
+
+    <input type="text" value="0"
+      class="bg-transparent text-white text-center outline-none w-6"
+      oninput="resizeInput(this)"
+      onchange="updateIncome(this, ${data.dividend}, ${index})">
+
+    <button onclick="changeShares(this, 1, ${data.dividend}, ${index})"
+      class="text-gray-300 hover:text-white px-1">+</button>
+
+  </div>
+</td>
+
+    <td id="income-${index}" 
+  class="text-right pr-6 font-semibold text-green-400 w-24 whitespace-nowrap">
+      ₹0
+    </td>
+
+    <td class="pr-4 text-right">
+      <button onclick="deleteRow(this, '${symbol}')" class="text-red-400">❌</button>
+    </td>
+  </tr>
+`;
+
+    tbody.innerHTML += newRow;
+
+    savePortfolio();
+
+    addedStocks.add(symbol);
+
+    updateTotal();
+    
+    document.getElementById("count").innerText =
+    document.querySelectorAll("#tableBody tr").length;
+    
+    showToast(symbol + " added ✅", "success");
+
+    document.getElementById("symbol").value = "";
+}
+
+function changeShares(btn, delta, dividend, index) {
+  let container = btn.parentElement;
+  let input = container.querySelector("input");
+
+  let value = parseInt(input.value) || 0;
+
+  value += delta;
+
+  if (value < 0) value = 0;
+
+  input.value = value;
+
+  resizeInput(input);
+  updateIncome(input, dividend, index);
+}
+
+function resizeInput(input) {
+  let length = input.value.length;
+
+  // minimum width
+  input.style.width = Math.max(20, length * 10) + "px";
+}
+
+function savePortfolio() {
+  let rows = document.querySelectorAll("#tableBody tr");
+  let portfolio = [];
+
+  rows.forEach(row => {
+    let cols = row.querySelectorAll("td");
+
+    let symbol = cols[0].innerText;
+    let cmp = parseFloat(cols[1].innerText.replace("₹", ""));
+    let dividend = parseFloat(cols[2].innerText.replace("₹", ""));
+    let shares = parseFloat(cols[3].querySelector("input").value);
+
+    portfolio.push({
+      symbol,
+      cmp,
+      dividend,
+      shares
+    });
+  });
+
+  localStorage.setItem("portfolio", JSON.stringify(portfolio));
+}
+
+function showToast(message, type = "success") {
+  const toast = document.getElementById("toast");
+
+  toast.innerText = message;
+
+  // 🔥 Reset ALL bg classes safely
+  toast.classList.remove(
+    "bg-green-500",
+    "bg-red-500",
+    "bg-yellow-500"
+  );
+
+  // 🎯 Apply new color
+  if (type === "success") {
+    toast.classList.add("bg-green-500");
+  } 
+  else if (type === "error") {
+    toast.classList.add("bg-red-500");
+  } 
+  else if (type === "warning") {
+    toast.classList.add("bg-yellow-500", "text-black"); // better contrast
+  }
+
+  // show
+  toast.classList.remove("opacity-0", "-translate-y-3");
+  toast.classList.add("opacity-100", "translate-y-0");
+
+  // hide after 2 seconds
+  setTimeout(() => {
+    toast.classList.remove("opacity-100", "-translate-y-3");
+    toast.classList.add("opacity-0", "-translate-y-3");
+  }, 3000);
+}
+
+function deleteRow(btn, symbol) {
+  let row = btn.closest("tr");
+  row.remove();
+
+  addedStocks.delete(symbol);
+
+  updateTotal();
+
+  document.getElementById("count").innerText =
+    document.querySelectorAll("#tableBody tr").length;
+
+  showToast(symbol + " removed ❌", "error");
+
+  savePortfolio();
+}
+
+function handleSearch() {
+  const input = document.getElementById("symbol").value.trim().toLowerCase();
+  const dropdown = document.getElementById("dropdown");
+
+  highlightedIndex = -1;
+
+  if (!input) {
+    showAllStocks(); // fallback
+    return;
+  }
+
+  currentMatches = Object.keys(masterStocks)
+    .filter(symbol => {
+      const stock = masterStocks[symbol];
+
+      return (
+        symbol.toLowerCase().includes(input) ||
+        (stock.name && stock.name.toLowerCase().includes(input))
+      );
+    })
+    .slice(0, 30); // limit for performance
+
+  if (currentMatches.length === 0) {
+    dropdown.classList.add("hidden");
+    return;
+  }
+
+  renderDropdown(currentMatches);
+
+  dropdown.classList.remove("hidden");
+}
+
+function addStockFromSaved(stock) {
+  let tbody = document.getElementById("tableBody");
+  let index = Date.now();
+
+  let newRow = `
+    <tr class="border-b border-gray-700 hover:bg-gray-700/40 transition">
+      <td class="p-4 font-medium text-white">${stock.symbol}</td>
+      <td class="text-gray-300">₹${stock.cmp}</td>
+      <td class="text-gray-300">₹${stock.dividend}</td>
+      <td>
+  <div class="flex items-center gap-1 bg-gray-700 rounded px-2 py-1 w-fit">
+
+    <button onclick="changeShares(this, -1, ${stock.dividend}, ${index})"
+      class="text-gray-300 hover:text-white px-1">−</button>
+
+    <input type="text" value="${stock.shares}"
+      class="bg-transparent text-white text-center outline-none w-6"
+      oninput="resizeInput(this)"
+      onchange="updateIncome(this, ${stock.dividend}, ${index})">
+
+    <button onclick="changeShares(this, 1, ${stock.dividend}, ${index})"
+      class="text-gray-300 hover:text-white px-1">+</button>
+
+  </div>
+</td>
+      <td id="income-${index}" class="text-right pr-6 font-semibold text-green-400">
+        ₹${(stock.shares * stock.dividend).toFixed(2)}
+      </td>
+      <td class="pr-4 text-right">
+        <button onclick="deleteRow(this, '${stock.symbol}')" class="text-red-400">❌</button>
+      </td>
+    </tr>
+  `;
+
+  tbody.innerHTML += newRow;
+
+  setTimeout(() => {
+  let inputs = tbody.querySelectorAll("input");
+  inputs.forEach(input => resizeInput(input));
+}, 0);
+
+  addedStocks.add(stock.symbol);
+
+  updateTotal();
+
+  document.getElementById("count").innerText =
+    document.querySelectorAll("#tableBody tr").length;
+}
+
+function updateHighlight(items) {
+  for (let i = 0; i < items.length; i++) {
+    items[i].classList.remove("bg-gray-700");
+  }
+
+  if (highlightedIndex >= 0) {
+    items[highlightedIndex].classList.add("bg-gray-700");
+  }
+}
+
+function showAllStocks() {
+  const dropdown = document.getElementById("dropdown");
+
+  dropdown.innerHTML = "";
+  highlightedIndex = -1;
+
+  // 🔥 Sort by company name (recommended)
+  currentMatches = Object.keys(masterStocks)
+  .sort((a, b) => {
+    return (masterStocks[a].name || "").localeCompare(masterStocks[b].name || "");
+  })
+  .slice(0, 30);
+
+  renderDropdown(currentMatches);
+
+  dropdown.classList.remove("hidden");
+}
+
+function highlightText(text, query) {
+  if (!query) return text;
+
+  const regex = new RegExp(`(${query})`, "gi");
+
+  return text.replace(regex, `<span class="text-white font-bold">$1</span>`);
+}
+
+function renderDropdown(list) {
+  const input = document.getElementById("symbol").value.trim();
+  const dropdown = document.getElementById("dropdown");
+
+  dropdown.innerHTML = "";
+
+  list.forEach((stock, index) => {
+    const isAdded = addedStocks.has(stock);
+
+    let item = document.createElement("div");
+
+    const highlightedName = highlightText(masterStocks[stock].name, input);
+    const highlightedSymbol = highlightText(stock, input);
+
+    item.className = isAdded
+      ? "px-4 py-2 opacity-60"
+      : "px-4 py-2 cursor-pointer hover:bg-gray-700 rounded";
+
+    item.innerHTML = `
+  <div class="flex justify-between items-center">
+
+    <div class="flex flex-col">
+
+      <span class="text-gray-400 text-xs">
+        <b>Stock:</b>
+        <span class="text-green-400 font-bold">
+          ${highlightedName}
+        </span>
+      </span>
+
+      <span class="text-gray-400 text-xs">
+        <b>Symbol:</b>
+        <span class="text-green-400 font-bold">
+          ${highlightedSymbol}
+        </span>
+      </span>
+
+    </div>
+
+    ${
+      isAdded
+        ? `<span class="text-yellow-400 text-lg">⚠️</span>`
+        : `<button 
+            class="bg-green-500 hover:bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg"
+            onclick="event.stopPropagation(); quickAdd('${stock}')">
+            +
+          </button>`
+    }
+
+  </div>
+`;
+
+    item.onclick = () => selectStock(index);
+
+    dropdown.appendChild(item);
+  });
+}
+
+function quickAdd(symbol) {
+  document.getElementById("symbol").value = symbol;
+
+  addStock();
+
+  document.getElementById("dropdown").classList.add("hidden");
+}
+
+let sortState = {
+  stock: true,
+  dividend: true,
+  income: true
+};
+
+function sortTable(type) {
+  const tbody = document.getElementById("tableBody");
+  let rows = Array.from(tbody.querySelectorAll("tr"));
+
+  document.querySelectorAll("th").forEach(th => th.classList.remove("text-green-400"));
+event.target.classList.add("text-green-400");
+
+  rows.sort((a, b) => {
+    let valA, valB;
+
+    if (type === "stock") {
+      valA = a.children[0].innerText;
+      valB = b.children[0].innerText;
+      return sortState[type]
+        ? valA.localeCompare(valB)
+        : valB.localeCompare(valA);
+    }
+
+    if (type === "dividend") {
+      valA = parseFloat(a.children[2].innerText.replace("₹", ""));
+      valB = parseFloat(b.children[2].innerText.replace("₹", ""));
+    }
+
+    if (type === "income") {
+      valA = parseFloat(a.children[4].innerText.replace("₹", ""));
+      valB = parseFloat(b.children[4].innerText.replace("₹", ""));
+    }
+
+    return sortState[type] ? valA - valB : valB - valA;
+  });
+
+  // toggle sort direction
+  sortState[type] = !sortState[type];
+
+  // re-render rows
+  tbody.innerHTML = "";
+  rows.forEach(row => tbody.appendChild(row));
+}
+
+function selectStock(index) {
+  const dropdown = document.getElementById("dropdown");
+
+  document.getElementById("symbol").value = currentMatches[index];
+
+  dropdown.classList.add("hidden");
+  highlightedIndex = -1;
+}
+
+document.addEventListener("click", function (e) {
+  if (!e.target.closest("#symbol")) {
+    document.getElementById("dropdown").classList.add("hidden");
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  document.getElementById("symbol").addEventListener("keydown", function (e) {
+    const dropdown = document.getElementById("dropdown");
+    const items = dropdown.children;
+
+    if (dropdown.classList.contains("hidden")) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      highlightedIndex = (highlightedIndex + 1) % items.length;
+      updateHighlight(items);
+    }
+
+    else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      highlightedIndex =
+        (highlightedIndex - 1 + items.length) % items.length;
+      updateHighlight(items);
+    }
+
+    else if (e.key === "Enter") {
+  e.preventDefault();
+
+  if (highlightedIndex >= 0) {
+    selectStock(highlightedIndex);
+  } else if (this.value.trim()) {
+    addStock(); // only if input exists
+  }
+}
+  });
+
+});
+
+window.onload = function () {
+  let saved = localStorage.getItem("portfolio");
+
+  if (!saved) return;
+
+  let portfolio = JSON.parse(saved);
+
+  portfolio.forEach(stock => {
+    addStockFromSaved(stock);
+  });
+};
+
+document.getElementById("symbol").addEventListener("focus", function () {
+  showAllStocks();
+});
+
+
+
+
+</script>
+
+</body>
+</html>
