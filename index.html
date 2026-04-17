@@ -124,6 +124,12 @@ let currentMatches = [];
 let addedStocks = new Set();
 
 let masterStocks = {};
+let rowCounter = 0;
+
+function createRowIndex() {
+  rowCounter += 1;
+  return Date.now() + rowCounter;
+}
 
 fetch("https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json")
   .then(res => res.text())
@@ -155,21 +161,25 @@ fetch("https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8
 
 async function loadPortfolioFromFirebase() {
   const querySnapshot = await getDocs(collection(db, "portfolio"));
+  const savedStocks = [];
 
   querySnapshot.forEach((docSnap) => {
-    addStockFromSaved(docSnap.data());
+    savedStocks.push(docSnap.data());
   });
+
+  savedStocks
+    .sort((a, b) => a.symbol.localeCompare(b.symbol))
+    .forEach(stock => addStockFromSaved(stock));
 }
 
 function updateIncome(input, dividend, index, symbol) {
-  let shares = parseFloat(input.value) || 0;
+  let shares = parseFloat(input.value);
 
 if (shares < 0 || isNaN(shares)) {
     shares = 0;
 }
 
-shares = Math.floor(shares); // remove decimals
-input.value = shares;   
+ // remove decimals   
 
   const income = (shares * dividend).toFixed(2);
 
@@ -214,7 +224,8 @@ function addStock() {
     }
 
     let tbody = document.getElementById("tableBody");
-    let index = Date.now();
+    let createdAt = Date.now();
+    let index = createRowIndex();
     
     let data = masterStocks[symbol];
     let shares = 0;
@@ -232,9 +243,8 @@ function addStock() {
       class="text-gray-300 hover:text-white px-1">−</button>
 
     <input type="text" value="0"
-      class="bg-transparent text-white text-center outline-none w-6"
-      oninput="resizeInput(this)"
-      onchange="updateIncome(this, ${data.dividend}, ${index}, '${symbol}')">
+      class="bg-transparent text-white text-center outline-none w-14 min-w-[56px] max-w-[56px]"
+      oninput="resizeInput(this); updateIncome(this, ${data.dividend}, ${index}, '${symbol}')">
 
     <button onclick="changeShares(this, 1, ${data.dividend}, ${index}, '${symbol}')"
       class="text-gray-300 hover:text-white px-1">+</button>
@@ -253,13 +263,14 @@ function addStock() {
   </tr>
 `;
 
-    tbody.innerHTML += newRow;
+    tbody.insertAdjacentHTML("afterbegin", newRow);
 
     saveToFirebase({
   symbol,
   cmp: data.cmp,
   dividend: data.dividend,
-  shares: 0
+  shares: 0,
+  createdAt
 });
 
     addedStocks.add(symbol);
@@ -291,10 +302,7 @@ function changeShares(btn, delta, dividend, index, symbol) {
 }
 
 function resizeInput(input) {
-  let length = input.value.length;
-
-  // minimum width
-  input.style.width = Math.max(20, length * 10) + "px";
+  input.style.width = "56px";
 }
 
 function savePortfolio() {
@@ -414,7 +422,7 @@ function handleSearch() {
 
 function addStockFromSaved(stock) {
   let tbody = document.getElementById("tableBody");
-  let index = Date.now();
+  let index = createRowIndex();
 
   let newRow = `
     <tr class="border-b border-gray-700 hover:bg-gray-700/40 transition">
@@ -428,9 +436,8 @@ function addStockFromSaved(stock) {
       class="text-gray-300 hover:text-white px-1">−</button>
 
     <input type="text" value="${stock.shares}"
-      class="bg-transparent text-white text-center outline-none w-6"
-      oninput="resizeInput(this)"
-      onchange="updateIncome(this, ${stock.dividend}, ${index}, '${stock.symbol}')">
+      class="bg-transparent text-white text-center outline-none w-14 min-w-[56px] max-w-[56px]"
+      oninput="resizeInput(this); updateIncome(this, ${stock.dividend}, ${index}, '${stock.symbol}')">
 
     <button onclick="changeShares(this, 1, ${stock.dividend}, ${index}, '${stock.symbol}')"
       class="text-gray-300 hover:text-white px-1">+</button>
@@ -446,7 +453,7 @@ function addStockFromSaved(stock) {
     </tr>
   `;
 
-  tbody.innerHTML += newRow;
+  tbody.insertAdjacentHTML("beforeend", newRow);
 
   setTimeout(() => {
   let inputs = tbody.querySelectorAll("input");
@@ -679,6 +686,9 @@ window.addStock = addStock;
 window.changeShares = changeShares;
 window.deleteRow = deleteRow;
 window.sortTable = sortTable;
+window.handleSearch = handleSearch;
+window.resizeInput = resizeInput;
+window.updateIncome = updateIncome;
 window.quickAdd = quickAdd;
 window.selectStock = selectStock;
 
