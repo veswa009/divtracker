@@ -3,39 +3,221 @@
 <head>
   <link rel="icon" href="data:,">
   <meta charset="UTF-8">
-  <title>Dividend Tracker</title>
+  <title>All Stocks Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --accent: #737373;
+      --accent-rgb: 115, 115, 115;
+      --accent-soft: #e5e5e5;
+      --accent-deep: #171717;
+      --accent-border: rgba(163, 163, 163, 0.34);
+      --accent-shadow: rgba(115, 115, 115, 0.22);
+      --accent-contrast: #050505;
+      --danger: #fb7185;
+      --warning: #facc15;
+    }
+
+    body[data-theme="positive"] {
+      --accent: #22c55e;
+      --accent-rgb: 34, 197, 94;
+      --accent-soft: #bbf7d0;
+      --accent-deep: #052e16;
+      --accent-border: rgba(34, 197, 94, 0.44);
+      --accent-shadow: rgba(34, 197, 94, 0.26);
+      --accent-contrast: #04130a;
+    }
+
+    body[data-theme="negative"] {
+      --accent: #fb7185;
+      --accent-rgb: 251, 113, 133;
+      --accent-soft: #ffe4e6;
+      --accent-deep: #4c0519;
+      --accent-border: rgba(251, 113, 133, 0.44);
+      --accent-shadow: rgba(251, 113, 133, 0.28);
+      --accent-contrast: #190308;
+    }
+
+    body {
+      background:
+        linear-gradient(135deg, rgba(var(--accent-rgb), 0.18), transparent 36%),
+        linear-gradient(90deg, rgba(var(--accent-rgb), 0.08), transparent 34%, rgba(255, 255, 255, 0.04)),
+        #05070a;
+      transition: background 260ms ease;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(var(--accent-rgb), 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--accent-rgb), 0.05) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+      transition: background-image 260ms ease;
+    }
+
+    .market-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), #f8fafc, var(--accent), transparent);
+    }
+
+    .glass-topbar {
+      background: rgba(5, 7, 10, 0.9);
+      border-bottom: 1px solid var(--accent-border);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35), 0 0 30px var(--accent-shadow);
+    }
+
+    .metric-card,
+    .table-wrap,
+    .dropdown-panel,
+    .share-control,
+    .price-control {
+      background: rgba(10, 10, 10, 0.74);
+      border: 1px solid var(--accent-border);
+      box-shadow: 0 0 24px var(--accent-shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .metric-label,
+    .muted-label {
+      color: rgba(245, 245, 245, 0.62);
+    }
+
+    .theme-text,
+    .metric-value,
+    .is-sorted {
+      color: var(--accent-soft);
+    }
+
+    .theme-strong {
+      color: var(--accent);
+    }
+
+    .search-input {
+      background: rgba(5, 7, 10, 0.82);
+      border: 1px solid var(--accent-border);
+      color: #f4f4f5;
+    }
+
+    .search-input::placeholder {
+      color: rgba(245, 245, 245, 0.42);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.42);
+    }
+
+    .primary-button {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      box-shadow: 0 0 24px var(--accent-shadow);
+      transition: transform 160ms ease, filter 160ms ease, background 260ms ease;
+    }
+
+    .primary-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .portfolio-table th {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(var(--accent-rgb), 0.18);
+      color: var(--accent-soft);
+      box-shadow: 0 1px 0 var(--accent-border);
+    }
+
+    .row-line {
+      border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
+    }
+
+    .row-line:hover {
+      background: rgba(var(--accent-rgb), 0.1);
+    }
+
+    .share-input,
+    .avg-price-input {
+      background: transparent;
+      color: var(--accent-soft);
+      outline: none;
+      text-align: center;
+    }
+
+    .share-input {
+      width: 56px;
+      min-width: 56px;
+      max-width: 56px;
+    }
+
+    .avg-price-input {
+      width: 96px;
+      min-width: 96px;
+      max-width: 96px;
+    }
+
+    .dropdown-option:hover,
+    .dropdown-option.active {
+      background: rgba(var(--accent-rgb), 0.16);
+    }
+
+    .theme-toast {
+      box-shadow: 0 0 30px var(--accent-shadow);
+    }
+
+    .toast-success {
+      background: #16a34a;
+    }
+
+    .toast-error {
+      background: #e11d48;
+    }
+
+    .toast-warning {
+      background: var(--warning);
+      color: #171717;
+    }
+  </style>
 </head>
 
 
 
-<body class="bg-gray-900 text-gray-200 font-sans">
+<body data-theme="neutral" class="text-zinc-100 font-sans">
 
 <div id="toast"
-  class="fixed top-5 right-5 z-[9999] text-white px-5 py-3 rounded-xl shadow-lg opacity-0 -translate-y-3 transition-all duration-300">
+  class="theme-toast fixed top-5 right-5 z-[9999] text-white px-5 py-3 rounded-lg opacity-0 -translate-y-3 transition-all duration-300">
 </div>
 
-<div class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800">
+<div class="market-header glass-topbar sticky top-0 z-50 backdrop-blur-md relative">
 
   <div class="max-w-7xl mx-auto px-6 py-3">
 
     <!-- HEADER ROW -->
     <div class="flex items-center">
 
-      <h1 class="text-2xl font-bold text-white">
-        Dividend Tracker 🌙
+      <h1 class="text-2xl font-bold text-zinc-50">
+        All Stocks Portfolio
       </h1>
 
       <div class="ml-auto flex items-center gap-4">
 
-        <div class="bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-800/40">
-          <p class="text-gray-500 text-xs">Total Stocks</p>
-          <p id="count" class="text-sm font-semibold text-blue-400">0</p>
+        <div class="metric-card px-3 py-1.5 rounded-lg">
+          <p class="metric-label text-xs">Total Stocks</p>
+          <p id="count" class="metric-value text-sm font-semibold">0</p>
         </div>
 
-        <div class="bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-800/40">
-          <p class="text-gray-500 text-xs">Total Dividend</p>
-          <p id="total" class="text-sm font-semibold text-green-400">₹0</p>
+        <div class="metric-card px-3 py-1.5 rounded-lg">
+          <p class="metric-label text-xs">Total Invested</p>
+          <p id="total" class="metric-value text-sm font-semibold">₹0.00</p>
         </div>
 
       </div>
@@ -48,15 +230,15 @@
         
         <input id="symbol" placeholder="Search stock (ITC, TCS)"
           oninput="handleSearch()"
-          class="flex-1 bg-gray-800 border border-gray-700 rounded-2xl px-4 py-2.5 text-white text-base focus:outline-none focus:ring-2 focus:ring-green-500">
+          class="search-input flex-1 rounded-lg px-4 py-2.5 text-base focus:outline-none">
 
         <button type="submit"
-          class="bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-2xl font-semibold">
+          class="primary-button px-5 py-2.5 rounded-lg font-semibold">
           Add
         </button>
 
         <div id="dropdown"
-          class="absolute top-full left-0 w-full bg-gray-800 border border-gray-700 rounded-xl mt-2 hidden max-h-60 overflow-y-auto z-50">
+          class="dropdown-panel absolute top-full left-0 w-full rounded-lg mt-2 hidden max-h-60 overflow-y-auto z-50">
         </div>
 
       </form>
@@ -69,16 +251,16 @@
   <!-- Table -->
   <div class="max-w-7xl mx-auto px-6">
 
-  <div class="bg-gray-800 rounded-2xl shadow border border-gray-700 mt-4">
+  <div class="table-wrap rounded-lg mt-4 max-h-[calc(100vh-190px)] overflow-auto">
 
-    <table class="w-full text-left">
-      <thead class="bg-gray-700 text-gray-300 text-sm sticky top-[130px] z-30">
+    <table class="portfolio-table w-full text-left">
+      <thead class="text-sm">
         <tr>
-          <th class="p-4 cursor-pointer" onclick="sortTable('stock', event)">Stock ⬍</th>
+          <th class="p-4 cursor-pointer" onclick="sortTable('symbol', event)">Symbol ⬍</th>
           <th>CMP</th>
-          <th class="cursor-pointer" onclick="sortTable('dividend', event)">Dividend ⬍</th>
+          <th class="cursor-pointer" onclick="sortTable('avgPrice', event)">Avg Price ⬍</th>
           <th>Shares</th>
-          <th class="text-right pr-6 cursor-pointer" onclick="sortTable('income', event)">Income ⬍</th>
+          <th class="text-right pr-6 cursor-pointer" onclick="sortTable('invested', event)">Invested Value ⬍</th>
           <th class="text-right pr-4">Action</th>
         </tr>
       </thead>
@@ -95,11 +277,13 @@
 
 <script type="module">
 
-// ✅ 1. IMPORT FIREBASE
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ✅ 2. PASTE YOUR CONFIG HERE
+const STOCK_SHEET_URL = "https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json";
+const SHARE_INPUT_WIDTH = "56px";
+const AVG_PRICE_INPUT_WIDTH = "96px";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCqhcJC6m4qdETVgDCIVlZX55451UYRq1o",
   authDomain: "divtracker-f5c6e.firebaseapp.com",
@@ -110,54 +294,90 @@ const firebaseConfig = {
   measurementId: "G-E244PEKHVN"
 };
 
-// ✅ 3. INITIALIZE FIREBASE
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function saveToFirebase(stock) {
-  await addDoc(collection(db, "portfolio"), stock);
-}
-
 let highlightedIndex = -1;
 let currentMatches = [];
-
-let addedStocks = new Set();
-
-let masterStocks = {};
+const sortState = {
+  symbol: true,
+  avgPrice: true,
+  invested: true
+};
 let rowCounter = 0;
+
+const addedStocks = new Set();
+const masterStocks = {};
+
+loadStockMaster();
 
 function createRowIndex() {
   rowCounter += 1;
   return Date.now() + rowCounter;
 }
 
-fetch("https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json")
-  .then(res => res.text())
-  .then(text => {
-    const json = JSON.parse(text.substring(47, text.length - 2));
+function parseMoney(value) {
+  return Number.parseFloat(String(value ?? "").replace(/[₹,\s]/g, "")) || 0;
+}
 
-    const rows = json.table.rows;
+function formatMoney(value) {
+  return parseMoney(value).toFixed(2);
+}
 
-    rows.forEach(row => {
-      const cols = row.c;
+function getAvgPrice(stock) {
+  return parseMoney(stock.avgPrice ?? 0);
+}
 
-      const name = cols[4]?.v;       // E column
-      const symbol = cols[5]?.v;     // F column
-      const cmp = cols[6]?.v;        // G column
-      const dividend = cols[8]?.v;   // I column
+function sanitizeAvgPriceInput(input) {
+  const startsNegative = input.value.trim().startsWith("-");
+  let value = input.value.replace(/[^\d.]/g, "");
+  const hasDecimal = value.includes(".");
+  const parts = value.split(".");
+  const whole = parts[0].slice(0, 5);
+  const decimals = parts.slice(1).join("").slice(0, 2);
 
-      if (symbol) {
-        masterStocks[symbol.toUpperCase()] = {
-          name: name || "",
-          cmp: cmp,
-          dividend: dividend
-        };
-      }
+  input.value = `${startsNegative ? "-" : ""}${whole}${hasDecimal ? "." + decimals : ""}`;
+  input.style.width = AVG_PRICE_INPUT_WIDTH;
+}
+
+function normalizeAvgPriceInput(input) {
+  input.value = formatMoney(input.value);
+  input.style.width = AVG_PRICE_INPUT_WIDTH;
+}
+
+function applyPortfolioTheme(total) {
+  if (total > 0) {
+    document.body.dataset.theme = "positive";
+  } else if (total < 0) {
+    document.body.dataset.theme = "negative";
+  } else {
+    document.body.dataset.theme = "neutral";
+  }
+}
+
+function loadStockMaster() {
+  fetch(STOCK_SHEET_URL)
+    .then(res => res.text())
+    .then(text => {
+      const json = JSON.parse(text.substring(47, text.length - 2));
+
+      json.table.rows.forEach(row => {
+        const cols = row.c;
+        const name = cols[4]?.v;
+        const symbol = cols[5]?.v;
+        const cmp = cols[6]?.v;
+
+        if (symbol) {
+          masterStocks[symbol.toUpperCase()] = {
+            name: name || "",
+            cmp: cmp
+          };
+        }
+      });
+
+      loadPortfolioFromFirebase();
     });
-
-    console.log("Loaded Stocks:", masterStocks);
-    loadPortfolioFromFirebase();
-  });
+}
 
 async function loadPortfolioFromFirebase() {
   const querySnapshot = await getDocs(collection(db, "portfolio"));
@@ -172,220 +392,167 @@ async function loadPortfolioFromFirebase() {
     .forEach(stock => addStockFromSaved(stock));
 }
 
-function updateIncome(input, dividend, index, symbol) {
-  let shares = parseFloat(input.value);
-
-if (shares < 0 || isNaN(shares)) {
-    shares = 0;
-}
-
- // remove decimals   
-
-  const income = (shares * dividend).toFixed(2);
-
-  document.getElementById(`income-${index}`).innerText = "₹" + income;
-
-  updateTotal();
-
-  updateSharesInFirebase(symbol, shares);
-
-}
-
-function updateTotal() {
-  let incomes = document.querySelectorAll("[id^='income-']");
-  let total = 0;
-
-  incomes.forEach(el => {
-    total += parseFloat(el.innerText.replace("₹", "")) || 0;
-  });
-
-  document.getElementById("total").innerText = "₹" + total.toFixed(2);
-}
-
 function addStock() {
-  
-    const symbol = document.getElementById("symbol").value.trim().toUpperCase();
-      
-    if (!symbol) return;
-  
-    if (Object.keys(masterStocks).length === 0) {
-        showToast("Loading stock data... ⏳");
-        return;
-    }
+  const symbolInput = document.getElementById("symbol");
+  const symbol = symbolInput.value.trim().toUpperCase();
 
-    if (addedStocks.has(symbol)) {
-         showToast(symbol + " already added ⚠️", "warning");
-        return;
-    }
-    
-    if (!masterStocks[symbol]) {
-        showToast("Stock not found ❌", "error");
-        return;
-    }
+  if (!symbol) return;
 
-    let tbody = document.getElementById("tableBody");
-    let createdAt = Date.now();
-    let index = createRowIndex();
-    
-    let data = masterStocks[symbol];
-    let shares = 0;
+  if (Object.keys(masterStocks).length === 0) {
+    showToast("Loading stock data... ⏳");
+    return;
+  }
 
-    let newRow = `
-  <tr class="border-b border-gray-700 hover:bg-gray-700/40 transition">
-    <td class="p-4 font-medium text-white">${symbol}</td>
-    <td class="text-gray-300">₹${data.cmp}</td>
-    <td class="text-gray-300">₹${data.dividend}</td>
-    
-    <td>
-  <div class="flex items-center gap-1 bg-gray-700 rounded px-2 py-1 w-fit">
+  if (addedStocks.has(symbol)) {
+    showToast(symbol + " already added ⚠️", "warning");
+    return;
+  }
 
-    <button onclick="changeShares(this, -1, ${data.dividend}, ${index}, '${symbol}')"
-      class="text-gray-300 hover:text-white px-1">−</button>
+  if (!masterStocks[symbol]) {
+    showToast("Stock not found ❌", "error");
+    return;
+  }
 
-    <input type="text" value="0"
-      class="bg-transparent text-white text-center outline-none w-14 min-w-[56px] max-w-[56px]"
-      oninput="resizeInput(this); updateIncome(this, ${data.dividend}, ${index}, '${symbol}')">
+  const stock = {
+    symbol,
+    cmp: masterStocks[symbol].cmp,
+    avgPrice: 0,
+    shares: 0
+  };
 
-    <button onclick="changeShares(this, 1, ${data.dividend}, ${index}, '${symbol}')"
-      class="text-gray-300 hover:text-white px-1">+</button>
+  document
+    .getElementById("tableBody")
+    .insertAdjacentHTML("afterbegin", createStockRow(stock, createRowIndex()));
 
-  </div>
-</td>
-
-    <td id="income-${index}" 
-  class="text-right pr-6 font-semibold text-green-400 w-24 whitespace-nowrap">
-      ₹0
-    </td>
-
-    <td class="pr-4 text-right">
-      <button onclick="deleteRow(this, '${symbol}')" class="text-red-400">❌</button>
-    </td>
-  </tr>
-`;
-
-    tbody.insertAdjacentHTML("afterbegin", newRow);
-
-    saveToFirebase({
-  symbol,
-  cmp: data.cmp,
-  dividend: data.dividend,
-  shares: 0,
-  createdAt
-});
-
-    addedStocks.add(symbol);
-
-    updateTotal();
-    
-    document.getElementById("count").innerText =
-    document.querySelectorAll("#tableBody tr").length;
-    
-    showToast(symbol + " added ✅", "success");
-
-    document.getElementById("symbol").value = "";
+  saveToFirebase(stock);
+  addedStocks.add(symbol);
+  updateSummary();
+  showToast(symbol + " added ✅", "success");
+  symbolInput.value = "";
 }
 
-function changeShares(btn, delta, dividend, index, symbol) {
-  let container = btn.parentElement;
-  let input = container.querySelector("input");
+function addStockFromSaved(stock) {
+  document
+    .getElementById("tableBody")
+    .insertAdjacentHTML("beforeend", createStockRow(stock, createRowIndex()));
+  addedStocks.add(stock.symbol);
+  updateSummary();
+}
 
+function createStockRow(stock, index) {
+  const shares = Number.parseFloat(stock.shares) || 0;
+  const avgPrice = getAvgPrice(stock);
+  const investedValue = (shares * avgPrice).toFixed(2);
+
+  return `
+    <tr class="row-line transition">
+      <td class="p-4 font-medium text-zinc-50">${stock.symbol}</td>
+      <td class="text-zinc-300">₹${stock.cmp}</td>
+      <td>
+        <div class="price-control rounded px-2 py-1 w-fit">
+          <input id="avgPrice-${index}" type="text" inputmode="decimal" maxlength="9" value="${avgPrice.toFixed(2)}"
+            class="avg-price-input"
+            oninput="handleAvgPriceInput(this, ${index}, '${stock.symbol}')"
+            onblur="normalizeAvgPrice(this, ${index}, '${stock.symbol}')">
+        </div>
+      </td>
+      <td>
+        <div class="share-control flex items-center gap-1 rounded px-2 py-1 w-fit">
+          <button onclick="changeShares(this, -1, ${index}, '${stock.symbol}')"
+            class="theme-text hover:text-rose-300 px-1">−</button>
+
+          <input id="shares-${index}" type="text" inputmode="numeric" value="${shares}"
+            class="share-input"
+            oninput="handleSharesInput(this, ${index}, '${stock.symbol}')">
+
+          <button onclick="changeShares(this, 1, ${index}, '${stock.symbol}')"
+            class="theme-text hover:text-zinc-50 px-1">+</button>
+        </div>
+      </td>
+      <td id="invested-${index}" class="text-right pr-6 font-semibold theme-strong w-32 whitespace-nowrap">
+        ₹${investedValue}
+      </td>
+      <td class="pr-4 text-right">
+        <button onclick="deleteRow(this, '${stock.symbol}')" class="text-rose-400 hover:text-rose-300">❌</button>
+      </td>
+    </tr>
+  `;
+}
+
+function changeShares(btn, delta, index, symbol) {
+  const input = btn.parentElement.querySelector("input");
   let value = parseInt(input.value) || 0;
 
   value += delta;
-
   if (value < 0) value = 0;
 
   input.value = value;
-
   resizeInput(input);
-  updateIncome(input, dividend, index, symbol);
+  updateInvestedValue(index, symbol);
+}
+
+function handleSharesInput(input, index, symbol) {
+  resizeInput(input);
+  updateInvestedValue(index, symbol);
+}
+
+function handleAvgPriceInput(input, index, symbol) {
+  sanitizeAvgPriceInput(input);
+  updateInvestedValue(index, symbol);
+}
+
+function normalizeAvgPrice(input, index, symbol) {
+  normalizeAvgPriceInput(input);
+  updateInvestedValue(index, symbol);
+}
+
+function updateInvestedValue(index, symbol) {
+  const sharesInput = document.getElementById(`shares-${index}`);
+  const avgPriceInput = document.getElementById(`avgPrice-${index}`);
+  const avgPrice = parseMoney(avgPriceInput.value);
+  let shares = parseFloat(sharesInput.value);
+
+  if (shares < 0 || isNaN(shares)) {
+    shares = 0;
+  }
+
+  document.getElementById(`invested-${index}`).innerText =
+    "₹" + (shares * avgPrice).toFixed(2);
+
+  updateTotal();
+  updatePortfolioInFirebase(symbol, {
+    avgPrice,
+    shares
+  });
 }
 
 function resizeInput(input) {
-  input.style.width = "56px";
-}
-
-function savePortfolio() {
-  let rows = document.querySelectorAll("#tableBody tr");
-  let portfolio = [];
-
-  rows.forEach(row => {
-    let cols = row.querySelectorAll("td");
-
-    let symbol = cols[0].innerText;
-    let cmp = parseFloat(cols[1].innerText.replace("₹", ""));
-    let dividend = parseFloat(cols[2].innerText.replace("₹", ""));
-    let shares = parseFloat(cols[3].querySelector("input").value);
-
-    portfolio.push({
-      symbol,
-      cmp,
-      dividend,
-      shares
-    });
-  });
-
-  localStorage.setItem("portfolio", JSON.stringify(portfolio));
-}
-
-function showToast(message, type = "success") {
-  const toast = document.getElementById("toast");
-
-  toast.innerText = message;
-
-  // 🔥 Reset ALL bg classes safely
-  toast.classList.remove(
-    "bg-green-500",
-    "bg-red-500",
-    "bg-yellow-500"
-  );
-
-  // 🎯 Apply new color
-  if (type === "success") {
-    toast.classList.add("bg-green-500");
-  } 
-  else if (type === "error") {
-    toast.classList.add("bg-red-500");
-  } 
-  else if (type === "warning") {
-    toast.classList.add("bg-yellow-500", "text-black"); // better contrast
-  }
-
-  // show
-  toast.classList.remove("opacity-0", "-translate-y-3");
-  toast.classList.add("opacity-100", "translate-y-0");
-
-  // hide after 2 seconds
-  setTimeout(() => {
-    toast.classList.remove("opacity-100", "-translate-y-3");
-    toast.classList.add("opacity-0", "-translate-y-3");
-  }, 3000);
+  input.style.width = SHARE_INPUT_WIDTH;
 }
 
 function deleteRow(btn, symbol) {
-  let row = btn.closest("tr");
-  row.remove();
-
+  btn.closest("tr").remove();
   addedStocks.delete(symbol);
-
-  updateTotal();
-
-  document.getElementById("count").innerText =
-    document.querySelectorAll("#tableBody tr").length;
-
+  updateSummary();
   showToast(symbol + " removed ❌", "error");
-
   deleteFromFirebase(symbol);
 }
 
-async function deleteFromFirebase(symbol) {
-  const querySnapshot = await getDocs(collection(db, "portfolio"));
+function updateSummary() {
+  updateTotal();
+  document.getElementById("count").innerText =
+    document.querySelectorAll("#tableBody tr").length;
+}
 
-  querySnapshot.forEach(async (docSnap) => {
-    if (docSnap.data().symbol === symbol) {
-      await deleteDoc(doc(db, "portfolio", docSnap.id));
-    }
+function updateTotal() {
+  let total = 0;
+
+  document.querySelectorAll("[id^='invested-']").forEach(el => {
+    total += parseMoney(el.innerText);
   });
+
+  document.getElementById("total").innerText = "₹" + total.toFixed(2);
+  applyPortfolioTheme(total);
 }
 
 function handleSearch() {
@@ -395,7 +562,7 @@ function handleSearch() {
   highlightedIndex = -1;
 
   if (!input) {
-    showAllStocks(); // fallback
+    showAllStocks();
     return;
   }
 
@@ -408,7 +575,7 @@ function handleSearch() {
         (stock.name && stock.name.toLowerCase().includes(input))
       );
     })
-    .slice(0, 30); // limit for performance
+    .slice(0, 30);
 
   if (currentMatches.length === 0) {
     dropdown.classList.add("hidden");
@@ -416,66 +583,7 @@ function handleSearch() {
   }
 
   renderDropdown(currentMatches);
-
   dropdown.classList.remove("hidden");
-}
-
-function addStockFromSaved(stock) {
-  let tbody = document.getElementById("tableBody");
-  let index = createRowIndex();
-
-  let newRow = `
-    <tr class="border-b border-gray-700 hover:bg-gray-700/40 transition">
-      <td class="p-4 font-medium text-white">${stock.symbol}</td>
-      <td class="text-gray-300">₹${stock.cmp}</td>
-      <td class="text-gray-300">₹${stock.dividend}</td>
-      <td>
-  <div class="flex items-center gap-1 bg-gray-700 rounded px-2 py-1 w-fit">
-
-    <button onclick="changeShares(this, -1, ${stock.dividend}, ${index}, '${stock.symbol}')"
-      class="text-gray-300 hover:text-white px-1">−</button>
-
-    <input type="text" value="${stock.shares}"
-      class="bg-transparent text-white text-center outline-none w-14 min-w-[56px] max-w-[56px]"
-      oninput="resizeInput(this); updateIncome(this, ${stock.dividend}, ${index}, '${stock.symbol}')">
-
-    <button onclick="changeShares(this, 1, ${stock.dividend}, ${index}, '${stock.symbol}')"
-      class="text-gray-300 hover:text-white px-1">+</button>
-
-  </div>
-</td>
-      <td id="income-${index}" class="text-right pr-6 font-semibold text-green-400">
-        ₹${(stock.shares * stock.dividend).toFixed(2)}
-      </td>
-      <td class="pr-4 text-right">
-        <button onclick="deleteRow(this, '${stock.symbol}')" class="text-red-400">❌</button>
-      </td>
-    </tr>
-  `;
-
-  tbody.insertAdjacentHTML("beforeend", newRow);
-
-  setTimeout(() => {
-  let inputs = tbody.querySelectorAll("input");
-  inputs.forEach(input => resizeInput(input));
-}, 0);
-
-  addedStocks.add(stock.symbol);
-
-  updateTotal();
-
-  document.getElementById("count").innerText =
-    document.querySelectorAll("#tableBody tr").length;
-}
-
-function updateHighlight(items) {
-  for (let i = 0; i < items.length; i++) {
-    items[i].classList.remove("bg-gray-700");
-  }
-
-  if (highlightedIndex >= 0) {
-    items[highlightedIndex].classList.add("bg-gray-700");
-  }
 }
 
 function showAllStocks() {
@@ -484,24 +592,23 @@ function showAllStocks() {
   dropdown.innerHTML = "";
   highlightedIndex = -1;
 
-  // 🔥 Sort by company name (recommended)
   currentMatches = Object.keys(masterStocks)
-  .sort((a, b) => {
-    return (masterStocks[a].name || "").localeCompare(masterStocks[b].name || "");
-  })
-  .slice(0, 30);
+    .sort((a, b) => {
+      return (masterStocks[a].name || "").localeCompare(masterStocks[b].name || "");
+    })
+    .slice(0, 30);
 
   renderDropdown(currentMatches);
-
   dropdown.classList.remove("hidden");
 }
 
 function highlightText(text, query) {
   if (!query) return text;
 
-  const regex = new RegExp(`(${query})`, "gi");
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`(${escapedQuery})`, "gi");
 
-  return text.replace(regex, `<span class="text-white font-bold">$1</span>`);
+  return text.replace(regex, `<span class="theme-text font-bold">$1</span>`);
 }
 
 function renderDropdown(list) {
@@ -513,30 +620,30 @@ function renderDropdown(list) {
   list.forEach((stock, index) => {
     const isAdded = addedStocks.has(stock);
 
-    let item = document.createElement("div");
+    const item = document.createElement("div");
 
     const highlightedName = highlightText(masterStocks[stock].name, input);
     const highlightedSymbol = highlightText(stock, input);
 
     item.className = isAdded
       ? "px-4 py-2 opacity-60"
-      : "px-4 py-2 cursor-pointer hover:bg-gray-700 rounded";
+      : "dropdown-option px-4 py-2 cursor-pointer rounded";
 
     item.innerHTML = `
   <div class="flex justify-between items-center">
 
     <div class="flex flex-col">
 
-      <span class="text-gray-400 text-xs">
-        <b>Stock:</b>
-        <span class="text-green-400 font-bold">
+      <span class="muted-label text-xs">
+        <b>Name:</b>
+        <span class="theme-text font-bold">
           ${highlightedName}
         </span>
       </span>
 
-      <span class="text-gray-400 text-xs">
+      <span class="muted-label text-xs">
         <b>Symbol:</b>
-        <span class="text-green-400 font-bold">
+        <span class="theme-strong font-bold">
           ${highlightedSymbol}
         </span>
       </span>
@@ -545,9 +652,9 @@ function renderDropdown(list) {
 
     ${
       isAdded
-        ? `<span class="text-yellow-400 text-lg">⚠️</span>`
+        ? `<span class="text-yellow-300 text-lg">⚠️</span>`
         : `<button 
-            class="bg-green-500 hover:bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg"
+            class="primary-button w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold"
             onclick="event.stopPropagation(); quickAdd('${stock}')">
             +
           </button>`
@@ -562,33 +669,35 @@ function renderDropdown(list) {
   });
 }
 
+function updateHighlight(items) {
+  for (let i = 0; i < items.length; i++) {
+    items[i].classList.remove("active");
+  }
+
+  if (highlightedIndex >= 0) {
+    items[highlightedIndex].classList.add("active");
+  }
+}
+
 function quickAdd(symbol) {
   document.getElementById("symbol").value = symbol;
-
   addStock();
-
   document.getElementById("dropdown").classList.add("hidden");
 }
 
-let sortState = {
-  stock: true,
-  dividend: true,
-  income: true
-};
-
 function sortTable(type, event) {
   const tbody = document.getElementById("tableBody");
-  let rows = Array.from(tbody.querySelectorAll("tr"));
+  const rows = Array.from(tbody.querySelectorAll("tr"));
 
-  document.querySelectorAll("th").forEach(th => th.classList.remove("text-green-400"));
-if (event) {
-  event.target.classList.add("text-green-400");
-}
+  document.querySelectorAll("th").forEach(th => th.classList.remove("is-sorted"));
+  if (event) {
+    event.target.classList.add("is-sorted");
+  }
 
   rows.sort((a, b) => {
     let valA, valB;
 
-    if (type === "stock") {
+    if (type === "symbol") {
       valA = a.children[0].innerText;
       valB = b.children[0].innerText;
       return sortState[type]
@@ -596,37 +705,23 @@ if (event) {
         : valB.localeCompare(valA);
     }
 
-    if (type === "dividend") {
-      valA = parseFloat(a.children[2].innerText.replace("₹", ""));
-      valB = parseFloat(b.children[2].innerText.replace("₹", ""));
+    if (type === "avgPrice") {
+      valA = parseMoney(a.querySelector("[id^='avgPrice-']").value);
+      valB = parseMoney(b.querySelector("[id^='avgPrice-']").value);
     }
 
-    if (type === "income") {
-      valA = parseFloat(a.children[4].innerText.replace("₹", ""));
-      valB = parseFloat(b.children[4].innerText.replace("₹", ""));
+    if (type === "invested") {
+      valA = parseMoney(a.children[4].innerText);
+      valB = parseMoney(b.children[4].innerText);
     }
 
     return sortState[type] ? valA - valB : valB - valA;
   });
 
-  // toggle sort direction
   sortState[type] = !sortState[type];
 
-  // re-render rows
   tbody.innerHTML = "";
   rows.forEach(row => tbody.appendChild(row));
-}
-
-async function updateSharesInFirebase(symbol, shares) {
-  const querySnapshot = await getDocs(collection(db, "portfolio"));
-
-  querySnapshot.forEach(async (docSnap) => {
-    if (docSnap.data().symbol === symbol) {
-      await updateDoc(doc(db, "portfolio", docSnap.id), {
-        shares: shares
-      });
-    }
-  });
 }
 
 function selectStock(index) {
@@ -638,49 +733,91 @@ function selectStock(index) {
   highlightedIndex = -1;
 }
 
-document.addEventListener("click", function (e) {
+function showToast(message, type = "success") {
+  const toast = document.getElementById("toast");
+
+  toast.innerText = message;
+  toast.classList.remove("toast-success", "toast-error", "toast-warning");
+
+  if (type === "success") {
+    toast.classList.add("toast-success");
+  } else if (type === "error") {
+    toast.classList.add("toast-error");
+  } else if (type === "warning") {
+    toast.classList.add("toast-warning");
+  }
+
+  toast.classList.remove("opacity-0", "-translate-y-3");
+  toast.classList.add("opacity-100", "translate-y-0");
+
+  setTimeout(() => {
+    toast.classList.remove("opacity-100", "-translate-y-3");
+    toast.classList.add("opacity-0", "-translate-y-3");
+  }, 3000);
+}
+
+async function saveToFirebase(stock) {
+  await addDoc(collection(db, "portfolio"), stock);
+}
+
+async function deleteFromFirebase(symbol) {
+  const querySnapshot = await getDocs(collection(db, "portfolio"));
+
+  querySnapshot.forEach(async (docSnap) => {
+    if (docSnap.data().symbol === symbol) {
+      await deleteDoc(doc(db, "portfolio", docSnap.id));
+    }
+  });
+}
+
+async function updatePortfolioInFirebase(symbol, changes) {
+  const querySnapshot = await getDocs(collection(db, "portfolio"));
+
+  querySnapshot.forEach(async (docSnap) => {
+    if (docSnap.data().symbol === symbol) {
+      await updateDoc(doc(db, "portfolio", docSnap.id), changes);
+    }
+  });
+}
+
+function handleDocumentClick(e) {
   if (!e.target.closest("#symbol")) {
     document.getElementById("dropdown").classList.add("hidden");
   }
-});
+}
 
-document.addEventListener("DOMContentLoaded", function () {
+function handleSymbolKeydown(e) {
+  const dropdown = document.getElementById("dropdown");
+  const items = dropdown.children;
 
-  document.getElementById("symbol").addEventListener("keydown", function (e) {
-    const dropdown = document.getElementById("dropdown");
-    const items = dropdown.children;
+  if (dropdown.classList.contains("hidden")) return;
 
-    if (dropdown.classList.contains("hidden")) return;
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    highlightedIndex = (highlightedIndex + 1) % items.length;
+    updateHighlight(items);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    highlightedIndex = (highlightedIndex - 1 + items.length) % items.length;
+    updateHighlight(items);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
 
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      highlightedIndex = (highlightedIndex + 1) % items.length;
-      updateHighlight(items);
+    if (highlightedIndex >= 0) {
+      selectStock(highlightedIndex);
+    } else if (e.currentTarget.value.trim()) {
+      addStock();
     }
-
-    else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      highlightedIndex =
-        (highlightedIndex - 1 + items.length) % items.length;
-      updateHighlight(items);
-    }
-
-    else if (e.key === "Enter") {
-  e.preventDefault();
-
-  if (highlightedIndex >= 0) {
-    selectStock(highlightedIndex);
-  } else if (this.value.trim()) {
-    addStock(); // only if input exists
   }
 }
-  });
 
-});
+function initializeEvents() {
+  const symbolInput = document.getElementById("symbol");
 
-document.getElementById("symbol").addEventListener("focus", function () {
-  showAllStocks();
-});
+  symbolInput.addEventListener("keydown", handleSymbolKeydown);
+  symbolInput.addEventListener("focus", showAllStocks);
+  document.addEventListener("click", handleDocumentClick);
+}
 
 window.addStock = addStock;
 window.changeShares = changeShares;
@@ -688,10 +825,14 @@ window.deleteRow = deleteRow;
 window.sortTable = sortTable;
 window.handleSearch = handleSearch;
 window.resizeInput = resizeInput;
-window.updateIncome = updateIncome;
+window.handleSharesInput = handleSharesInput;
+window.handleAvgPriceInput = handleAvgPriceInput;
+window.normalizeAvgPrice = normalizeAvgPrice;
+window.updateInvestedValue = updateInvestedValue;
 window.quickAdd = quickAdd;
 window.selectStock = selectStock;
 
+document.addEventListener("DOMContentLoaded", initializeEvents);
 
 
 </script>
