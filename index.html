@@ -3,9 +3,11 @@
 <head>
   <link rel="icon" href="data:,">
   <meta charset="UTF-8">
-  <title>All Stocks Portfolio</title>
+  <title>All Stocks Portfolio &#x1F4B0;</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Sora:wght@600;700;800&display=swap");
+
     :root {
       --accent: #737373;
       --accent-rgb: 115, 115, 115;
@@ -39,6 +41,7 @@
     }
 
     body {
+      font-family: "Manrope", "Segoe UI", sans-serif;
       background:
         linear-gradient(135deg, rgba(var(--accent-rgb), 0.18), transparent 36%),
         linear-gradient(90deg, rgba(var(--accent-rgb), 0.08), transparent 34%, rgba(255, 255, 255, 0.04)),
@@ -86,6 +89,11 @@
       backdrop-filter: blur(18px);
     }
 
+    .metric-card {
+      min-width: 132px;
+      text-align: center;
+    }
+
     .metric-label,
     .muted-label {
       color: rgba(245, 245, 245, 0.62);
@@ -99,6 +107,12 @@
 
     .theme-strong {
       color: var(--accent);
+    }
+
+    .portfolio-title {
+      font-family: "Sora", "Manrope", sans-serif;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
     }
 
     .search-input {
@@ -128,13 +142,28 @@
       transform: translateY(-1px);
     }
 
+    .portfolio-table {
+      table-layout: fixed;
+      width: 100%;
+      min-width: 0;
+    }
+
     .portfolio-table th {
       position: sticky;
       top: 0;
       z-index: 30;
-      background: rgba(var(--accent-rgb), 0.18);
+      background:
+        linear-gradient(180deg, rgba(12, 18, 30, 0.98), rgba(7, 10, 18, 0.98));
       color: var(--accent-soft);
-      box-shadow: 0 1px 0 var(--accent-border);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 1px 0 var(--accent-border);
+      backdrop-filter: blur(18px);
+      isolation: isolate;
+    }
+
+    .portfolio-table th,
+    .portfolio-table td {
+      font-variant-numeric: tabular-nums;
+      overflow: hidden;
     }
 
     .row-line {
@@ -145,7 +174,7 @@
       background: rgba(var(--accent-rgb), 0.1);
     }
 
-    .share-input,
+    .quantity-input,
     .avg-price-input {
       background: transparent;
       color: var(--accent-soft);
@@ -153,21 +182,159 @@
       text-align: center;
     }
 
-    .share-input {
-      width: 56px;
-      min-width: 56px;
-      max-width: 56px;
+    .stock-column {
+      width: 23%;
+    }
+
+    .input-column {
+      width: 11%;
+    }
+
+    .value-column {
+      width: 10.5%;
+    }
+
+    .action-column {
+      width: 7.5%;
+      min-width: 88px;
+      text-align: center;
+    }
+
+    .quantity-column {
+      width: 11%;
+    }
+
+    .avg-column {
+      width: 15%;
+    }
+
+    .invested-column {
+      width: 14.5%;
+    }
+
+    .current-price-column,
+    .current-value-column {
+      width: 11%;
+    }
+
+    .pnl-column {
+      width: 7.5%;
+    }
+
+    .stock-text,
+    .stock-symbol {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .stock-text {
+      color: #fafafa;
+      font-weight: 700;
+      font-size: 0.95rem;
+      line-height: 1.12rem;
+    }
+
+    .stock-symbol {
+      margin-top: 0.18rem;
+      color: rgba(245, 245, 245, 0.68);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 0.9rem;
+    }
+
+    .quantity-input {
+      width: 118px;
+      min-width: 118px;
+      max-width: 118px;
     }
 
     .avg-price-input {
-      width: 96px;
-      min-width: 96px;
-      max-width: 96px;
+      width: 148px;
+      min-width: 148px;
+      max-width: 148px;
+    }
+
+    .price-prefix {
+      color: rgba(245, 245, 245, 0.72);
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .numeric-cell {
+      white-space: nowrap;
+      font-size: 0.86rem;
+    }
+
+    .header-label {
+      display: block;
+      font-size: 0.7rem;
+      line-height: 0.92rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(245, 245, 245, 0.84);
+      white-space: nowrap;
+    }
+
+    .header-shell {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.45rem;
+      width: 100%;
+    }
+
+    .sort-indicator {
+      color: rgba(245, 245, 245, 0.42);
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1;
+      transition: color 160ms ease, transform 160ms ease;
+    }
+
+    th[data-sort-key] {
+      transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+    }
+
+    th[data-sort-key].is-sorted {
+      background:
+        linear-gradient(180deg, rgba(var(--accent-rgb), 0.22), rgba(7, 10, 18, 0.98));
+      box-shadow:
+        inset 0 -2px 0 rgba(var(--accent-rgb), 0.68),
+        0 1px 0 var(--accent-border);
+    }
+
+    th[data-sort-key].is-sorted .header-label {
+      color: #f8fafc;
+    }
+
+    th[data-sort-key].is-sorted .sort-indicator {
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .profit-positive {
+      color: #4ade80;
+    }
+
+    .profit-negative {
+      color: #fb7185;
+    }
+
+    .profit-neutral {
+      color: #e4e4e7;
     }
 
     .dropdown-option:hover,
     .dropdown-option.active {
-      background: rgba(var(--accent-rgb), 0.16);
+      background: rgba(17, 24, 39, 0.98);
+      border-color: rgba(var(--accent-rgb), 0.42);
+      transform: translateY(-1px);
     }
 
     .theme-toast {
@@ -186,10 +353,105 @@
       background: var(--warning);
       color: #171717;
     }
+
+    .dialog-backdrop {
+      background: rgba(0, 0, 0, 0.62);
+    }
+
+    .dialog-card {
+      width: min(92vw, 460px);
+      background: rgba(10, 10, 10, 0.96);
+      border: 1px solid var(--accent-border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42), 0 0 26px var(--accent-shadow);
+    }
+
+    .delete-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: #fb7185;
+      font-size: 1.1rem;
+      font-weight: 800;
+      line-height: 1;
+      text-shadow: 0 0 18px rgba(251, 113, 133, 0.36);
+      transition: transform 160ms ease, color 160ms ease, filter 160ms ease;
+    }
+
+    .delete-button:hover {
+      color: #fecdd3;
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+    }
+
+    .dropdown-panel {
+      padding: 0.55rem;
+      background: #05070a;
+      z-index: 70;
+      isolation: isolate;
+      backdrop-filter: none;
+      box-shadow:
+        0 22px 48px rgba(0, 0, 0, 0.48),
+        0 0 26px var(--accent-shadow);
+    }
+
+    .dropdown-option,
+    .dropdown-static {
+      margin-bottom: 0.45rem;
+      border-radius: 0.95rem;
+      border: 1px solid rgba(var(--accent-rgb), 0.18);
+      background: rgba(10, 12, 18, 0.98);
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .dropdown-panel > :last-child {
+      margin-bottom: 0;
+    }
+
+    .dropdown-add-button {
+      min-width: 72px;
+      height: 38px;
+      border: 1px solid rgba(var(--accent-rgb), 0.34);
+      border-radius: 999px;
+      background:
+        linear-gradient(135deg, rgba(var(--accent-rgb), 0.92), rgba(250, 250, 250, 0.88));
+      color: #050505;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 10px 20px rgba(var(--accent-rgb), 0.28);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
+    }
+
+    .dropdown-add-button:hover {
+      transform: translateY(-1px) scale(1.01);
+      filter: brightness(1.06);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.42),
+        0 14px 24px rgba(var(--accent-rgb), 0.34);
+    }
+
+    .dropdown-added-badge {
+      padding: 0.42rem 0.82rem;
+      border-radius: 999px;
+      border: 1px solid rgba(250, 204, 21, 0.32);
+      background: rgba(250, 204, 21, 0.12);
+      color: #fde68a;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .action-column .header-label {
+      letter-spacing: 0.08em;
+    }
   </style>
 </head>
-
-
 
 <body data-theme="neutral" class="text-zinc-100 font-sans">
 
@@ -197,37 +459,54 @@
   class="theme-toast fixed top-5 right-5 z-[9999] text-white px-5 py-3 rounded-lg opacity-0 -translate-y-3 transition-all duration-300">
 </div>
 
+<div id="valueDialog" class="dialog-backdrop fixed inset-0 z-[10000] hidden items-center justify-center px-4">
+  <div class="dialog-card rounded-2xl p-6 text-center">
+    <p id="valueDialogMessage" class="text-base font-semibold text-zinc-100"></p>
+    <button id="valueDialogOk" type="button" class="primary-button mt-5 px-6 py-2.5 rounded-xl font-semibold">
+      Okay
+    </button>
+  </div>
+</div>
+
 <div class="market-header glass-topbar sticky top-0 z-50 backdrop-blur-md relative">
 
-  <div class="max-w-7xl mx-auto px-6 py-3">
+  <div class="max-w-[1400px] mx-auto px-4 py-3">
 
-    <!-- HEADER ROW -->
-    <div class="flex items-center">
+    <div class="flex items-center gap-4 flex-wrap">
 
-      <h1 class="text-2xl font-bold text-zinc-50">
-        All Stocks Portfolio
+      <h1 class="portfolio-title text-[2.05rem] font-bold text-zinc-50">
+        All Stocks Portfolio &#x1F4B0;
       </h1>
 
-      <div class="ml-auto flex items-center gap-4">
+      <div class="ml-auto flex items-center gap-4 flex-wrap justify-end">
 
-        <div class="metric-card px-3 py-1.5 rounded-lg">
+        <div class="metric-card px-3 py-1.5 rounded-lg flex flex-col items-center justify-center">
           <p class="metric-label text-xs">Total Stocks</p>
-          <p id="count" class="metric-value text-sm font-semibold">0</p>
+          <p id="count" class="metric-value text-sm font-semibold text-center">0</p>
         </div>
 
-        <div class="metric-card px-3 py-1.5 rounded-lg">
-          <p class="metric-label text-xs">Total Invested</p>
-          <p id="total" class="metric-value text-sm font-semibold">₹0.00</p>
+        <div class="metric-card px-3 py-1.5 rounded-lg flex flex-col items-center justify-center">
+          <p class="metric-label text-xs">Invested Value</p>
+          <p id="totalInvested" class="metric-value text-sm font-semibold text-center whitespace-nowrap">&#8377;0.00</p>
+        </div>
+
+        <div class="metric-card px-3 py-1.5 rounded-lg flex flex-col items-center justify-center">
+          <p class="metric-label text-xs">Current Value</p>
+          <p id="totalCurrentValue" class="metric-value text-sm font-semibold text-center whitespace-nowrap">&#8377;0.00</p>
+        </div>
+
+        <div class="metric-card px-3 py-1.5 rounded-lg flex flex-col items-center justify-center">
+          <p class="metric-label text-xs">Profit/Loss</p>
+          <p id="totalPnl" class="metric-value text-sm font-semibold profit-neutral text-center whitespace-nowrap">&#8377;0.00</p>
         </div>
 
       </div>
 
     </div>
 
-    <!-- SEARCH -->
     <div class="mt-3">
       <form onsubmit="event.preventDefault(); addStock();" class="flex gap-3 relative w-full">
-        
+
         <input id="symbol" placeholder="Search stock (ITC, TCS)"
           oninput="handleSearch()"
           class="search-input flex-1 rounded-lg px-4 py-2.5 text-base focus:outline-none">
@@ -238,7 +517,7 @@
         </button>
 
         <div id="dropdown"
-          class="dropdown-panel absolute top-full left-0 w-full rounded-lg mt-2 hidden max-h-60 overflow-y-auto z-50">
+          class="dropdown-panel absolute top-full left-0 w-full rounded-lg mt-2 hidden max-h-60 overflow-y-auto z-[70]">
         </div>
 
       </form>
@@ -248,20 +527,58 @@
 
 </div>
 
-  <!-- Table -->
-  <div class="max-w-7xl mx-auto px-6">
+<div class="max-w-[1400px] mx-auto px-4">
 
-  <div class="table-wrap rounded-lg mt-4 max-h-[calc(100vh-190px)] overflow-auto">
+  <div class="table-wrap rounded-lg mt-4 max-h-[calc(100vh-190px)] overflow-y-auto overflow-x-hidden">
 
     <table class="portfolio-table w-full text-left">
       <thead class="text-sm">
         <tr>
-          <th class="p-4 cursor-pointer" onclick="sortTable('symbol', event)">Symbol ⬍</th>
-          <th>CMP</th>
-          <th class="cursor-pointer" onclick="sortTable('avgPrice', event)">Avg Price ⬍</th>
-          <th>Shares</th>
-          <th class="text-right pr-6 cursor-pointer" onclick="sortTable('invested', event)">Invested Value ⬍</th>
-          <th class="text-right pr-4">Action</th>
+          <th class="stock-column cursor-pointer px-4 py-3" data-sort-key="stockName" onclick="sortTable('stockName', this)">
+            <span class="header-shell">
+              <span class="header-label">Stock</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
+          </th>
+          <th class="quantity-column input-column text-center cursor-pointer px-2 py-3" data-sort-key="quantity" onclick="sortTable('quantity', this)">
+            <span class="header-shell">
+              <span class="header-label">Quantity</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
+          </th>
+          <th class="avg-column input-column text-center cursor-pointer px-2 py-3" data-sort-key="avgPrice" onclick="sortTable('avgPrice', this)">
+            <span class="header-shell">
+              <span class="header-label">Average Price</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
+          </th>
+          <th class="invested-column value-column text-right cursor-pointer px-3 py-3" data-sort-key="investedValue" onclick="sortTable('investedValue', this)">
+            <span class="header-shell">
+              <span class="header-label">Invested Value</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
+          </th>
+          <th class="current-price-column value-column text-right cursor-pointer px-3 py-3" data-sort-key="currentPrice" onclick="sortTable('currentPrice', this)">
+            <span class="header-shell">
+              <span class="header-label">Current Price</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
+          </th>
+          <th class="current-value-column value-column text-right cursor-pointer px-2 py-3" data-sort-key="currentValue" onclick="sortTable('currentValue', this)">
+            <span class="header-shell">
+              <span class="header-label">Current Value</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
+          </th>
+          <th class="pnl-column value-column text-right cursor-pointer px-2 py-3" data-sort-key="pnl" onclick="sortTable('pnl', this)">
+            <span class="header-shell">
+              <span class="header-label">P&amp;L</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
+          </th>
+          <th class="action-column px-3 py-3">
+            <span class="header-label">Action</span>
+          </th>
         </tr>
       </thead>
 
@@ -273,16 +590,27 @@
 
 </div>
 
-
-
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const STOCK_SHEET_URL = "https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json";
-const SHARE_INPUT_WIDTH = "56px";
-const AVG_PRICE_INPUT_WIDTH = "96px";
+const RUPEE = "\u20B9";
+const QUANTITY_MAX_LENGTH = 11;
+const AVG_PRICE_MAX_LENGTH = 12;
+const QUANTITY_INPUT_WIDTH = "118px";
+const AVG_PRICE_INPUT_WIDTH = "148px";
+const QUANTITY_DIGITS = 9;
+const MAX_WHOLE_DIGITS = 6;
+const MAX_DECIMAL_DIGITS = 2;
+const indianIntegerFormatter = new Intl.NumberFormat("en-IN", {
+  maximumFractionDigits: 0
+});
+const indianCurrencyFormatter = new Intl.NumberFormat("en-IN", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
 
 const firebaseConfig = {
   apiKey: "AIzaSyCqhcJC6m4qdETVgDCIVlZX55451UYRq1o",
@@ -299,11 +627,9 @@ const db = getFirestore(app);
 
 let highlightedIndex = -1;
 let currentMatches = [];
-const sortState = {
-  symbol: true,
-  avgPrice: true,
-  invested: true
-};
+let stockMasterLoaded = false;
+let currentSort = getDefaultSort();
+let pendingValueDialogRowId = "";
 let rowCounter = 0;
 
 const addedStocks = new Set();
@@ -313,42 +639,314 @@ loadStockMaster();
 
 function createRowIndex() {
   rowCounter += 1;
-  return Date.now() + rowCounter;
+  return `portfolio-row-${Date.now()}-${rowCounter}`;
+}
+
+function getDefaultSort() {
+  return {
+    key: "stockName",
+    ascending: true
+  };
 }
 
 function parseMoney(value) {
-  return Number.parseFloat(String(value ?? "").replace(/[₹,\s]/g, "")) || 0;
+  return Number.parseFloat(String(value ?? "").replace(/[^\d.-]/g, "")) || 0;
 }
 
 function formatMoney(value) {
-  return parseMoney(value).toFixed(2);
+  return formatDecimalDisplay(value, {
+    fixedDecimals: true
+  });
 }
 
-function getAvgPrice(stock) {
-  return parseMoney(stock.avgPrice ?? 0);
+function formatCurrency(value) {
+  return `${RUPEE}${indianCurrencyFormatter.format(parseMoney(value))}`;
 }
 
-function sanitizeAvgPriceInput(input) {
-  const startsNegative = input.value.trim().startsWith("-");
-  let value = input.value.replace(/[^\d.]/g, "");
+function formatSignedCurrency(value) {
+  const amount = parseMoney(value);
+  const prefix = amount < 0 ? "-" : "";
+  return `${prefix}${RUPEE}${indianCurrencyFormatter.format(Math.abs(amount))}`;
+}
+
+function parseQuantity(value) {
+  const digits = String(value ?? "").replace(/\D/g, "").slice(0, QUANTITY_DIGITS);
+  return Number.parseInt(digits || "0", 10);
+}
+
+function formatQuantity(value) {
+  return indianIntegerFormatter.format(parseQuantity(value));
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function buildStockRecord(symbol, savedStock = {}) {
+  const normalizedSymbol = String(symbol ?? "").trim().toUpperCase();
+  const masterStock = masterStocks[normalizedSymbol] || {};
+
+  return {
+    symbol: normalizedSymbol,
+    stockName: savedStock.stockName || savedStock.name || masterStock.name || normalizedSymbol,
+    quantity: parseQuantity(savedStock.quantity ?? savedStock.shares ?? 0),
+    avgPrice: parseMoney(savedStock.avgPrice ?? 0),
+    currentPrice: parseMoney(masterStock.currentPrice ?? savedStock.currentPrice ?? savedStock.cmp ?? 0)
+  };
+}
+
+function sanitizeQuantityValue(rawValue) {
+  return String(rawValue ?? "").replace(/\D/g, "").slice(0, QUANTITY_DIGITS);
+}
+
+function formatGroupedWholeNumber(value) {
+  const parsedWhole = Number.parseInt(String(value || "0"), 10);
+  return indianIntegerFormatter.format(Number.isNaN(parsedWhole) ? 0 : parsedWhole);
+}
+
+function sanitizeDecimalValue(rawValue) {
+  let value = String(rawValue ?? "").replace(/[^\d.]/g, "");
+  const decimalIndex = value.indexOf(".");
+
+  if (decimalIndex !== -1) {
+    value = value.slice(0, decimalIndex + 1) + value.slice(decimalIndex + 1).replace(/\./g, "");
+  }
+
   const hasDecimal = value.includes(".");
-  const parts = value.split(".");
-  const whole = parts[0].slice(0, 5);
-  const decimals = parts.slice(1).join("").slice(0, 2);
+  let [whole = "", decimals = ""] = value.split(".");
 
-  input.value = `${startsNegative ? "-" : ""}${whole}${hasDecimal ? "." + decimals : ""}`;
+  if (value.startsWith(".")) {
+    whole = "0";
+  }
+
+  whole = whole.slice(0, MAX_WHOLE_DIGITS);
+  decimals = decimals.slice(0, MAX_DECIMAL_DIGITS);
+
+  return hasDecimal ? `${whole}.${decimals}` : whole;
+}
+
+function formatDecimalDisplay(rawValue, { fixedDecimals = false } = {}) {
+  const value = sanitizeDecimalValue(rawValue);
+
+  if (!value) {
+    return fixedDecimals ? "0.00" : "";
+  }
+
+  const hasDecimal = value.includes(".");
+  const [whole = "0", decimals = ""] = value.split(".");
+  const groupedWhole = formatGroupedWholeNumber(whole);
+
+  if (!hasDecimal) {
+    return fixedDecimals ? `${groupedWhole}.00` : groupedWhole;
+  }
+
+  if (!fixedDecimals) {
+    return `${groupedWhole}.${decimals}`;
+  }
+
+  return `${groupedWhole}.${decimals.padEnd(MAX_DECIMAL_DIGITS, "0").slice(0, MAX_DECIMAL_DIGITS)}`;
+}
+
+function sanitizeQuantityInput(input) {
+  const sanitizedValue = sanitizeQuantityValue(input.value);
+  input.value = sanitizedValue ? formatQuantity(sanitizedValue) : "";
+  input.style.width = QUANTITY_INPUT_WIDTH;
+}
+
+function sanitizeDecimalInput(input) {
+  input.value = formatDecimalDisplay(input.value);
   input.style.width = AVG_PRICE_INPUT_WIDTH;
 }
 
-function normalizeAvgPriceInput(input) {
+function normalizeDecimalInput(input) {
   input.value = formatMoney(input.value);
   input.style.width = AVG_PRICE_INPUT_WIDTH;
 }
 
-function applyPortfolioTheme(total) {
-  if (total > 0) {
+function normalizeQuantityInput(input) {
+  input.value = formatQuantity(input.value);
+  input.style.width = QUANTITY_INPUT_WIDTH;
+}
+
+function selectInputValue(input) {
+  requestAnimationFrame(() => {
+    input.select();
+
+    if (typeof input.setSelectionRange === "function") {
+      input.setSelectionRange(0, input.value.length);
+    }
+  });
+}
+
+function handleEditableInputFocus(input) {
+  selectInputValue(input);
+}
+
+function handleEditableInputMouseup(event, input) {
+  event.preventDefault();
+  selectInputValue(input);
+}
+
+function compareStocksAlphabetically(symbolA, symbolB) {
+  const nameA = String(masterStocks[symbolA]?.name || symbolA);
+  const nameB = String(masterStocks[symbolB]?.name || symbolB);
+  const nameComparison = nameA.localeCompare(nameB);
+
+  if (nameComparison !== 0) {
+    return nameComparison;
+  }
+
+  return String(symbolA).localeCompare(String(symbolB));
+}
+
+function getSearchPriority(symbol, query) {
+  if (!query) {
+    return 0;
+  }
+
+  const stockName = String(masterStocks[symbol]?.name || "").toLowerCase();
+  const stockSymbol = String(symbol || "").toLowerCase();
+
+  if (stockName.startsWith(query) || stockSymbol.startsWith(query)) {
+    return 0;
+  }
+
+  return 1;
+}
+
+function getSearchMatches(query = "") {
+  const normalizedQuery = String(query || "").trim().toLowerCase();
+
+  return Object.keys(masterStocks)
+    .filter(symbol => {
+      if (!normalizedQuery) {
+        return true;
+      }
+
+      const stockName = String(masterStocks[symbol]?.name || "").toLowerCase();
+      const stockSymbol = String(symbol || "").toLowerCase();
+
+      return stockName.includes(normalizedQuery) || stockSymbol.includes(normalizedQuery);
+    })
+    .sort((symbolA, symbolB) => {
+      const priorityDifference = getSearchPriority(symbolA, normalizedQuery) - getSearchPriority(symbolB, normalizedQuery);
+
+      if (priorityDifference !== 0) {
+        return priorityDifference;
+      }
+
+      return compareStocksAlphabetically(symbolA, symbolB);
+    })
+    .slice(0, 30);
+}
+
+function getFirstSelectableMatchIndex() {
+  return currentMatches.findIndex(symbol => !addedStocks.has(symbol));
+}
+
+function setDefaultHighlightedMatch() {
+  highlightedIndex = getFirstSelectableMatchIndex();
+}
+
+function getNextSelectableMatchIndex(startIndex, direction) {
+  const firstSelectableIndex = getFirstSelectableMatchIndex();
+
+  if (firstSelectableIndex === -1) {
+    return -1;
+  }
+
+  if (startIndex < 0 || addedStocks.has(currentMatches[startIndex])) {
+    return firstSelectableIndex;
+  }
+
+  for (let index = startIndex + direction; index >= 0 && index < currentMatches.length; index += direction) {
+    if (!addedStocks.has(currentMatches[index])) {
+      return index;
+    }
+  }
+
+  return startIndex;
+}
+
+function findIncompletePortfolioRow() {
+  return Array.from(document.querySelectorAll("#tableBody tr"))
+    .find(row => parseQuantity(row.dataset.quantity) <= 0 || parseMoney(row.dataset.avgPrice) <= 0);
+}
+
+function focusIncompletePortfolioRow(row) {
+  if (!row) return;
+
+  const quantity = parseQuantity(row.dataset.quantity);
+  const targetInput = quantity <= 0
+    ? document.getElementById(`quantity-${row.id}`)
+    : document.getElementById(`avgPrice-${row.id}`);
+
+  if (targetInput) {
+    targetInput.focus();
+    handleEditableInputFocus(targetInput);
+  }
+}
+
+function showValueDialog(message, row) {
+  const dialog = document.getElementById("valueDialog");
+  const messageElement = document.getElementById("valueDialogMessage");
+
+  pendingValueDialogRowId = row?.id || "";
+  messageElement.innerText = message;
+  dialog.classList.remove("hidden");
+  dialog.classList.add("flex");
+}
+
+function hideValueDialog() {
+  const dialog = document.getElementById("valueDialog");
+  const rowId = pendingValueDialogRowId;
+
+  dialog.classList.add("hidden");
+  dialog.classList.remove("flex");
+  pendingValueDialogRowId = "";
+
+  if (rowId) {
+    focusIncompletePortfolioRow(document.getElementById(rowId));
+  }
+}
+
+function getRowByIndex(index) {
+  return document.getElementById(index);
+}
+
+function getPnlClass(value) {
+  if (value > 0) return "profit-positive";
+  if (value < 0) return "profit-negative";
+  return "profit-neutral";
+}
+
+function applyProfitClass(element, value) {
+  element.classList.remove("profit-positive", "profit-negative", "profit-neutral");
+  element.classList.add(getPnlClass(value));
+}
+
+function calculatePortfolioValues(quantity, avgPrice, currentPrice) {
+  const hasAveragePrice = avgPrice > 0;
+  const investedValue = hasAveragePrice ? quantity * avgPrice : 0;
+  const currentValue = hasAveragePrice ? quantity * currentPrice : 0;
+  const pnl = hasAveragePrice ? currentValue - investedValue : 0;
+
+  return {
+    investedValue,
+    currentValue,
+    pnl
+  };
+}
+
+function applyPortfolioTheme(totalPnl) {
+  if (totalPnl > 0) {
     document.body.dataset.theme = "positive";
-  } else if (total < 0) {
+  } else if (totalPnl < 0) {
     document.body.dataset.theme = "negative";
   } else {
     document.body.dataset.theme = "neutral";
@@ -363,33 +961,46 @@ function loadStockMaster() {
 
       json.table.rows.forEach(row => {
         const cols = row.c;
-        const name = cols[4]?.v;
-        const symbol = cols[5]?.v;
-        const cmp = cols[6]?.v;
+        const name = String(cols[4]?.v ?? "").trim();
+        const symbol = String(cols[5]?.v ?? "").trim().toUpperCase();
+        const currentPrice = parseMoney(cols[6]?.v);
 
         if (symbol) {
-          masterStocks[symbol.toUpperCase()] = {
-            name: name || "",
-            cmp: cmp
+          masterStocks[symbol] = {
+            name,
+            currentPrice
           };
         }
       });
-
+    })
+    .catch(() => {
+      showToast("Unable to load stock master", "error");
+    })
+    .finally(() => {
+      stockMasterLoaded = true;
       loadPortfolioFromFirebase();
     });
 }
 
 async function loadPortfolioFromFirebase() {
   const querySnapshot = await getDocs(collection(db, "portfolio"));
-  const savedStocks = [];
+  const savedStocks = new Map();
 
   querySnapshot.forEach((docSnap) => {
-    savedStocks.push(docSnap.data());
+    const savedStock = docSnap.data();
+    const symbol = String(savedStock.symbol ?? "").trim().toUpperCase();
+
+    if (symbol) {
+      savedStocks.set(symbol, savedStock);
+    }
   });
 
-  savedStocks
-    .sort((a, b) => a.symbol.localeCompare(b.symbol))
+  Array.from(savedStocks.values())
+    .sort((a, b) => String(a.symbol ?? "").localeCompare(String(b.symbol ?? "")))
     .forEach(stock => addStockFromSaved(stock));
+
+  updateSummary();
+  applyCurrentSort();
 }
 
 function addStock() {
@@ -398,186 +1009,247 @@ function addStock() {
 
   if (!symbol) return;
 
-  if (Object.keys(masterStocks).length === 0) {
-    showToast("Loading stock data... ⏳");
+  if (!stockMasterLoaded) {
+    showToast("Loading stock data...", "warning");
     return;
   }
 
   if (addedStocks.has(symbol)) {
-    showToast(symbol + " already added ⚠️", "warning");
+    showToast(symbol + " already added", "warning");
+    resetSearchInput();
     return;
   }
 
   if (!masterStocks[symbol]) {
-    showToast("Stock not found ❌", "error");
+    showToast("Stock not found", "error");
     return;
   }
 
-  const stock = {
-    symbol,
-    cmp: masterStocks[symbol].cmp,
-    avgPrice: 0,
-    shares: 0
-  };
+  const incompleteRow = findIncompletePortfolioRow();
+
+  if (incompleteRow) {
+    showValueDialog("Please enter quantity and average price to proceed further or remove the stock to add the next stock.", incompleteRow);
+    return;
+  }
+
+  const stock = buildStockRecord(symbol);
 
   document
     .getElementById("tableBody")
     .insertAdjacentHTML("afterbegin", createStockRow(stock, createRowIndex()));
 
-  saveToFirebase(stock);
   addedStocks.add(symbol);
   updateSummary();
-  showToast(symbol + " added ✅", "success");
-  symbolInput.value = "";
+  saveToFirebase(stock);
+  showToast(symbol + " added", "success");
+  resetSearchInput();
 }
 
 function addStockFromSaved(stock) {
+  const hydratedStock = buildStockRecord(stock.symbol, stock);
+
+  if (!hydratedStock.symbol || addedStocks.has(hydratedStock.symbol)) {
+    return;
+  }
+
   document
     .getElementById("tableBody")
-    .insertAdjacentHTML("beforeend", createStockRow(stock, createRowIndex()));
-  addedStocks.add(stock.symbol);
-  updateSummary();
+    .insertAdjacentHTML("beforeend", createStockRow(hydratedStock, createRowIndex()));
+
+  addedStocks.add(hydratedStock.symbol);
 }
 
 function createStockRow(stock, index) {
-  const shares = Number.parseFloat(stock.shares) || 0;
-  const avgPrice = getAvgPrice(stock);
-  const investedValue = (shares * avgPrice).toFixed(2);
+  const quantity = parseQuantity(stock.quantity);
+  const avgPrice = parseMoney(stock.avgPrice);
+  const currentPrice = parseMoney(stock.currentPrice);
+  const { investedValue, currentValue, pnl } = calculatePortfolioValues(quantity, avgPrice, currentPrice);
+  const escapedStockName = escapeHtml(stock.stockName);
+  const escapedSymbol = escapeHtml(stock.symbol);
 
   return `
-    <tr class="row-line transition">
-      <td class="p-4 font-medium text-zinc-50">${stock.symbol}</td>
-      <td class="text-zinc-300">₹${stock.cmp}</td>
-      <td>
-        <div class="price-control rounded px-2 py-1 w-fit">
-          <input id="avgPrice-${index}" type="text" inputmode="decimal" maxlength="9" value="${avgPrice.toFixed(2)}"
+    <tr id="${index}" class="row-line transition"
+      data-stock-name="${escapedStockName}"
+      data-symbol="${escapedSymbol}"
+      data-quantity="${quantity}"
+      data-avg-price="${avgPrice}"
+      data-invested-value="${investedValue}"
+      data-current-price="${currentPrice}"
+      data-current-value="${currentValue}"
+      data-pnl="${pnl}">
+      <td class="stock-column px-4 py-3 align-middle">
+        <div class="min-w-0">
+          <span class="stock-text" title="${escapedStockName}">${escapedStockName}</span>
+          <span class="stock-symbol" title="${escapedSymbol}">${escapedSymbol}</span>
+        </div>
+      </td>
+      <td class="quantity-column input-column text-center px-2 py-3 align-middle">
+        <div class="share-control rounded px-2 py-1 w-fit mx-auto">
+          <input id="quantity-${index}" type="text" inputmode="numeric" maxlength="${QUANTITY_MAX_LENGTH}" value="${formatQuantity(quantity)}"
+            class="quantity-input"
+            oninput="handleQuantityInput(this, '${index}')"
+            onfocus="handleEditableInputFocus(this)"
+            onclick="handleEditableInputFocus(this)"
+            onmouseup="handleEditableInputMouseup(event, this)"
+            onkeydown="handleQuantityKeydown(event, this, '${index}')"
+            onblur="normalizeQuantity(this, '${index}')">
+        </div>
+      </td>
+      <td class="avg-column input-column text-center px-2 py-3 align-middle">
+        <div class="price-control rounded px-2 py-1 w-fit mx-auto flex items-center justify-center gap-1">
+          <span class="price-prefix">${RUPEE}</span>
+          <input id="avgPrice-${index}" type="text" inputmode="decimal" maxlength="${AVG_PRICE_MAX_LENGTH}" value="${formatMoney(avgPrice)}"
             class="avg-price-input"
-            oninput="handleAvgPriceInput(this, ${index}, '${stock.symbol}')"
-            onblur="normalizeAvgPrice(this, ${index}, '${stock.symbol}')">
+            oninput="handleAvgPriceInput(this, '${index}')"
+            onfocus="handleEditableInputFocus(this)"
+            onclick="handleEditableInputFocus(this)"
+            onmouseup="handleEditableInputMouseup(event, this)"
+            onblur="normalizeAvgPrice(this, '${index}')">
         </div>
       </td>
-      <td>
-        <div class="share-control flex items-center gap-1 rounded px-2 py-1 w-fit">
-          <button onclick="changeShares(this, -1, ${index}, '${stock.symbol}')"
-            class="theme-text hover:text-rose-300 px-1">−</button>
-
-          <input id="shares-${index}" type="text" inputmode="numeric" value="${shares}"
-            class="share-input"
-            oninput="handleSharesInput(this, ${index}, '${stock.symbol}')">
-
-          <button onclick="changeShares(this, 1, ${index}, '${stock.symbol}')"
-            class="theme-text hover:text-zinc-50 px-1">+</button>
-        </div>
+      <td id="invested-${index}" class="invested-column value-column numeric-cell text-right px-3 py-3 font-semibold theme-strong align-middle">
+        ${formatCurrency(investedValue)}
       </td>
-      <td id="invested-${index}" class="text-right pr-6 font-semibold theme-strong w-32 whitespace-nowrap">
-        ₹${investedValue}
+      <td id="currentPrice-${index}" class="current-price-column value-column numeric-cell text-right px-3 py-3 text-zinc-300 align-middle">
+        ${formatCurrency(currentPrice)}
       </td>
-      <td class="pr-4 text-right">
-        <button onclick="deleteRow(this, '${stock.symbol}')" class="text-rose-400 hover:text-rose-300">❌</button>
+      <td id="currentValue-${index}" class="current-value-column value-column numeric-cell text-right px-2 py-3 font-semibold theme-strong align-middle">
+        ${formatCurrency(currentValue)}
+      </td>
+      <td id="pnl-${index}" class="pnl-column value-column numeric-cell text-right px-2 py-3 font-semibold align-middle ${getPnlClass(pnl)}">
+        ${formatSignedCurrency(pnl)}
+      </td>
+      <td class="action-column px-3 py-3 align-middle">
+        <button onclick="deleteRow('${index}')" class="delete-button" aria-label="Remove stock">❌</button>
       </td>
     </tr>
   `;
 }
 
-function changeShares(btn, delta, index, symbol) {
-  const input = btn.parentElement.querySelector("input");
-  let value = parseInt(input.value) || 0;
-
-  value += delta;
-  if (value < 0) value = 0;
-
-  input.value = value;
-  resizeInput(input);
-  updateInvestedValue(index, symbol);
+function handleQuantityInput(input, index) {
+  sanitizeQuantityInput(input);
+  updateRowValues(index, { persist: false });
 }
 
-function handleSharesInput(input, index, symbol) {
-  resizeInput(input);
-  updateInvestedValue(index, symbol);
-}
+function handleQuantityKeydown(event, input, index) {
+  const currentValue = parseQuantity(input.value);
 
-function handleAvgPriceInput(input, index, symbol) {
-  sanitizeAvgPriceInput(input);
-  updateInvestedValue(index, symbol);
-}
-
-function normalizeAvgPrice(input, index, symbol) {
-  normalizeAvgPriceInput(input);
-  updateInvestedValue(index, symbol);
-}
-
-function updateInvestedValue(index, symbol) {
-  const sharesInput = document.getElementById(`shares-${index}`);
-  const avgPriceInput = document.getElementById(`avgPrice-${index}`);
-  const avgPrice = parseMoney(avgPriceInput.value);
-  let shares = parseFloat(sharesInput.value);
-
-  if (shares < 0 || isNaN(shares)) {
-    shares = 0;
+  if (event.key === "ArrowUp") {
+    event.preventDefault();
+    input.value = formatQuantity(currentValue + 1);
+    updateRowValues(index, { persist: false });
+  } else if (event.key === "ArrowDown") {
+    event.preventDefault();
+    input.value = formatQuantity(Math.max(0, currentValue - 1));
+    updateRowValues(index, { persist: false });
   }
-
-  document.getElementById(`invested-${index}`).innerText =
-    "₹" + (shares * avgPrice).toFixed(2);
-
-  updateTotal();
-  updatePortfolioInFirebase(symbol, {
-    avgPrice,
-    shares
-  });
 }
 
-function resizeInput(input) {
-  input.style.width = SHARE_INPUT_WIDTH;
+function normalizeQuantity(input, index) {
+  normalizeQuantityInput(input);
+  updateRowValues(index);
 }
 
-function deleteRow(btn, symbol) {
-  btn.closest("tr").remove();
+function handleAvgPriceInput(input, index) {
+  sanitizeDecimalInput(input);
+  updateRowValues(index, { persist: false });
+}
+
+function normalizeAvgPrice(input, index) {
+  normalizeDecimalInput(input);
+  updateRowValues(index);
+}
+
+function updateRowValues(index, { persist = true } = {}) {
+  const row = getRowByIndex(index);
+
+  if (!row) return;
+
+  const symbol = row.dataset.symbol;
+  const quantityInput = document.getElementById(`quantity-${index}`);
+  const avgPriceInput = document.getElementById(`avgPrice-${index}`);
+  const quantity = parseQuantity(quantityInput?.value);
+  const avgPrice = parseMoney(avgPriceInput?.value);
+  const currentPrice = parseMoney(masterStocks[symbol]?.currentPrice ?? row.dataset.currentPrice);
+  const { investedValue, currentValue, pnl } = calculatePortfolioValues(quantity, avgPrice, currentPrice);
+
+  row.dataset.quantity = quantity;
+  row.dataset.avgPrice = avgPrice;
+  row.dataset.currentPrice = currentPrice;
+  row.dataset.investedValue = investedValue;
+  row.dataset.currentValue = currentValue;
+  row.dataset.pnl = pnl;
+
+  document.getElementById(`invested-${index}`).innerText = formatCurrency(investedValue);
+  document.getElementById(`currentPrice-${index}`).innerText = formatCurrency(currentPrice);
+  document.getElementById(`currentValue-${index}`).innerText = formatCurrency(currentValue);
+
+  const pnlElement = document.getElementById(`pnl-${index}`);
+  pnlElement.innerText = formatSignedCurrency(pnl);
+  applyProfitClass(pnlElement, pnl);
+
+  quantityInput.style.width = QUANTITY_INPUT_WIDTH;
+  avgPriceInput.style.width = AVG_PRICE_INPUT_WIDTH;
+
+  updateSummary();
+
+  if (persist) {
+    updatePortfolioInFirebase(symbol, {
+      stockName: row.dataset.stockName,
+      avgPrice,
+      quantity,
+      currentPrice
+    });
+  }
+}
+
+function deleteRow(index) {
+  const row = getRowByIndex(index);
+
+  if (!row) return;
+
+  const symbol = row.dataset.symbol;
+  row.remove();
   addedStocks.delete(symbol);
   updateSummary();
-  showToast(symbol + " removed ❌", "error");
+  showToast(symbol + " removed", "error");
   deleteFromFirebase(symbol);
 }
 
 function updateSummary() {
-  updateTotal();
-  document.getElementById("count").innerText =
-    document.querySelectorAll("#tableBody tr").length;
-}
+  let investedValueTotal = 0;
+  let currentValueTotal = 0;
+  let pnlTotal = 0;
 
-function updateTotal() {
-  let total = 0;
-
-  document.querySelectorAll("[id^='invested-']").forEach(el => {
-    total += parseMoney(el.innerText);
+  document.querySelectorAll("#tableBody tr").forEach(row => {
+    investedValueTotal += parseMoney(row.dataset.investedValue);
+    currentValueTotal += parseMoney(row.dataset.currentValue);
+    pnlTotal += parseMoney(row.dataset.pnl);
   });
 
-  document.getElementById("total").innerText = "₹" + total.toFixed(2);
-  applyPortfolioTheme(total);
+  document.getElementById("count").innerText = document.querySelectorAll("#tableBody tr").length;
+  document.getElementById("totalInvested").innerText = formatCurrency(investedValueTotal);
+  document.getElementById("totalCurrentValue").innerText = formatCurrency(currentValueTotal);
+
+  const pnlElement = document.getElementById("totalPnl");
+  pnlElement.innerText = formatSignedCurrency(pnlTotal);
+  applyProfitClass(pnlElement, pnlTotal);
+  applyPortfolioTheme(pnlTotal);
 }
 
 function handleSearch() {
   const input = document.getElementById("symbol").value.trim().toLowerCase();
   const dropdown = document.getElementById("dropdown");
 
-  highlightedIndex = -1;
-
   if (!input) {
     showAllStocks();
     return;
   }
 
-  currentMatches = Object.keys(masterStocks)
-    .filter(symbol => {
-      const stock = masterStocks[symbol];
-
-      return (
-        symbol.toLowerCase().includes(input) ||
-        (stock.name && stock.name.toLowerCase().includes(input))
-      );
-    })
-    .slice(0, 30);
+  currentMatches = getSearchMatches(input);
 
   if (currentMatches.length === 0) {
+    highlightedIndex = -1;
     dropdown.classList.add("hidden");
     return;
   }
@@ -586,29 +1258,69 @@ function handleSearch() {
   dropdown.classList.remove("hidden");
 }
 
+function openSearchDropdown() {
+  const symbolInput = document.getElementById("symbol");
+
+  if (symbolInput.value.trim()) {
+    handleSearch();
+    return;
+  }
+
+  showAllStocks();
+}
+
+function resetSearchInput() {
+  const symbolInput = document.getElementById("symbol");
+  const dropdown = document.getElementById("dropdown");
+
+  symbolInput.value = "";
+  currentMatches = [];
+  highlightedIndex = -1;
+  dropdown.classList.add("hidden");
+}
+
 function showAllStocks() {
   const dropdown = document.getElementById("dropdown");
 
   dropdown.innerHTML = "";
-  highlightedIndex = -1;
+  currentMatches = getSearchMatches();
 
-  currentMatches = Object.keys(masterStocks)
-    .sort((a, b) => {
-      return (masterStocks[a].name || "").localeCompare(masterStocks[b].name || "");
-    })
-    .slice(0, 30);
+  if (currentMatches.length === 0) {
+    highlightedIndex = -1;
+    dropdown.classList.add("hidden");
+    return;
+  }
 
   renderDropdown(currentMatches);
   dropdown.classList.remove("hidden");
 }
 
 function highlightText(text, query) {
-  if (!query) return text;
+  const source = String(text ?? "");
 
-  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const regex = new RegExp(`(${escapedQuery})`, "gi");
+  if (!query) {
+    return escapeHtml(source);
+  }
 
-  return text.replace(regex, `<span class="theme-text font-bold">$1</span>`);
+  const lowerSource = source.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  let cursor = 0;
+  let highlighted = "";
+
+  while (cursor < source.length) {
+    const matchIndex = lowerSource.indexOf(lowerQuery, cursor);
+
+    if (matchIndex === -1) {
+      highlighted += escapeHtml(source.slice(cursor));
+      break;
+    }
+
+    highlighted += escapeHtml(source.slice(cursor, matchIndex));
+    highlighted += `<span class="theme-text font-bold">${escapeHtml(source.slice(matchIndex, matchIndex + query.length))}</span>`;
+    cursor = matchIndex + query.length;
+  }
+
+  return highlighted;
 }
 
 function renderDropdown(list) {
@@ -619,64 +1331,80 @@ function renderDropdown(list) {
 
   list.forEach((stock, index) => {
     const isAdded = addedStocks.has(stock);
-
     const item = document.createElement("div");
-
-    const highlightedName = highlightText(masterStocks[stock].name, input);
+    const stockName = masterStocks[stock]?.name || "";
+    const highlightedName = highlightText(stockName, input);
     const highlightedSymbol = highlightText(stock, input);
+    const quickAddSymbol = JSON.stringify(stock);
 
     item.className = isAdded
-      ? "px-4 py-2 opacity-60"
-      : "dropdown-option px-4 py-2 cursor-pointer rounded";
+      ? "dropdown-static px-4 py-3 opacity-75"
+      : "dropdown-option px-4 py-3 cursor-pointer";
 
     item.innerHTML = `
-  <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center">
+        <div class="flex flex-col">
+          <span class="muted-label text-xs">
+            <b>Name:</b>
+            <span class="theme-text font-bold">
+              ${highlightedName}
+            </span>
+          </span>
 
-    <div class="flex flex-col">
+          <span class="muted-label text-xs">
+            <b>Symbol:</b>
+            <span class="theme-strong font-bold">
+              ${highlightedSymbol}
+            </span>
+          </span>
+        </div>
 
-      <span class="muted-label text-xs">
-        <b>Name:</b>
-        <span class="theme-text font-bold">
-          ${highlightedName}
-        </span>
-      </span>
+        ${
+          isAdded
+            ? `<span class="dropdown-added-badge">Added</span>`
+            : `<button
+                class="dropdown-add-button flex items-center justify-center"
+                onclick="event.stopPropagation(); quickAdd(${quickAddSymbol})">
+                Add
+              </button>`
+        }
+      </div>
+    `;
 
-      <span class="muted-label text-xs">
-        <b>Symbol:</b>
-        <span class="theme-strong font-bold">
-          ${highlightedSymbol}
-        </span>
-      </span>
-
-    </div>
-
-    ${
-      isAdded
-        ? `<span class="text-yellow-300 text-lg">⚠️</span>`
-        : `<button 
-            class="primary-button w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold"
-            onclick="event.stopPropagation(); quickAdd('${stock}')">
-            +
-          </button>`
-    }
-
-  </div>
-`;
-
-    item.onclick = () => selectStock(index);
-
+    item.onclick = () => handleMatchSelection(index);
     dropdown.appendChild(item);
   });
+
+  setDefaultHighlightedMatch();
+  updateHighlight(dropdown.children);
 }
 
 function updateHighlight(items) {
-  for (let i = 0; i < items.length; i++) {
+  for (let i = 0; i < items.length; i += 1) {
     items[i].classList.remove("active");
   }
 
-  if (highlightedIndex >= 0) {
+  if (highlightedIndex >= 0 && items[highlightedIndex]) {
     items[highlightedIndex].classList.add("active");
+    items[highlightedIndex].scrollIntoView({
+      block: "nearest"
+    });
   }
+}
+
+function handleMatchSelection(index) {
+  const symbol = currentMatches[index];
+
+  if (!symbol) {
+    return;
+  }
+
+  if (addedStocks.has(symbol)) {
+    showToast(symbol + " already added", "warning");
+    return;
+  }
+
+  selectStock(index);
 }
 
 function quickAdd(symbol) {
@@ -685,50 +1413,107 @@ function quickAdd(symbol) {
   document.getElementById("dropdown").classList.add("hidden");
 }
 
-function sortTable(type, event) {
+function getSortValue(row, type) {
+  if (type === "stockName") {
+    return String(row.dataset.stockName ?? "").toLowerCase();
+  }
+
+  if (type === "quantity") {
+    return parseMoney(row.dataset.quantity);
+  }
+
+  if (type === "avgPrice") {
+    return parseMoney(row.dataset.avgPrice);
+  }
+
+  if (type === "investedValue") {
+    return parseMoney(row.dataset.investedValue);
+  }
+
+  if (type === "currentPrice") {
+    return parseMoney(row.dataset.currentPrice);
+  }
+
+  if (type === "currentValue") {
+    return parseMoney(row.dataset.currentValue);
+  }
+
+  if (type === "pnl") {
+    return parseMoney(row.dataset.pnl);
+  }
+
+  return "";
+}
+
+function updateSortedHeader() {
+  document
+    .querySelectorAll("th[data-sort-key]")
+    .forEach(th => {
+      th.classList.remove("is-sorted");
+
+      const indicator = th.querySelector(".sort-indicator");
+
+      if (indicator) {
+        indicator.innerHTML = "&#8597;";
+      }
+    });
+
+  const activeHeader = document.querySelector(`th[data-sort-key="${currentSort.key}"]`);
+
+  if (activeHeader) {
+    activeHeader.classList.add("is-sorted");
+
+    const indicator = activeHeader.querySelector(".sort-indicator");
+
+    if (indicator) {
+      indicator.innerHTML = currentSort.ascending ? "&#8593;" : "&#8595;";
+    }
+  }
+}
+
+function applyCurrentSort() {
   const tbody = document.getElementById("tableBody");
   const rows = Array.from(tbody.querySelectorAll("tr"));
 
-  document.querySelectorAll("th").forEach(th => th.classList.remove("is-sorted"));
-  if (event) {
-    event.target.classList.add("is-sorted");
-  }
+  updateSortedHeader();
 
   rows.sort((a, b) => {
-    let valA, valB;
+    const valA = getSortValue(a, currentSort.key);
+    const valB = getSortValue(b, currentSort.key);
 
-    if (type === "symbol") {
-      valA = a.children[0].innerText;
-      valB = b.children[0].innerText;
-      return sortState[type]
-        ? valA.localeCompare(valB)
-        : valB.localeCompare(valA);
+    if (typeof valA === "string") {
+      return currentSort.ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
     }
 
-    if (type === "avgPrice") {
-      valA = parseMoney(a.querySelector("[id^='avgPrice-']").value);
-      valB = parseMoney(b.querySelector("[id^='avgPrice-']").value);
-    }
-
-    if (type === "invested") {
-      valA = parseMoney(a.children[4].innerText);
-      valB = parseMoney(b.children[4].innerText);
-    }
-
-    return sortState[type] ? valA - valB : valB - valA;
+    return currentSort.ascending ? valA - valB : valB - valA;
   });
-
-  sortState[type] = !sortState[type];
 
   tbody.innerHTML = "";
   rows.forEach(row => tbody.appendChild(row));
 }
 
+function sortTable(type) {
+  if (currentSort.key === type) {
+    currentSort.ascending = !currentSort.ascending;
+  } else {
+    currentSort = {
+      key: type,
+      ascending: true
+    };
+  }
+
+  applyCurrentSort();
+}
+
 function selectStock(index) {
   const dropdown = document.getElementById("dropdown");
+  const symbol = currentMatches[index];
 
-  document.getElementById("symbol").value = currentMatches[index];
+  if (!symbol || addedStocks.has(symbol)) {
+    return;
+  }
 
+  document.getElementById("symbol").value = symbol;
   dropdown.classList.add("hidden");
   highlightedIndex = -1;
 }
@@ -751,13 +1536,19 @@ function showToast(message, type = "success") {
   toast.classList.add("opacity-100", "translate-y-0");
 
   setTimeout(() => {
-    toast.classList.remove("opacity-100", "-translate-y-3");
+    toast.classList.remove("opacity-100", "translate-y-0");
     toast.classList.add("opacity-0", "-translate-y-3");
   }, 3000);
 }
 
 async function saveToFirebase(stock) {
-  await addDoc(collection(db, "portfolio"), stock);
+  await addDoc(collection(db, "portfolio"), {
+    symbol: stock.symbol,
+    stockName: stock.stockName,
+    avgPrice: parseMoney(stock.avgPrice),
+    quantity: parseQuantity(stock.quantity),
+    currentPrice: parseMoney(stock.currentPrice)
+  });
 }
 
 async function deleteFromFirebase(symbol) {
@@ -781,7 +1572,7 @@ async function updatePortfolioInFirebase(symbol, changes) {
 }
 
 function handleDocumentClick(e) {
-  if (!e.target.closest("#symbol")) {
+  if (!e.target.closest("#symbol") && !e.target.closest("#dropdown")) {
     document.getElementById("dropdown").classList.add("hidden");
   }
 }
@@ -790,21 +1581,28 @@ function handleSymbolKeydown(e) {
   const dropdown = document.getElementById("dropdown");
   const items = dropdown.children;
 
-  if (dropdown.classList.contains("hidden")) return;
+  if (e.key === "Escape") {
+    e.preventDefault();
+    highlightedIndex = -1;
+    dropdown.classList.add("hidden");
+    return;
+  }
+
+  if (dropdown.classList.contains("hidden") || items.length === 0) return;
 
   if (e.key === "ArrowDown") {
     e.preventDefault();
-    highlightedIndex = (highlightedIndex + 1) % items.length;
+    highlightedIndex = getNextSelectableMatchIndex(highlightedIndex, 1);
     updateHighlight(items);
   } else if (e.key === "ArrowUp") {
     e.preventDefault();
-    highlightedIndex = (highlightedIndex - 1 + items.length) % items.length;
+    highlightedIndex = getNextSelectableMatchIndex(highlightedIndex, -1);
     updateHighlight(items);
   } else if (e.key === "Enter") {
     e.preventDefault();
 
     if (highlightedIndex >= 0) {
-      selectStock(highlightedIndex);
+      handleMatchSelection(highlightedIndex);
     } else if (e.currentTarget.value.trim()) {
       addStock();
     }
@@ -813,27 +1611,32 @@ function handleSymbolKeydown(e) {
 
 function initializeEvents() {
   const symbolInput = document.getElementById("symbol");
+  const valueDialogOk = document.getElementById("valueDialogOk");
 
   symbolInput.addEventListener("keydown", handleSymbolKeydown);
-  symbolInput.addEventListener("focus", showAllStocks);
+  symbolInput.addEventListener("focus", openSearchDropdown);
+  symbolInput.addEventListener("click", openSearchDropdown);
+  valueDialogOk.addEventListener("click", hideValueDialog);
   document.addEventListener("click", handleDocumentClick);
+  updateSortedHeader();
 }
 
 window.addStock = addStock;
-window.changeShares = changeShares;
 window.deleteRow = deleteRow;
 window.sortTable = sortTable;
 window.handleSearch = handleSearch;
-window.resizeInput = resizeInput;
-window.handleSharesInput = handleSharesInput;
+window.openSearchDropdown = openSearchDropdown;
+window.handleQuantityInput = handleQuantityInput;
+window.handleQuantityKeydown = handleQuantityKeydown;
+window.normalizeQuantity = normalizeQuantity;
 window.handleAvgPriceInput = handleAvgPriceInput;
 window.normalizeAvgPrice = normalizeAvgPrice;
-window.updateInvestedValue = updateInvestedValue;
+window.handleEditableInputFocus = handleEditableInputFocus;
+window.handleEditableInputMouseup = handleEditableInputMouseup;
 window.quickAdd = quickAdd;
 window.selectStock = selectStock;
 
 document.addEventListener("DOMContentLoaded", initializeEvents);
-
 
 </script>
 
