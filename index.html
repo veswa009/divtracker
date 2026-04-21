@@ -155,6 +155,7 @@
       background:
         linear-gradient(180deg, rgba(12, 18, 30, 0.98), rgba(7, 10, 18, 0.98));
       color: var(--accent-soft);
+      text-align: center;
       box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 1px 0 var(--accent-border);
       backdrop-filter: blur(18px);
       isolation: isolate;
@@ -183,42 +184,34 @@
     }
 
     .stock-column {
-      width: 23%;
-    }
-
-    .input-column {
-      width: 11%;
-    }
-
-    .value-column {
-      width: 10.5%;
+      width: 24%;
     }
 
     .action-column {
-      width: 7.5%;
-      min-width: 88px;
+      width: 4.5%;
+      min-width: 52px;
       text-align: center;
     }
 
     .quantity-column {
-      width: 11%;
+      width: 10.5%;
     }
 
     .avg-column {
-      width: 15%;
+      width: 12.5%;
     }
 
     .invested-column {
-      width: 14.5%;
+      width: 12.5%;
     }
 
     .current-price-column,
     .current-value-column {
-      width: 11%;
+      width: 10.5%;
     }
 
     .pnl-column {
-      width: 7.5%;
+      width: 7%;
     }
 
     .stock-text,
@@ -247,15 +240,15 @@
     }
 
     .quantity-input {
-      width: 118px;
-      min-width: 118px;
-      max-width: 118px;
+      width: 108px;
+      min-width: 108px;
+      max-width: 108px;
     }
 
     .avg-price-input {
-      width: 148px;
-      min-width: 148px;
-      max-width: 148px;
+      width: 128px;
+      min-width: 128px;
+      max-width: 128px;
     }
 
     .price-prefix {
@@ -284,8 +277,8 @@
     .header-shell {
       display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.45rem;
+      justify-content: center;
+      gap: 0.5rem;
       width: 100%;
     }
 
@@ -363,6 +356,18 @@
       background: rgba(10, 10, 10, 0.96);
       border: 1px solid var(--accent-border);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42), 0 0 26px var(--accent-shadow);
+    }
+
+    .dialog-stock-name {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.08rem 0.52rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.32);
+      background: rgba(var(--accent-rgb), 0.14);
+      color: #fafafa;
+      font-weight: 800;
+      box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.12);
     }
 
     .delete-button {
@@ -450,6 +455,86 @@
     .action-column .header-label {
       letter-spacing: 0.08em;
     }
+
+    .data-source-card {
+      background: rgba(10, 10, 10, 0.82);
+      border: 1px solid var(--accent-border);
+      box-shadow: 0 0 24px var(--accent-shadow);
+      backdrop-filter: blur(18px);
+      min-height: 46px;
+    }
+
+    .stock-summary-row {
+      cursor: pointer;
+    }
+
+    .stock-summary-row.is-expanded {
+      background: rgba(var(--accent-rgb), 0.14);
+    }
+
+    .summary-value {
+      display: block;
+      white-space: nowrap;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .summary-quantity,
+    .summary-avg {
+      text-align: center;
+      color: #f4f4f5;
+    }
+
+    .editor-row td {
+      overflow: visible;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .editor-panel {
+      margin: 0.1rem 0 0.8rem;
+      padding: 0.95rem 1rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(var(--accent-rgb), 0.24);
+      background: rgba(14, 14, 18, 0.9);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 0 18px rgba(var(--accent-rgb), 0.12);
+    }
+
+    .editor-controls {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .editor-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.38rem;
+    }
+
+    .editor-label {
+      color: rgba(245, 245, 245, 0.64);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .editor-actions {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .save-row-button {
+      min-width: 88px;
+      min-height: 42px;
+      border-radius: 0.9rem;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
   </style>
 </head>
 
@@ -504,8 +589,8 @@
 
     </div>
 
-    <div class="mt-3">
-      <form onsubmit="event.preventDefault(); addStock();" class="flex gap-3 relative w-full">
+    <div class="mt-3 flex flex-col gap-3 xl:flex-row xl:items-start">
+      <form onsubmit="event.preventDefault(); addStock();" class="flex gap-3 relative w-full xl:flex-1">
 
         <input id="symbol" placeholder="Search stock (ITC, TCS)"
           oninput="handleSearch()"
@@ -521,6 +606,12 @@
         </div>
 
       </form>
+
+      <div class="data-source-card w-full rounded-lg px-4 py-2.5 flex items-center xl:w-[420px] xl:min-w-[420px]">
+        <p class="theme-text text-sm font-semibold leading-5">
+          Average Price may be delayed up to 20 minutes.
+        </p>
+      </div>
     </div>
 
   </div>
@@ -598,11 +689,11 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } 
 const STOCK_SHEET_URL = "https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json";
 const RUPEE = "\u20B9";
 const QUANTITY_MAX_LENGTH = 11;
-const AVG_PRICE_MAX_LENGTH = 12;
-const QUANTITY_INPUT_WIDTH = "118px";
-const AVG_PRICE_INPUT_WIDTH = "148px";
-const QUANTITY_DIGITS = 9;
-const MAX_WHOLE_DIGITS = 6;
+const AVG_PRICE_MAX_LENGTH = 14;
+const QUANTITY_INPUT_WIDTH = "108px";
+const AVG_PRICE_INPUT_WIDTH = "128px";
+const QUANTITY_DIGITS = 8;
+const MAX_WHOLE_DIGITS = 8;
 const MAX_DECIMAL_DIGITS = 2;
 const indianIntegerFormatter = new Intl.NumberFormat("en-IN", {
   maximumFractionDigits: 0
@@ -634,8 +725,6 @@ let rowCounter = 0;
 
 const addedStocks = new Set();
 const masterStocks = {};
-
-loadStockMaster();
 
 function createRowIndex() {
   rowCounter += 1;
@@ -873,23 +962,78 @@ function getNextSelectableMatchIndex(startIndex, direction) {
   return startIndex;
 }
 
+function getPortfolioStockRows() {
+  return Array.from(document.querySelectorAll('#tableBody tr[data-row-type="stock"]'));
+}
+
 function findIncompletePortfolioRow() {
-  return Array.from(document.querySelectorAll("#tableBody tr"))
+  return getPortfolioStockRows()
     .find(row => parseQuantity(row.dataset.quantity) <= 0 || parseMoney(row.dataset.avgPrice) <= 0);
+}
+
+function getEditorRowByIndex(index) {
+  return document.getElementById(`editor-${index}`);
+}
+
+function setEditorRowExpanded(index, isExpanded, { focusField = "" } = {}) {
+  const row = getRowByIndex(index);
+  const editorRow = getEditorRowByIndex(index);
+
+  if (!row || !editorRow) {
+    return;
+  }
+
+  getPortfolioStockRows().forEach(otherRow => {
+    if (otherRow.id === index) {
+      return;
+    }
+
+    otherRow.classList.remove("is-expanded");
+    getEditorRowByIndex(otherRow.id)?.classList.add("hidden");
+  });
+
+  if (isExpanded) {
+    row.classList.add("is-expanded");
+    editorRow.classList.remove("hidden");
+  } else {
+    row.classList.remove("is-expanded");
+    editorRow.classList.add("hidden");
+  }
+
+  if (!isExpanded || !focusField) {
+    return;
+  }
+
+  const targetInput = focusField === "avg"
+    ? document.getElementById(`avgPrice-${index}`)
+    : document.getElementById(`quantity-${index}`);
+
+  if (targetInput) {
+    requestAnimationFrame(() => {
+      targetInput.focus();
+      handleEditableInputFocus(targetInput);
+    });
+  }
+}
+
+function toggleEditorRow(index) {
+  const editorRow = getEditorRowByIndex(index);
+
+  if (!editorRow) {
+    return;
+  }
+
+  const shouldExpand = editorRow.classList.contains("hidden");
+  setEditorRowExpanded(index, shouldExpand);
 }
 
 function focusIncompletePortfolioRow(row) {
   if (!row) return;
 
   const quantity = parseQuantity(row.dataset.quantity);
-  const targetInput = quantity <= 0
-    ? document.getElementById(`quantity-${row.id}`)
-    : document.getElementById(`avgPrice-${row.id}`);
-
-  if (targetInput) {
-    targetInput.focus();
-    handleEditableInputFocus(targetInput);
-  }
+  setEditorRowExpanded(row.id, true, {
+    focusField: quantity <= 0 ? "quantity" : "avg"
+  });
 }
 
 function showValueDialog(message, row) {
@@ -897,9 +1041,16 @@ function showValueDialog(message, row) {
   const messageElement = document.getElementById("valueDialogMessage");
 
   pendingValueDialogRowId = row?.id || "";
-  messageElement.innerText = message;
+  messageElement.innerHTML = message;
   dialog.classList.remove("hidden");
   dialog.classList.add("flex");
+}
+
+function buildIncompleteStockDialogMessage(row) {
+  const pendingSymbol = escapeHtml(String(row?.dataset?.symbol || row?.dataset?.stockName || "STOCK").trim().toUpperCase());
+  const highlightedSymbol = `<span class="dialog-stock-name">"${pendingSymbol}"</span>`;
+
+  return `Please enter ${highlightedSymbol} Stock Quantity and Average Price to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
 }
 
 function hideValueDialog() {
@@ -953,33 +1104,32 @@ function applyPortfolioTheme(totalPnl) {
   }
 }
 
-function loadStockMaster() {
-  fetch(STOCK_SHEET_URL)
-    .then(res => res.text())
-    .then(text => {
-      const json = JSON.parse(text.substring(47, text.length - 2));
+async function loadStockMaster() {
+  try {
+    const response = await fetch(STOCK_SHEET_URL);
+    const text = await response.text();
+    const json = JSON.parse(text.substring(47, text.length - 2));
 
-      json.table.rows.forEach(row => {
-        const cols = row.c;
-        const name = String(cols[4]?.v ?? "").trim();
-        const symbol = String(cols[5]?.v ?? "").trim().toUpperCase();
-        const currentPrice = parseMoney(cols[6]?.v);
+    json.table.rows.forEach(row => {
+      const cols = row.c;
+      const name = String(cols[4]?.v ?? "").trim();
+      const symbol = String(cols[5]?.v ?? "").trim().toUpperCase();
+      const currentPrice = parseMoney(cols[6]?.v);
 
-        if (symbol) {
-          masterStocks[symbol] = {
-            name,
-            currentPrice
-          };
-        }
-      });
-    })
-    .catch(() => {
-      showToast("Unable to load stock master", "error");
-    })
-    .finally(() => {
-      stockMasterLoaded = true;
-      loadPortfolioFromFirebase();
+      if (symbol) {
+        masterStocks[symbol] = {
+          ...masterStocks[symbol],
+          name,
+          currentPrice
+        };
+      }
     });
+  } catch {
+    showToast("Unable to load stock master", "error");
+  } finally {
+    stockMasterLoaded = true;
+    await loadPortfolioFromFirebase();
+  }
 }
 
 async function loadPortfolioFromFirebase() {
@@ -1028,21 +1178,27 @@ function addStock() {
   const incompleteRow = findIncompletePortfolioRow();
 
   if (incompleteRow) {
-    showValueDialog("Please enter quantity and average price to proceed further or remove the stock to add the next stock.", incompleteRow);
+    showValueDialog(buildIncompleteStockDialogMessage(incompleteRow), incompleteRow);
     return;
   }
 
   const stock = buildStockRecord(symbol);
+  const rowIndex = createRowIndex();
 
   document
     .getElementById("tableBody")
-    .insertAdjacentHTML("afterbegin", createStockRow(stock, createRowIndex()));
+    .insertAdjacentHTML("afterbegin", createStockRow(stock, rowIndex, {
+      expanded: true
+    }));
 
   addedStocks.add(symbol);
   updateSummary();
   saveToFirebase(stock);
   showToast(symbol + " added", "success");
   resetSearchInput();
+  setEditorRowExpanded(rowIndex, true, {
+    focusField: "quantity"
+  });
 }
 
 function addStockFromSaved(stock) {
@@ -1059,16 +1215,21 @@ function addStockFromSaved(stock) {
   addedStocks.add(hydratedStock.symbol);
 }
 
-function createStockRow(stock, index) {
+function createStockRow(stock, index, { expanded = false } = {}) {
   const quantity = parseQuantity(stock.quantity);
   const avgPrice = parseMoney(stock.avgPrice);
   const currentPrice = parseMoney(stock.currentPrice);
   const { investedValue, currentValue, pnl } = calculatePortfolioValues(quantity, avgPrice, currentPrice);
   const escapedStockName = escapeHtml(stock.stockName);
   const escapedSymbol = escapeHtml(stock.symbol);
+  const quantityValue = formatQuantity(quantity);
+  const avgPriceValue = formatCurrency(avgPrice);
+  const expandedClass = expanded ? " is-expanded" : "";
+  const editorHiddenClass = expanded ? "" : " hidden";
 
   return `
-    <tr id="${index}" class="row-line transition"
+    <tr id="${index}" class="row-line transition stock-summary-row${expandedClass}" data-row-type="stock"
+      onclick="toggleEditorRow('${index}')"
       data-stock-name="${escapedStockName}"
       data-symbol="${escapedSymbol}"
       data-quantity="${quantity}"
@@ -1083,84 +1244,121 @@ function createStockRow(stock, index) {
           <span class="stock-symbol" title="${escapedSymbol}">${escapedSymbol}</span>
         </div>
       </td>
-      <td class="quantity-column input-column text-center px-2 py-3 align-middle">
-        <div class="share-control rounded px-2 py-1 w-fit mx-auto">
-          <input id="quantity-${index}" type="text" inputmode="numeric" maxlength="${QUANTITY_MAX_LENGTH}" value="${formatQuantity(quantity)}"
-            class="quantity-input"
-            oninput="handleQuantityInput(this, '${index}')"
-            onfocus="handleEditableInputFocus(this)"
-            onclick="handleEditableInputFocus(this)"
-            onmouseup="handleEditableInputMouseup(event, this)"
-            onkeydown="handleQuantityKeydown(event, this, '${index}')"
-            onblur="normalizeQuantity(this, '${index}')">
-        </div>
+      <td id="quantityDisplay-${index}" class="quantity-column text-center px-2 py-3 align-middle">
+        <span class="summary-value summary-quantity">${quantityValue}</span>
       </td>
-      <td class="avg-column input-column text-center px-2 py-3 align-middle">
-        <div class="price-control rounded px-2 py-1 w-fit mx-auto flex items-center justify-center gap-1">
-          <span class="price-prefix">${RUPEE}</span>
-          <input id="avgPrice-${index}" type="text" inputmode="decimal" maxlength="${AVG_PRICE_MAX_LENGTH}" value="${formatMoney(avgPrice)}"
-            class="avg-price-input"
-            oninput="handleAvgPriceInput(this, '${index}')"
-            onfocus="handleEditableInputFocus(this)"
-            onclick="handleEditableInputFocus(this)"
-            onmouseup="handleEditableInputMouseup(event, this)"
-            onblur="normalizeAvgPrice(this, '${index}')">
-        </div>
+      <td id="avgPriceDisplay-${index}" class="avg-column text-center px-2 py-3 align-middle">
+        <span class="summary-value summary-avg">${avgPriceValue}</span>
       </td>
-      <td id="invested-${index}" class="invested-column value-column numeric-cell text-right px-3 py-3 font-semibold theme-strong align-middle">
+      <td id="invested-${index}" class="invested-column numeric-cell text-right px-2 py-3 font-semibold theme-strong align-middle">
         ${formatCurrency(investedValue)}
       </td>
-      <td id="currentPrice-${index}" class="current-price-column value-column numeric-cell text-right px-3 py-3 text-zinc-300 align-middle">
+      <td id="currentPrice-${index}" class="current-price-column numeric-cell text-right px-2 py-3 text-zinc-300 align-middle">
         ${formatCurrency(currentPrice)}
       </td>
-      <td id="currentValue-${index}" class="current-value-column value-column numeric-cell text-right px-2 py-3 font-semibold theme-strong align-middle">
+      <td id="currentValue-${index}" class="current-value-column numeric-cell text-right px-2 py-3 font-semibold theme-strong align-middle">
         ${formatCurrency(currentValue)}
       </td>
-      <td id="pnl-${index}" class="pnl-column value-column numeric-cell text-right px-2 py-3 font-semibold align-middle ${getPnlClass(pnl)}">
+      <td id="pnl-${index}" class="pnl-column numeric-cell text-right px-2 py-3 font-semibold align-middle ${getPnlClass(pnl)}">
         ${formatSignedCurrency(pnl)}
       </td>
-      <td class="action-column px-3 py-3 align-middle">
-        <button onclick="deleteRow('${index}')" class="delete-button" aria-label="Remove stock">❌</button>
+      <td class="action-column px-1 py-3 align-middle">
+        <button onclick="event.stopPropagation(); deleteRow('${index}')"
+          class="delete-button" aria-label="Remove stock">&#10060;</button>
+      </td>
+    </tr>
+    <tr id="editor-${index}" class="editor-row${editorHiddenClass}" data-row-type="editor" data-parent-id="${index}">
+      <td colspan="8" class="px-4 align-middle">
+        <div class="editor-panel">
+          <div class="editor-controls">
+            <label class="editor-field">
+              <span class="editor-label">Quantity</span>
+              <div class="share-control rounded px-2 py-1 w-fit">
+                <input id="quantity-${index}" type="text" inputmode="numeric" maxlength="${QUANTITY_MAX_LENGTH}" value="${quantityValue}"
+                  class="quantity-input"
+                  oninput="handleQuantityInput(this)"
+                  onfocus="handleEditableInputFocus(this)"
+                  onclick="handleEditableInputFocus(this)"
+                  onmouseup="handleEditableInputMouseup(event, this)"
+                  onkeydown="handleQuantityKeydown(event, this, '${index}')"
+                  onblur="normalizeQuantity(this)">
+              </div>
+            </label>
+
+            <label class="editor-field">
+              <span class="editor-label">Average Price</span>
+              <div class="price-control rounded px-2 py-1 w-fit flex items-center justify-center gap-1">
+                <span class="price-prefix">${RUPEE}</span>
+                <input id="avgPrice-${index}" type="text" inputmode="decimal" maxlength="${AVG_PRICE_MAX_LENGTH}" value="${formatMoney(avgPrice)}"
+                  class="avg-price-input"
+                  oninput="handleAvgPriceInput(this)"
+                  onfocus="handleEditableInputFocus(this)"
+                  onclick="handleEditableInputFocus(this)"
+                  onmouseup="handleEditableInputMouseup(event, this)"
+                  onkeydown="handleEditorInputKeydown(event, '${index}')"
+                  onblur="normalizeAvgPrice(this)">
+              </div>
+            </label>
+
+            <div class="editor-actions">
+              <button type="button" class="primary-button save-row-button"
+                onclick="saveExpandedRowValues('${index}')">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
   `;
 }
 
-function handleQuantityInput(input, index) {
+function handleQuantityInput(input) {
   sanitizeQuantityInput(input);
-  updateRowValues(index, { persist: false });
 }
 
 function handleQuantityKeydown(event, input, index) {
   const currentValue = parseQuantity(input.value);
+  const maxQuantity = Number.parseInt("9".repeat(QUANTITY_DIGITS), 10);
 
   if (event.key === "ArrowUp") {
     event.preventDefault();
-    input.value = formatQuantity(currentValue + 1);
-    updateRowValues(index, { persist: false });
+    input.value = formatQuantity(Math.min(maxQuantity, currentValue + 1));
   } else if (event.key === "ArrowDown") {
     event.preventDefault();
     input.value = formatQuantity(Math.max(0, currentValue - 1));
-    updateRowValues(index, { persist: false });
+  } else if (event.key === "Enter") {
+    event.preventDefault();
+    saveExpandedRowValues(index);
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    setEditorRowExpanded(index, false);
   }
 }
 
-function normalizeQuantity(input, index) {
+function normalizeQuantity(input) {
   normalizeQuantityInput(input);
-  updateRowValues(index);
 }
 
-function handleAvgPriceInput(input, index) {
+function handleAvgPriceInput(input) {
   sanitizeDecimalInput(input);
-  updateRowValues(index, { persist: false });
 }
 
-function normalizeAvgPrice(input, index) {
+function handleEditorInputKeydown(event, index) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    saveExpandedRowValues(index);
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    setEditorRowExpanded(index, false);
+  }
+}
+
+function normalizeAvgPrice(input) {
   normalizeDecimalInput(input);
-  updateRowValues(index);
 }
 
-function updateRowValues(index, { persist = true } = {}) {
+function saveExpandedRowValues(index) {
   const row = getRowByIndex(index);
 
   if (!row) return;
@@ -1168,8 +1366,18 @@ function updateRowValues(index, { persist = true } = {}) {
   const symbol = row.dataset.symbol;
   const quantityInput = document.getElementById(`quantity-${index}`);
   const avgPriceInput = document.getElementById(`avgPrice-${index}`);
+
+  normalizeQuantityInput(quantityInput);
+  normalizeDecimalInput(avgPriceInput);
+
   const quantity = parseQuantity(quantityInput?.value);
   const avgPrice = parseMoney(avgPriceInput?.value);
+
+  if (quantity <= 0 || avgPrice <= 0) {
+    showValueDialog(buildIncompleteStockDialogMessage(row), row);
+    return;
+  }
+
   const currentPrice = parseMoney(masterStocks[symbol]?.currentPrice ?? row.dataset.currentPrice);
   const { investedValue, currentValue, pnl } = calculatePortfolioValues(quantity, avgPrice, currentPrice);
 
@@ -1180,6 +1388,8 @@ function updateRowValues(index, { persist = true } = {}) {
   row.dataset.currentValue = currentValue;
   row.dataset.pnl = pnl;
 
+  document.getElementById(`quantityDisplay-${index}`).innerText = formatQuantity(quantity);
+  document.getElementById(`avgPriceDisplay-${index}`).innerText = formatCurrency(avgPrice);
   document.getElementById(`invested-${index}`).innerText = formatCurrency(investedValue);
   document.getElementById(`currentPrice-${index}`).innerText = formatCurrency(currentPrice);
   document.getElementById(`currentValue-${index}`).innerText = formatCurrency(currentValue);
@@ -1193,22 +1403,24 @@ function updateRowValues(index, { persist = true } = {}) {
 
   updateSummary();
 
-  if (persist) {
-    updatePortfolioInFirebase(symbol, {
-      stockName: row.dataset.stockName,
-      avgPrice,
-      quantity,
-      currentPrice
-    });
-  }
+  updatePortfolioInFirebase(symbol, {
+    stockName: row.dataset.stockName,
+    avgPrice,
+    quantity,
+    currentPrice
+  });
+
+  setEditorRowExpanded(index, false);
 }
 
 function deleteRow(index) {
   const row = getRowByIndex(index);
+  const editorRow = getEditorRowByIndex(index);
 
   if (!row) return;
 
   const symbol = row.dataset.symbol;
+  editorRow?.remove();
   row.remove();
   addedStocks.delete(symbol);
   updateSummary();
@@ -1221,13 +1433,13 @@ function updateSummary() {
   let currentValueTotal = 0;
   let pnlTotal = 0;
 
-  document.querySelectorAll("#tableBody tr").forEach(row => {
+  getPortfolioStockRows().forEach(row => {
     investedValueTotal += parseMoney(row.dataset.investedValue);
     currentValueTotal += parseMoney(row.dataset.currentValue);
     pnlTotal += parseMoney(row.dataset.pnl);
   });
 
-  document.getElementById("count").innerText = document.querySelectorAll("#tableBody tr").length;
+  document.getElementById("count").innerText = getPortfolioStockRows().length;
   document.getElementById("totalInvested").innerText = formatCurrency(investedValueTotal);
   document.getElementById("totalCurrentValue").innerText = formatCurrency(currentValueTotal);
 
@@ -1473,13 +1685,16 @@ function updateSortedHeader() {
 
 function applyCurrentSort() {
   const tbody = document.getElementById("tableBody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
+  const rowGroups = getPortfolioStockRows().map(row => ({
+    row,
+    editorRow: getEditorRowByIndex(row.id)
+  }));
 
   updateSortedHeader();
 
-  rows.sort((a, b) => {
-    const valA = getSortValue(a, currentSort.key);
-    const valB = getSortValue(b, currentSort.key);
+  rowGroups.sort((groupA, groupB) => {
+    const valA = getSortValue(groupA.row, currentSort.key);
+    const valB = getSortValue(groupB.row, currentSort.key);
 
     if (typeof valA === "string") {
       return currentSort.ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
@@ -1489,7 +1704,13 @@ function applyCurrentSort() {
   });
 
   tbody.innerHTML = "";
-  rows.forEach(row => tbody.appendChild(row));
+  rowGroups.forEach(group => {
+    tbody.appendChild(group.row);
+
+    if (group.editorRow) {
+      tbody.appendChild(group.editorRow);
+    }
+  });
 }
 
 function sortTable(type) {
@@ -1609,6 +1830,37 @@ function handleSymbolKeydown(e) {
   }
 }
 
+function handlePageRefreshKeydown(event) {
+  const isRefreshShortcut = event.key === "F5" || ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "r");
+
+  if (!isRefreshShortcut) {
+    return;
+  }
+
+  const incompleteRow = findIncompletePortfolioRow();
+
+  if (!incompleteRow) {
+    return;
+  }
+
+  event.preventDefault();
+  showValueDialog(buildIncompleteStockDialogMessage(incompleteRow), incompleteRow);
+}
+
+function handleBeforeUnload(event) {
+  const incompleteRow = findIncompletePortfolioRow();
+
+  if (!incompleteRow) {
+    return;
+  }
+
+  const warningMessage = "Complete the pending stock quantity and average price before leaving this page.";
+
+  event.preventDefault();
+  event.returnValue = warningMessage;
+  return warningMessage;
+}
+
 function initializeEvents() {
   const symbolInput = document.getElementById("symbol");
   const valueDialogOk = document.getElementById("valueDialogOk");
@@ -1618,7 +1870,10 @@ function initializeEvents() {
   symbolInput.addEventListener("click", openSearchDropdown);
   valueDialogOk.addEventListener("click", hideValueDialog);
   document.addEventListener("click", handleDocumentClick);
+  document.addEventListener("keydown", handlePageRefreshKeydown);
+  window.addEventListener("beforeunload", handleBeforeUnload);
   updateSortedHeader();
+  loadStockMaster();
 }
 
 window.addStock = addStock;
@@ -1626,11 +1881,14 @@ window.deleteRow = deleteRow;
 window.sortTable = sortTable;
 window.handleSearch = handleSearch;
 window.openSearchDropdown = openSearchDropdown;
+window.toggleEditorRow = toggleEditorRow;
 window.handleQuantityInput = handleQuantityInput;
 window.handleQuantityKeydown = handleQuantityKeydown;
 window.normalizeQuantity = normalizeQuantity;
 window.handleAvgPriceInput = handleAvgPriceInput;
+window.handleEditorInputKeydown = handleEditorInputKeydown;
 window.normalizeAvgPrice = normalizeAvgPrice;
+window.saveExpandedRowValues = saveExpandedRowValues;
 window.handleEditableInputFocus = handleEditableInputFocus;
 window.handleEditableInputMouseup = handleEditableInputMouseup;
 window.quickAdd = quickAdd;
