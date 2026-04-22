@@ -3,7 +3,7 @@
 <head>
   <link rel="icon" href="data:,">
   <meta charset="UTF-8">
-  <title>All Stocks Portfolio &#x1F4B9;</title>
+  <title>All Stocks Portfolio &#x1F4B0;</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Sora:wght@600;700;800&display=swap");
@@ -94,10 +94,6 @@
       text-align: center;
     }
 
-    .table-wrap {
-      min-height: 420px;
-    }
-
     .metric-label,
     .muted-label {
       color: rgba(245, 245, 245, 0.62);
@@ -117,77 +113,6 @@
       font-family: "Sora", "Manrope", sans-serif;
       letter-spacing: -0.04em;
       text-wrap: balance;
-    }
-
-    .header-hero {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      order: 3;
-      width: 100%;
-      padding-top: 0.2rem;
-    }
-
-    .header-hero-shell {
-      position: relative;
-      width: min(100%, 328px);
-      min-height: 72px;
-      padding: 0.22rem 0.55rem;
-      border-radius: 1.15rem;
-      border: 1px solid rgba(var(--accent-rgb), 0.18);
-      background:
-        radial-gradient(circle at 20% 18%, rgba(var(--accent-rgb), 0.16), transparent 34%),
-        linear-gradient(180deg, rgba(10, 12, 18, 0.96), rgba(6, 8, 12, 0.9));
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04),
-        0 0 18px rgba(var(--accent-rgb), 0.1);
-      overflow: hidden;
-    }
-
-    .header-mascot-track {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 62px;
-    }
-
-    .header-mascot-graphic {
-      width: 100%;
-      max-width: 260px;
-      max-height: 100%;
-      display: block;
-    }
-
-    .header-mascot-image {
-      filter:
-        drop-shadow(0 0 16px rgba(16, 185, 129, 0.12))
-        drop-shadow(0 0 16px rgba(239, 68, 68, 0.1));
-    }
-
-    .header-mascot-fallback {
-      overflow: visible;
-    }
-
-    .bull-run {
-      transform-origin: center;
-    }
-
-    .bear-run {
-      transform-origin: center;
-    }
-
-    .market-spark {
-    }
-
-    @media (min-width: 1024px) {
-      .header-hero {
-        order: 0;
-        flex: 0 0 328px;
-        width: 328px;
-        padding-top: 0;
-      }
     }
 
     .search-input {
@@ -266,10 +191,6 @@
     .portfolio-table td {
       font-variant-numeric: tabular-nums;
       overflow: hidden;
-    }
-
-    .portfolio-table th {
-      overflow: visible;
     }
 
     .row-line {
@@ -373,7 +294,7 @@
       white-space: nowrap;
       font-size: 0.84rem;
       font-weight: 700;
-      text-align: right;
+      text-align: center;
       color: #f4f4f5;
     }
 
@@ -396,146 +317,12 @@
       width: 100%;
     }
 
-    .header-shell-left {
-      justify-content: flex-start;
-    }
-
-    .header-shell-right {
-      justify-content: flex-end;
-    }
-
     .sort-indicator {
       color: rgba(245, 245, 245, 0.42);
       font-size: 0.78rem;
       font-weight: 800;
       line-height: 1;
       transition: color 160ms ease, transform 160ms ease;
-    }
-
-    .demat-header-button {
-      display: block;
-      width: 100%;
-      border: 0;
-      background: transparent;
-      color: inherit;
-      text-align: center;
-      padding: 0.15rem 0.2rem;
-      border-radius: 0.85rem;
-      transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
-    }
-
-    .demat-header-button.has-active-filter {
-      background: rgba(var(--accent-rgb), 0.18);
-      box-shadow:
-        inset 0 0 0 1px rgba(var(--accent-rgb), 0.34),
-        0 10px 24px rgba(var(--accent-rgb), 0.08);
-    }
-
-    .demat-header-text {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.38rem;
-    }
-
-    .demat-filter-status {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 0;
-      max-width: 110px;
-      padding: 0.16rem 0.42rem;
-      border-radius: 999px;
-      background: rgba(var(--accent-rgb), 0.28);
-      color: #ffffff;
-      font-size: 0.52rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      line-height: 1;
-      text-transform: uppercase;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .demat-column.has-active-filter .header-label,
-    .demat-header-button.has-active-filter .sort-indicator {
-      color: var(--accent);
-    }
-
-    .demat-header-button:focus-visible {
-      outline: 2px solid rgba(var(--accent-rgb), 0.6);
-      outline-offset: 2px;
-      border-radius: 0.7rem;
-    }
-
-    .demat-filter-menu {
-      position: absolute;
-      top: calc(100% - 1px);
-      left: 50%;
-      z-index: 80;
-      width: min(188px, 92vw);
-      max-height: 320px;
-      margin-top: 0.35rem;
-      padding: 0.5rem;
-      border-radius: 1rem;
-      border: 1px solid rgba(var(--accent-rgb), 0.28);
-      background: rgba(10, 12, 18, 0.98);
-      box-shadow:
-        0 22px 40px rgba(0, 0, 0, 0.42),
-        0 0 22px rgba(var(--accent-rgb), 0.14);
-      transform: translateX(-50%);
-      text-align: left;
-      overflow-y: auto;
-    }
-
-    .demat-filter-title {
-      color: rgba(245, 245, 245, 0.58);
-      font-size: 0.56rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .demat-filter-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .demat-filter-option,
-    .demat-sort-button {
-      width: 100%;
-      border-radius: 0.8rem;
-      border: 1px solid rgba(var(--accent-rgb), 0.16);
-      background: rgba(19, 24, 33, 0.9);
-      color: #f4f4f5;
-      font-size: 0.72rem;
-      font-weight: 700;
-      line-height: 1.2;
-      text-align: left;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-    }
-
-    .demat-filter-option {
-      padding: 0.42rem 0.56rem;
-    }
-
-    .demat-sort-button {
-      padding: 0.68rem 0.72rem;
-    }
-
-    .demat-filter-option:hover,
-    .demat-filter-option.is-active,
-    .demat-sort-button:hover {
-      background: rgba(23, 32, 45, 0.98);
-      border-color: rgba(var(--accent-rgb), 0.42);
-      transform: translateY(-1px);
-    }
-
-    .demat-filter-divider {
-      height: 1px;
-      margin: 0.65rem 0;
-      background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.4), transparent);
     }
 
     th[data-sort-key] {
@@ -675,13 +462,15 @@
     }
 
     .dialog-stock-name {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.08rem 0.52rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.32);
+      background: rgba(var(--accent-rgb), 0.14);
       color: #fafafa;
       font-weight: 800;
-    }
-
-    .dialog-field-name {
-      color: var(--accent);
-      font-weight: 800;
+      box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.12);
     }
 
     .delete-button {
@@ -786,29 +575,6 @@
       background: rgba(var(--accent-rgb), 0.14);
     }
 
-    .filter-hidden {
-      display: none !important;
-    }
-
-    .empty-state-row td {
-      padding: 3.2rem 1.25rem;
-      text-align: center;
-    }
-
-    .empty-state-title {
-      color: #f8fafc;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .empty-state-copy {
-      margin-top: 0.55rem;
-      color: rgba(245, 245, 245, 0.62);
-      font-size: 0.92rem;
-      font-weight: 600;
-    }
-
     .summary-value {
       display: block;
       white-space: nowrap;
@@ -820,20 +586,22 @@
 
     .summary-quantity,
     .summary-avg {
+      text-align: center;
       color: #f4f4f5;
     }
 
-    .summary-quantity {
-      text-align: center;
-    }
-
-    .summary-right,
-    .numeric-right {
-      text-align: right;
-    }
-
-    .numeric-left {
-      text-align: left;
+    .demat-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      padding: 0.24rem 0.62rem;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.22);
+      background: rgba(var(--accent-rgb), 0.12);
+      color: #f8fafc;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .editor-row td {
@@ -853,7 +621,6 @@
 
     .editor-controls {
       display: flex;
-      justify-content: center;
       align-items: flex-end;
       gap: 0.75rem;
       flex-wrap: wrap;
@@ -862,9 +629,7 @@
     .editor-field {
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 0.38rem;
-      text-align: center;
     }
 
     .editor-label {
@@ -878,7 +643,6 @@
     .editor-actions {
       display: flex;
       align-items: flex-end;
-      justify-content: center;
     }
 
     .editor-select-shell {
@@ -969,7 +733,7 @@
     <div class="flex items-center gap-4 flex-wrap">
 
       <h1 class="portfolio-title text-[2.05rem] font-bold text-zinc-50">
-        All Stocks Portfolio &#x1F4B9;
+        All Stocks Portfolio &#x1F4B0;
       </h1>
 
       <div class="ml-auto flex items-center gap-4 flex-wrap justify-end">
@@ -1046,47 +810,41 @@
               <span class="sort-indicator">&#8597;</span>
             </span>
           </th>
-          <th class="avg-column input-column text-right cursor-pointer px-1.5 py-3" data-sort-key="avgPrice" onclick="sortTable('avgPrice', this)">
-            <span class="header-shell header-shell-right">
+          <th class="avg-column input-column text-center cursor-pointer px-1.5 py-3" data-sort-key="avgPrice" onclick="sortTable('avgPrice', this)">
+            <span class="header-shell">
               <span class="header-label">Average Price</span>
               <span class="sort-indicator">&#8597;</span>
             </span>
           </th>
-          <th class="invested-column value-column text-right cursor-pointer px-2 py-3" data-sort-key="investedValue" onclick="sortTable('investedValue', this)">
-            <span class="header-shell header-shell-right">
+          <th class="invested-column value-column text-center cursor-pointer px-2 py-3" data-sort-key="investedValue" onclick="sortTable('investedValue', this)">
+            <span class="header-shell">
               <span class="header-label">Invested Value</span>
               <span class="sort-indicator">&#8597;</span>
             </span>
           </th>
-          <th class="current-price-column value-column text-right cursor-pointer px-2 py-3" data-sort-key="currentPrice" onclick="sortTable('currentPrice', this)">
-            <span class="header-shell header-shell-right">
+          <th class="current-price-column value-column text-center cursor-pointer px-2 py-3" data-sort-key="currentPrice" onclick="sortTable('currentPrice', this)">
+            <span class="header-shell">
               <span class="header-label">Current Price</span>
               <span class="sort-indicator">&#8597;</span>
             </span>
           </th>
-          <th class="current-value-column value-column text-right cursor-pointer px-2 py-3" data-sort-key="currentValue" onclick="sortTable('currentValue', this)">
-            <span class="header-shell header-shell-right">
+          <th class="current-value-column value-column text-center cursor-pointer px-2 py-3" data-sort-key="currentValue" onclick="sortTable('currentValue', this)">
+            <span class="header-shell">
               <span class="header-label">Current Value</span>
               <span class="sort-indicator">&#8597;</span>
             </span>
           </th>
-          <th class="pnl-column value-column text-right cursor-pointer px-2 py-3" data-sort-key="pnl" onclick="sortTable('pnl', this)">
-            <span class="header-shell header-shell-right">
+          <th class="pnl-column value-column text-center cursor-pointer px-2 py-3" data-sort-key="pnl" onclick="sortTable('pnl', this)">
+            <span class="header-shell">
               <span class="header-label">P&amp;L</span>
               <span class="sort-indicator">&#8597;</span>
             </span>
           </th>
-          <th id="dematHeaderCell" class="demat-column text-center px-2 py-3 relative">
-            <button id="dematHeaderButton" type="button" class="demat-header-button" onclick="toggleDematFilterMenu(event)" title="Filter by demat account">
-              <span class="header-shell">
-                <span class="demat-header-text">
-                  <span class="header-label">Demat</span>
-                  <span id="dematFilterStatus" class="demat-filter-status hidden">Filtered</span>
-                </span>
-                <span class="sort-indicator">&#9662;</span>
-              </span>
-            </button>
-            <div id="dematFilterMenu" class="demat-filter-menu hidden"></div>
+          <th class="demat-column text-center cursor-pointer px-2 py-3" data-sort-key="demat" onclick="sortTable('demat', this)">
+            <span class="header-shell">
+              <span class="header-label">Demat</span>
+              <span class="sort-indicator">&#8597;</span>
+            </span>
           </th>
           <th class="action-column px-2 py-3">
             <span class="header-label">Action</span>
@@ -1111,9 +869,7 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } 
 
 const STOCK_SHEET_URL = "https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json";
 const RUPEE = "\u20B9";
-const DEFAULT_DEMAT = "";
-const DEMAT_SELECT_LABEL = "Select";
-const DEMAT_FILTER_ALL = "__ALL__";
+const DEFAULT_DEMAT = "TBD";
 const DEMAT_OPTIONS = [
   DEFAULT_DEMAT,
   "Anand Rathi",
@@ -1168,7 +924,6 @@ let highlightedIndex = -1;
 let currentMatches = [];
 let stockMasterLoaded = false;
 let currentSort = getDefaultSort();
-let currentDematFilter = DEMAT_FILTER_ALL;
 let pendingValueDialogRowId = "";
 let pendingDeleteRowId = "";
 let rowCounter = 0;
@@ -1251,144 +1006,17 @@ function normalizeDemat(value) {
   return matchingOption || DEFAULT_DEMAT;
 }
 
-function getDematDisplayValue(value) {
-  const normalizedDemat = normalizeDemat(value);
-  return normalizedDemat || DEMAT_SELECT_LABEL;
-}
-
 function createDematOptionsMarkup(selectedDemat) {
   const normalizedDemat = normalizeDemat(selectedDemat);
 
   return DEMAT_OPTIONS
     .map(option => {
       const escapedOption = escapeHtml(option);
-      const optionLabel = option ? escapedOption : DEMAT_SELECT_LABEL;
       const selectedAttribute = option === normalizedDemat ? " selected" : "";
-      const disabledAttribute = option === DEFAULT_DEMAT ? " disabled" : "";
 
-      return `<option value="${escapedOption}"${selectedAttribute}${disabledAttribute}>${optionLabel}</option>`;
+      return `<option value="${escapedOption}"${selectedAttribute}>${escapedOption}</option>`;
     })
     .join("");
-}
-
-function getPortfolioRowState(row) {
-  if (!row) {
-    return {
-      symbol: "STOCK",
-      quantity: 0,
-      avgPrice: 0,
-      demat: DEFAULT_DEMAT
-    };
-  }
-
-  const index = row.id;
-  const quantityInput = document.getElementById(`quantity-${index}`);
-  const avgPriceInput = document.getElementById(`avgPrice-${index}`);
-  const dematSelect = document.getElementById(`demat-${index}`);
-
-  return {
-    symbol: String(row.dataset.symbol || row.dataset.stockName || "STOCK").trim().toUpperCase(),
-    quantity: quantityInput ? parseQuantity(quantityInput.value) : parseQuantity(row.dataset.quantity),
-    avgPrice: avgPriceInput ? parseMoney(avgPriceInput.value) : parseMoney(row.dataset.avgPrice),
-    demat: dematSelect ? normalizeDemat(dematSelect.value) : normalizeDemat(row.dataset.demat)
-  };
-}
-
-function isPortfolioRowComplete(row) {
-  const rowState = getPortfolioRowState(row);
-  return rowState.quantity > 0 && rowState.avgPrice > 0 && Boolean(rowState.demat);
-}
-
-function getRowFocusField(row) {
-  const rowState = getPortfolioRowState(row);
-
-  if (rowState.quantity <= 0) {
-    return "quantity";
-  }
-
-  if (rowState.avgPrice <= 0) {
-    return "avg";
-  }
-
-  if (!rowState.demat) {
-    return "demat";
-  }
-
-  return "quantity";
-}
-
-function getAvailableDematFilterOptions() {
-  return DEMAT_OPTIONS.filter(Boolean);
-}
-
-function renderDematFilterMenu() {
-  const menu = document.getElementById("dematFilterMenu");
-
-  if (!menu) {
-    return;
-  }
-
-  syncDematFilterState();
-  updateDematFilterHeaderState();
-  const availableOptions = getAvailableDematFilterOptions();
-  const filterButtons = [
-    `<button type="button" class="demat-filter-option${currentDematFilter === DEMAT_FILTER_ALL ? " is-active" : ""}" onclick="applyDematFilter('${DEMAT_FILTER_ALL}')">All Demat Accounts</button>`,
-    ...availableOptions.map(option => {
-      const escapedOption = escapeHtml(option);
-      const isActive = currentDematFilter === option ? " is-active" : "";
-
-      return `<button type="button" class="demat-filter-option${isActive}" onclick="applyDematFilter('${escapedOption}')">${escapedOption}</button>`;
-    })
-  ].join("");
-
-  menu.innerHTML = `
-    <p class="demat-filter-title">Filter</p>
-    <div class="demat-filter-list mt-3">
-      ${filterButtons}
-    </div>
-  `;
-}
-
-function showDematFilterMenu() {
-  const menu = document.getElementById("dematFilterMenu");
-
-  if (!menu) {
-    return;
-  }
-
-  renderDematFilterMenu();
-  menu.classList.remove("hidden");
-}
-
-function hideDematFilterMenu() {
-  const menu = document.getElementById("dematFilterMenu");
-
-  menu?.classList.add("hidden");
-}
-
-function toggleDematFilterMenu(event) {
-  event.preventDefault();
-  event.stopPropagation();
-
-  const menu = document.getElementById("dematFilterMenu");
-
-  if (!menu) {
-    return;
-  }
-
-  if (menu.classList.contains("hidden")) {
-    showDematFilterMenu();
-  } else {
-    hideDematFilterMenu();
-  }
-}
-
-function applyDematFilter(filterValue) {
-  currentDematFilter = filterValue === DEMAT_FILTER_ALL ? DEMAT_FILTER_ALL : normalizeDemat(filterValue);
-  applyCurrentSort();
-  updateSummary();
-  renderDematFilterMenu();
-  hideDematFilterMenu();
 }
 
 function sanitizeQuantityValue(rawValue) {
@@ -1568,45 +1196,9 @@ function getPortfolioStockRows() {
   return Array.from(document.querySelectorAll('#tableBody tr[data-row-type="stock"]'));
 }
 
-function hasActiveDematFilter() {
-  return currentDematFilter !== DEMAT_FILTER_ALL;
-}
-
-function doesRowMatchCurrentDematFilter(row) {
-  return Boolean(row) && (
-    currentDematFilter === DEMAT_FILTER_ALL ||
-    normalizeDemat(row.dataset.demat) === currentDematFilter
-  );
-}
-
-function getSummaryRows() {
-  return getPortfolioStockRows().filter(row => doesRowMatchCurrentDematFilter(row));
-}
-
-function updateDematFilterHeaderState() {
-  const headerCell = document.getElementById("dematHeaderCell");
-  const headerButton = document.getElementById("dematHeaderButton");
-  const filterStatus = document.getElementById("dematFilterStatus");
-  const isFilterActive = hasActiveDematFilter();
-
-  headerCell?.classList.toggle("has-active-filter", isFilterActive);
-  headerButton?.classList.toggle("has-active-filter", isFilterActive);
-
-  if (filterStatus) {
-    filterStatus.classList.toggle("hidden", !isFilterActive);
-    filterStatus.textContent = isFilterActive ? currentDematFilter : "";
-    filterStatus.title = isFilterActive ? `Showing only ${currentDematFilter} stocks` : "";
-  }
-
-  if (headerButton) {
-    headerButton.title = isFilterActive
-      ? `Demat filter active: showing only ${currentDematFilter} stocks`
-      : "Filter by demat account";
-  }
-}
-
 function findIncompletePortfolioRow() {
-  return getPortfolioStockRows().find(row => !isPortfolioRowComplete(row));
+  return getPortfolioStockRows()
+    .find(row => parseQuantity(row.dataset.quantity) <= 0 || parseMoney(row.dataset.avgPrice) <= 0);
 }
 
 function getEditorRowByIndex(index) {
@@ -1644,17 +1236,12 @@ function setEditorRowExpanded(index, isExpanded, { focusField = "" } = {}) {
 
   const targetInput = focusField === "avg"
     ? document.getElementById(`avgPrice-${index}`)
-    : focusField === "demat"
-      ? document.getElementById(`demat-${index}`)
-      : document.getElementById(`quantity-${index}`);
+    : document.getElementById(`quantity-${index}`);
 
   if (targetInput) {
     requestAnimationFrame(() => {
       targetInput.focus();
-
-      if (targetInput.tagName === "INPUT") {
-        handleEditableInputFocus(targetInput);
-      }
+      handleEditableInputFocus(targetInput);
     });
   }
 }
@@ -1673,8 +1260,9 @@ function toggleEditorRow(index) {
 function focusIncompletePortfolioRow(row) {
   if (!row) return;
 
+  const quantity = parseQuantity(row.dataset.quantity);
   setEditorRowExpanded(row.id, true, {
-    focusField: getRowFocusField(row)
+    focusField: quantity <= 0 ? "quantity" : "avg"
   });
 }
 
@@ -1716,45 +1304,10 @@ function hideWelcomeDialog() {
 }
 
 function buildIncompleteStockDialogMessage(row) {
-  const rowState = getPortfolioRowState(row);
-  const hasQuantity = rowState.quantity > 0;
-  const hasAvgPrice = rowState.avgPrice > 0;
-  const hasDemat = Boolean(rowState.demat);
-  const pendingSymbol = escapeHtml(rowState.symbol);
+  const pendingSymbol = escapeHtml(String(row?.dataset?.symbol || row?.dataset?.stockName || "STOCK").trim().toUpperCase());
   const highlightedSymbol = `<span class="dialog-stock-name">"${pendingSymbol}"</span>`;
-  const quantityLabel = `<span class="dialog-field-name">Quantity</span>`;
-  const averagePriceLabel = `<span class="dialog-field-name">Average Price</span>`;
-  const dematAccount = `<span class="dialog-field-name">Demat Account</span>`;
 
-  if (!hasQuantity && !hasAvgPrice && !hasDemat) {
-    return `Please enter ${highlightedSymbol} Stock ${quantityLabel} and ${averagePriceLabel} then select the ${dematAccount} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
-  }
-
-  if (!hasQuantity && !hasAvgPrice && hasDemat) {
-    return `Please enter ${highlightedSymbol} Stock ${quantityLabel} and ${averagePriceLabel} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
-  }
-
-  if (hasQuantity && !hasAvgPrice && !hasDemat) {
-    return `Please enter ${highlightedSymbol} Stock ${averagePriceLabel} then select the ${dematAccount} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
-  }
-
-  if (!hasQuantity && hasAvgPrice && !hasDemat) {
-    return `Please enter ${highlightedSymbol} Stock ${quantityLabel} then select the ${dematAccount} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
-  }
-
-  if (hasQuantity && hasAvgPrice && !hasDemat) {
-    return `Please select the ${dematAccount} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
-  }
-
-  if (hasQuantity && !hasAvgPrice && hasDemat) {
-    return `Please enter ${highlightedSymbol} ${averagePriceLabel} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
-  }
-
-  if (!hasQuantity && hasAvgPrice && hasDemat) {
-    return `Please enter ${highlightedSymbol} ${quantityLabel} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
-  }
-
-  return `Please enter ${highlightedSymbol} Stock ${quantityLabel} and ${averagePriceLabel} to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
+  return `Please enter ${highlightedSymbol} Stock Quantity and Average Price to proceed further or remove the ${highlightedSymbol} Stock to proceed further.`;
 }
 
 function buildDeleteDialogMessage(row) {
@@ -1874,26 +1427,14 @@ async function loadStockMaster() {
 async function loadPortfolioFromFirebase() {
   const querySnapshot = await getDocs(collection(db, "portfolio"));
   const savedStocks = new Map();
-  const staleDocIds = [];
-
-  currentDematFilter = DEMAT_FILTER_ALL;
 
   querySnapshot.forEach((docSnap) => {
     const savedStock = docSnap.data();
     const symbol = String(savedStock.symbol ?? "").trim().toUpperCase();
-    const quantity = parseQuantity(savedStock.quantity ?? savedStock.shares ?? 0);
-    const avgPrice = parseMoney(savedStock.avgPrice ?? 0);
-    const demat = normalizeDemat(savedStock.demat);
 
-    if (symbol && quantity > 0 && avgPrice > 0 && demat) {
+    if (symbol) {
       savedStocks.set(symbol, savedStock);
-    } else if (symbol) {
-      staleDocIds.push(docSnap.id);
     }
-  });
-
-  staleDocIds.forEach(docId => {
-    deleteDoc(doc(db, "portfolio", docId));
   });
 
   Array.from(savedStocks.values())
@@ -1935,26 +1476,18 @@ function addStock() {
 
   const stock = buildStockRecord(symbol);
   const rowIndex = createRowIndex();
-  const tableBody = document.getElementById("tableBody");
 
-  if (currentDematFilter !== DEMAT_FILTER_ALL) {
-    currentDematFilter = DEMAT_FILTER_ALL;
-  }
-
-  tableBody.querySelectorAll(".filter-hidden").forEach(element => {
-    element.classList.remove("filter-hidden");
-  });
-  tableBody.querySelector(".empty-state-row")?.remove();
-
-  tableBody.insertAdjacentHTML("afterbegin", createStockRow(stock, rowIndex, {
-    expanded: true,
-    persisted: false
-  }));
+  document
+    .getElementById("tableBody")
+    .insertAdjacentHTML("afterbegin", createStockRow(stock, rowIndex, {
+      expanded: true
+    }));
 
   addedStocks.add(symbol);
   updateSummary();
-  hideDematFilterMenu();
-  renderDematFilterMenu();
+  saveToFirebase(stock);
+  applyCurrentSort();
+  showToast(symbol + " added", "success");
   resetSearchInput();
   setEditorRowExpanded(rowIndex, true, {
     focusField: "quantity"
@@ -1970,14 +1503,12 @@ function addStockFromSaved(stock) {
 
   document
     .getElementById("tableBody")
-    .insertAdjacentHTML("beforeend", createStockRow(hydratedStock, createRowIndex(), {
-      persisted: true
-    }));
+    .insertAdjacentHTML("beforeend", createStockRow(hydratedStock, createRowIndex()));
 
   addedStocks.add(hydratedStock.symbol);
 }
 
-function createStockRow(stock, index, { expanded = false, persisted = false } = {}) {
+function createStockRow(stock, index, { expanded = false } = {}) {
   const quantity = parseQuantity(stock.quantity);
   const avgPrice = parseMoney(stock.avgPrice);
   const currentPrice = parseMoney(stock.currentPrice);
@@ -1985,9 +1516,7 @@ function createStockRow(stock, index, { expanded = false, persisted = false } = 
   const { investedValue, currentValue, pnl } = calculatePortfolioValues(quantity, avgPrice, currentPrice);
   const escapedStockName = escapeHtml(stock.stockName);
   const escapedSymbol = escapeHtml(stock.symbol);
-  const dematDisplayValue = getDematDisplayValue(demat);
   const escapedDemat = escapeHtml(demat);
-  const escapedDematDisplayValue = escapeHtml(dematDisplayValue);
   const quantityValue = formatQuantity(quantity);
   const avgPriceValue = formatCurrency(avgPrice);
   const expandedClass = expanded ? " is-expanded" : "";
@@ -2004,7 +1533,6 @@ function createStockRow(stock, index, { expanded = false, persisted = false } = 
       data-current-price="${currentPrice}"
       data-current-value="${currentValue}"
       data-demat="${escapedDemat}"
-      data-is-saved="${persisted ? "true" : "false"}"
       data-pnl="${pnl}">
       <td class="stock-column px-4 py-3 align-middle">
         <div class="min-w-0">
@@ -2015,23 +1543,23 @@ function createStockRow(stock, index, { expanded = false, persisted = false } = 
       <td id="quantityDisplay-${index}" class="quantity-column text-center px-2 py-3 align-middle">
         <span class="summary-value summary-quantity">${quantityValue}</span>
       </td>
-      <td id="avgPriceDisplay-${index}" class="avg-column text-right px-2 py-3 align-middle">
-        <span class="summary-value summary-avg summary-right">${avgPriceValue}</span>
+      <td id="avgPriceDisplay-${index}" class="avg-column text-center px-2 py-3 align-middle">
+        <span class="summary-value summary-avg">${avgPriceValue}</span>
       </td>
-      <td id="invested-${index}" class="invested-column numeric-cell numeric-right px-2 py-3 align-middle">
+      <td id="invested-${index}" class="invested-column numeric-cell px-2 py-3 align-middle">
         ${formatCurrency(investedValue)}
       </td>
-      <td id="currentPrice-${index}" class="current-price-column numeric-cell numeric-right px-2 py-3 align-middle">
+      <td id="currentPrice-${index}" class="current-price-column numeric-cell px-2 py-3 align-middle">
         ${formatCurrency(currentPrice)}
       </td>
-      <td id="currentValue-${index}" class="current-value-column numeric-cell numeric-right px-2 py-3 align-middle">
+      <td id="currentValue-${index}" class="current-value-column numeric-cell px-2 py-3 align-middle">
         ${formatCurrency(currentValue)}
       </td>
-      <td id="pnl-${index}" class="pnl-column numeric-cell numeric-right px-2 py-3 align-middle ${getPnlClass(pnl)}">
+      <td id="pnl-${index}" class="pnl-column numeric-cell px-2 py-3 align-middle ${getPnlClass(pnl)}">
         ${formatSignedCurrency(pnl)}
       </td>
       <td id="dematDisplay-${index}" class="demat-column text-center px-2 py-3 align-middle">
-        <span class="summary-value" title="${escapedDematDisplayValue}">${escapedDematDisplayValue}</span>
+        <span class="summary-value demat-chip" title="${escapedDemat}">${escapedDemat}</span>
       </td>
       <td class="action-column px-1 py-3 align-middle">
         <button onclick="event.stopPropagation(); deleteRow('${index}')"
@@ -2139,70 +1667,11 @@ function normalizeAvgPrice(input) {
   normalizeDecimalInput(input);
 }
 
-function setSummaryCellValue(cellId, value) {
-  const cell = document.getElementById(cellId);
-
-  if (!cell) {
-    return;
-  }
-
-  const summaryValue = cell.querySelector(".summary-value");
-
-  if (summaryValue) {
-    summaryValue.innerText = value;
-    summaryValue.title = value;
-    return;
-  }
-
-  cell.innerText = value;
-}
-
-function moveRowGroupToTop(index) {
-  const tbody = document.getElementById("tableBody");
-  const row = getRowByIndex(index);
-  const editorRow = getEditorRowByIndex(index);
-
-  if (!tbody || !row) {
-    return;
-  }
-
-  if (editorRow) {
-    tbody.prepend(editorRow);
-  }
-
-  tbody.prepend(row);
-}
-
-function renderEmptyStateRow(message, { preserveRows = false } = {}) {
-  const tbody = document.getElementById("tableBody");
-
-  if (!tbody) {
-    return;
-  }
-
-  const emptyStateMarkup = `
-    <tr class="empty-state-row">
-      <td colspan="9">
-        <p class="empty-state-title">Portfolio is waiting for its first move.</p>
-        <p class="empty-state-copy">${escapeHtml(message)}</p>
-      </td>
-    </tr>
-  `;
-
-  if (preserveRows) {
-    tbody.insertAdjacentHTML("beforeend", emptyStateMarkup);
-    return;
-  }
-
-  tbody.innerHTML = emptyStateMarkup;
-}
-
 function saveExpandedRowValues(index) {
   const row = getRowByIndex(index);
 
   if (!row) return;
 
-  const isSavedRow = row.dataset.isSaved === "true";
   const symbol = row.dataset.symbol;
   const quantityInput = document.getElementById(`quantity-${index}`);
   const avgPriceInput = document.getElementById(`avgPrice-${index}`);
@@ -2215,7 +1684,7 @@ function saveExpandedRowValues(index) {
   const avgPrice = parseMoney(avgPriceInput?.value);
   const demat = normalizeDemat(dematSelect?.value);
 
-  if (quantity <= 0 || avgPrice <= 0 || !demat) {
+  if (quantity <= 0 || avgPrice <= 0) {
     showValueDialog(buildIncompleteStockDialogMessage(row), row);
     return;
   }
@@ -2231,12 +1700,18 @@ function saveExpandedRowValues(index) {
   row.dataset.demat = demat;
   row.dataset.pnl = pnl;
 
-  setSummaryCellValue(`quantityDisplay-${index}`, formatQuantity(quantity));
-  setSummaryCellValue(`avgPriceDisplay-${index}`, formatCurrency(avgPrice));
+  document.getElementById(`quantityDisplay-${index}`).innerText = formatQuantity(quantity);
+  document.getElementById(`avgPriceDisplay-${index}`).innerText = formatCurrency(avgPrice);
   document.getElementById(`invested-${index}`).innerText = formatCurrency(investedValue);
   document.getElementById(`currentPrice-${index}`).innerText = formatCurrency(currentPrice);
   document.getElementById(`currentValue-${index}`).innerText = formatCurrency(currentValue);
-  setSummaryCellValue(`dematDisplay-${index}`, getDematDisplayValue(demat));
+
+  const dematChip = document.querySelector(`#dematDisplay-${index} .demat-chip`);
+
+  if (dematChip) {
+    dematChip.innerText = demat;
+    dematChip.title = demat;
+  }
 
   const pnlElement = document.getElementById(`pnl-${index}`);
   pnlElement.innerText = formatSignedCurrency(pnl);
@@ -2247,32 +1722,16 @@ function saveExpandedRowValues(index) {
 
   updateSummary();
 
-  const persistencePayload = {
-    symbol,
+  updatePortfolioInFirebase(symbol, {
     stockName: row.dataset.stockName,
     avgPrice,
     demat,
     quantity,
     currentPrice
-  };
-
-  if (isSavedRow) {
-    updatePortfolioInFirebase(symbol, persistencePayload);
-  } else {
-    saveToFirebase(persistencePayload);
-    row.dataset.isSaved = "true";
-  }
+  });
 
   setEditorRowExpanded(index, false);
-
-  if (isSavedRow) {
-    applyCurrentSort();
-  } else {
-    moveRowGroupToTop(index);
-    updateSortedHeader();
-    renderDematFilterMenu();
-    showToast(symbol + " added", "success");
-  }
+  applyCurrentSort();
 }
 
 function deleteRow(index) {
@@ -2290,35 +1749,27 @@ function removePortfolioRow(index) {
   if (!row) return;
 
   const symbol = row.dataset.symbol;
-  const isSavedRow = row.dataset.isSaved === "true";
   editorRow?.remove();
   row.remove();
   addedStocks.delete(symbol);
   updateSummary();
   applyCurrentSort();
   showToast(symbol + " removed", "error");
-
-  if (isSavedRow) {
-    deleteFromFirebase(symbol);
-  }
+  deleteFromFirebase(symbol);
 }
 
 function updateSummary() {
-  syncDematFilterState();
-  updateDematFilterHeaderState();
-
   let investedValueTotal = 0;
   let currentValueTotal = 0;
   let pnlTotal = 0;
-  const summaryRows = getSummaryRows();
 
-  summaryRows.forEach(row => {
+  getPortfolioStockRows().forEach(row => {
     investedValueTotal += parseMoney(row.dataset.investedValue);
     currentValueTotal += parseMoney(row.dataset.currentValue);
     pnlTotal += parseMoney(row.dataset.pnl);
   });
 
-  document.getElementById("count").innerText = summaryRows.length;
+  document.getElementById("count").innerText = getPortfolioStockRows().length;
   document.getElementById("totalInvested").innerText = formatCurrency(investedValueTotal);
   document.getElementById("totalCurrentValue").innerText = formatCurrency(currentValueTotal);
 
@@ -2483,14 +1934,6 @@ function updateHighlight(items) {
   }
 }
 
-function syncDematFilterState() {
-  const availableOptions = getAvailableDematFilterOptions();
-
-  if (currentDematFilter !== DEMAT_FILTER_ALL && !availableOptions.includes(currentDematFilter)) {
-    currentDematFilter = DEMAT_FILTER_ALL;
-  }
-}
-
 function handleMatchSelection(index) {
   const symbol = currentMatches[index];
 
@@ -2518,7 +1961,7 @@ function getSortValue(row, type) {
   }
 
   if (type === "demat") {
-    return getDematDisplayValue(row.dataset.demat).toLowerCase();
+    return String(row.dataset.demat ?? "").toLowerCase();
   }
 
   if (type === "quantity") {
@@ -2549,8 +1992,6 @@ function getSortValue(row, type) {
 }
 
 function updateSortedHeader() {
-  syncDematFilterState();
-
   document
     .querySelectorAll("th[data-sort-key]")
     .forEach(th => {
@@ -2578,16 +2019,11 @@ function updateSortedHeader() {
 
 function applyCurrentSort() {
   const tbody = document.getElementById("tableBody");
-
-  tbody.querySelectorAll(".empty-state-row").forEach(emptyRow => emptyRow.remove());
-
   const rowGroups = getPortfolioStockRows().map(row => ({
     row,
     editorRow: getEditorRowByIndex(row.id)
   }));
 
-  syncDematFilterState();
-  updateDematFilterHeaderState();
   updateSortedHeader();
 
   rowGroups.sort((groupA, groupB) => {
@@ -2602,36 +2038,13 @@ function applyCurrentSort() {
   });
 
   tbody.innerHTML = "";
-  let visibleRowCount = 0;
-
   rowGroups.forEach(group => {
-    const matchesFilter = doesRowMatchCurrentDematFilter(group.row);
-
-    group.row.classList.toggle("filter-hidden", !matchesFilter);
     tbody.appendChild(group.row);
 
     if (group.editorRow) {
-      group.editorRow.classList.toggle("filter-hidden", !matchesFilter);
       tbody.appendChild(group.editorRow);
     }
-
-    if (matchesFilter) {
-      visibleRowCount += 1;
-    }
   });
-
-  if (visibleRowCount === 0) {
-    const emptyMessage = currentDematFilter === DEMAT_FILTER_ALL
-      ? "Add a stock to tracker to start building your dashboard."
-      : `No stocks found in ${currentDematFilter}. Add a stock to this demat account to see it here.`;
-
-    renderEmptyStateRow(emptyMessage, {
-      preserveRows: rowGroups.length > 0
-    });
-  }
-
-  updateSummary();
-  renderDematFilterMenu();
 }
 
 function sortTable(type) {
@@ -2718,10 +2131,6 @@ function handleDocumentClick(e) {
   if (!e.target.closest("#symbol") && !e.target.closest("#dropdown")) {
     document.getElementById("dropdown").classList.add("hidden");
   }
-
-  if (!e.target.closest("#dematFilterMenu") && !e.target.closest(".demat-header-button")) {
-    hideDematFilterMenu();
-  }
 }
 
 function handleSymbolKeydown(e) {
@@ -2780,7 +2189,7 @@ function handleBeforeUnload(event) {
     return;
   }
 
-  const warningMessage = "Complete the pending stock quantity, average price, and demat account before leaving this page.";
+  const warningMessage = "Complete the pending stock quantity and average price before leaving this page.";
 
   event.preventDefault();
   event.returnValue = warningMessage;
@@ -2804,9 +2213,7 @@ function initializeEvents() {
   document.addEventListener("click", handleDocumentClick);
   document.addEventListener("keydown", handlePageRefreshKeydown);
   window.addEventListener("beforeunload", handleBeforeUnload);
-  currentDematFilter = DEMAT_FILTER_ALL;
   updateSortedHeader();
-  renderDematFilterMenu();
   showWelcomeDialog();
   loadStockMaster();
 }
@@ -2828,8 +2235,6 @@ window.handleEditableInputFocus = handleEditableInputFocus;
 window.handleEditableInputMouseup = handleEditableInputMouseup;
 window.quickAdd = quickAdd;
 window.selectStock = selectStock;
-window.toggleDematFilterMenu = toggleDematFilterMenu;
-window.applyDematFilter = applyDematFilter;
 
 document.addEventListener("DOMContentLoaded", initializeEvents);
 
