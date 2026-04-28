@@ -1,9 +1,9 @@
+import json
+import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import requests
-import json
 
-app = FastAPI()
+app = FastAPI(title="AllStocksPortfolio")
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,19 +18,19 @@ def get_data():
     url = "https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json"
     res = requests.get(url)
     data = json.loads(res.text[47:-2])
-    
-    rows = data['table']['rows']
+
+    rows = data["table"]["rows"]
     result = []
 
     for row in rows:
-        cols = row['c']
-        
+        cols = row["c"]
+
         result.append({
-            "symbol": cols[5]['v'],
-            "cmp": cols[6]['v'],
-            "shares": cols[7]['v'],
-            "dividend_per_share": cols[8]['v'],
-            "expected_dividend": cols[7]['v'] * cols[8]['v']
+            "symbol": cols[5]["v"],
+            "cmp": cols[6]["v"],
+            "shares": cols[7]["v"],
+            "distribution_per_share": cols[8]["v"],
+            "expected_distribution": cols[7]["v"] * cols[8]["v"]
         })
 
     return result

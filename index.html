@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="icon" href="data:,">
+  <link rel="icon" type="image/png" href="assets/allstockpf.png?v=20260425">
+  <link rel="shortcut icon" href="assets/allstockpf.png?v=20260425">
+  <link rel="apple-touch-icon" href="assets/allstockpf.png?v=20260425">
   <meta charset="UTF-8">
   <script>
     (() => {
       try {
-        const authState = window.localStorage.getItem("divtracker-authenticated") === "true"
+        const authState = window.localStorage.getItem("allstocksportfolio-authenticated") === "true"
           ? "authenticated"
           : "unauthenticated";
         document.documentElement.setAttribute("data-auth-state", authState);
@@ -15,7 +17,7 @@
       }
     })();
   </script>
-  <title>All Stocks Portfolio &#x1F4B9;</title>
+  <title>All Stocks Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Outfit:wght@700;800;900&family=Sora:wght@600;700;800&display=swap");
@@ -217,6 +219,31 @@
       color: rgba(245, 245, 245, 0.62);
     }
 
+    .welcome-panel {
+      min-width: 92px;
+      text-align: center;
+    }
+
+    .welcome-panel-label {
+      color: rgba(245, 245, 245, 0.52);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .welcome-user {
+      display: block;
+      margin-top: 0.15rem;
+      color: #f4f4f5;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
+    }
+
     .theme-text,
     .metric-value,
     .is-sorted {
@@ -231,6 +258,42 @@
       font-family: "Sora", "Manrope", sans-serif;
       letter-spacing: -0.04em;
       text-wrap: balance;
+    }
+
+    .portfolio-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .landing-brand-chip {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .brand-chip-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+      line-height: 1.04;
+    }
+
+    .brand-chip-title {
+      color: rgba(245, 245, 245, 0.88);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-chip-tagline {
+      color: rgba(245, 245, 245, 0.52);
+      font-size: 0.68rem;
+      font-weight: 700;
     }
 
     .header-hero {
@@ -910,6 +973,29 @@
         linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
     }
 
+    .legend-name {
+      display: inline-block;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .legend-name-buffett {
+      background: linear-gradient(120deg, #d9f99d, #34d399 55%, #bbf7d0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px rgba(34, 197, 94, 0.2);
+    }
+
+    .legend-name-tata {
+      background: linear-gradient(120deg, #ffe4e6, #fb7185 55%, #fdba74);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 18px rgba(251, 113, 133, 0.24);
+    }
+
     .landing-feature-card p:first-child {
       font-size: 0.68rem;
     }
@@ -931,6 +1017,7 @@
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.04),
         0 18px 44px rgba(0, 0, 0, 0.34);
+      align-self: start;
     }
 
     .landing-hero-title {
@@ -988,12 +1075,12 @@
 
     .auth-input {
       width: 100%;
-      padding: 0.82rem 0.95rem;
+      padding: 0.76rem 0.95rem;
       border-radius: 1rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(4, 6, 10, 0.7);
       color: #fafafa;
-      font-size: 0.96rem;
+      font-size: 0.92rem;
       font-weight: 700;
       transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
@@ -1071,6 +1158,105 @@
       font-size: 0.8rem;
       font-weight: 700;
       line-height: 1.4;
+    }
+
+    .auth-panel-copy {
+      max-width: 26rem;
+    }
+
+    .auth-panel-copy h2 {
+      line-height: 1.05;
+    }
+
+    .auth-fields-grid {
+      display: grid;
+      gap: 0.78rem;
+    }
+
+    .auth-fields-grid-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .auth-field-error {
+      min-height: 1rem;
+      margin-top: 0.4rem;
+      color: #fda4af;
+      font-size: 0.74rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .required-star {
+      color: #fb7185;
+      margin-left: 0.12rem;
+    }
+
+    .signup-verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.55rem;
+      padding: 0.42rem 0.72rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.14);
+      border: 1px solid rgba(34, 197, 94, 0.34);
+      color: #bbf7d0;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .auth-helper-copy {
+      color: rgba(245, 245, 245, 0.48);
+      font-size: 0.72rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .auth-text-button {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: rgba(229, 231, 235, 0.82);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 160ms ease, transform 160ms ease;
+    }
+
+    .auth-text-button:hover {
+      color: #fafafa;
+      transform: translateY(-1px);
+    }
+
+    .auth-text-button:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.34);
+      outline-offset: 3px;
+      border-radius: 0.5rem;
+    }
+
+    .auth-status {
+      min-height: 1rem;
+      color: #bbf7d0;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .auth-hidden-recaptcha {
+      position: fixed;
+      left: -9999px;
+      bottom: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 640px) {
+      .auth-fields-grid-two {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
     .demo-access-card {
@@ -1463,28 +1649,27 @@
 
     <div class="relative grid gap-4 px-4 py-4 md:px-6 md:py-5 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
       <section class="min-w-0">
-        <div class="landing-chip inline-flex items-center gap-3 rounded-full px-3.5 py-1.5">
-          <span class="inline-flex items-center gap-2 text-[0.76rem] font-extrabold tracking-[0.08em] text-white/70">
-            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,0.7)]"></span>
-            <span class="h-2.5 w-2.5 rounded-full bg-rose-400 shadow-[0_0_14px_rgba(251,113,133,0.7)]"></span>
-            All Stocks Portfolio
+        <div class="landing-brand-chip inline-flex items-center gap-3 rounded-full px-3.5 py-1.5">
+          <span class="brand-chip-copy">
+            <span class="brand-chip-title">All Stocks Portfolio</span>
+            <span class="brand-chip-tagline">Bull and bear moves in one place</span>
           </span>
         </div>
 
         <h1 id="landingTitle" class="landing-hero-title mt-4 max-w-[34rem]">
-          <span class="landing-hero-lead">Stock market focus</span>
+          <span class="landing-hero-lead">Congrats!</span>
           <span class="landing-hero-body">
-            Track your holdings, stay patient, and let disciplined investing do the heavy lifting <span class="landing-hero-target">&#x1F4C8;</span>
+            You opened this website instead of scrolling reels <span class="landing-hero-target">&#x1F3AF;</span>
           </span>
         </h1>
 
         <p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-200/82 md:text-base">
-          Review your positions, compare invested capital with live pricing, and keep every portfolio decision grounded in long-term discipline.
+          Your portfolio dashboard is ready. Thanks for visiting this website and keeping the focus on compounding, patience, and long-term investing.
         </p>
 
         <div class="mt-4 grid gap-2.5 sm:grid-cols-3">
           <div class="landing-feature-card rounded-[1.35rem] p-3">
-            <p class="text-[0.76rem] font-black tracking-[0.08em] text-emerald-200/80">Warren Buffett</p>
+            <p class="legend-name legend-name-buffett">Warren Buffett</p>
             <p class="mt-3 text-lg font-extrabold text-white">Price is what you pay.</p>
             <p class="mt-2 text-sm leading-6 text-zinc-300/80">Value is what you get. Keep that lens close whenever you add or review a position.</p>
           </div>
@@ -1496,14 +1681,14 @@
           </div>
 
           <div class="landing-feature-card rounded-[1.35rem] p-3">
-            <p class="text-[0.76rem] font-black tracking-[0.08em] text-white/70">Ratan Tata</p>
+            <p class="legend-name legend-name-tata">Ratan Tata</p>
             <p class="mt-3 text-lg font-extrabold text-white">Build with conviction</p>
             <p class="mt-2 text-sm leading-6 text-zinc-300/80">"I don't believe in taking right decisions. I take decisions and then make them right."</p>
           </div>
         </div>
       </section>
 
-      <aside class="landing-auth-card rounded-[1.6rem] p-5 md:p-6">
+      <aside class="landing-auth-card rounded-[1.6rem] p-4 md:p-5">
         <div class="landing-chip flex items-center gap-2 rounded-full p-1">
           <button id="showSigninOption" type="button" class="auth-option-button is-active flex-1 rounded-full px-4 py-2.5 text-sm font-extrabold tracking-[0.08em]">
             Sign In
@@ -1513,53 +1698,166 @@
           </button>
         </div>
 
-        <div class="mt-5">
-          <p class="text-[0.76rem] font-black tracking-[0.08em] text-white/45">Market access</p>
-          <h2 class="mt-2.5 text-[1.8rem] font-extrabold text-white">Enter the dashboard</h2>
-          <p class="mt-2.5 text-sm leading-5 text-zinc-300/82">
-            Login to review your holdings, current prices, invested value, and overall portfolio performance on a single screen.
-          </p>
-        </div>
-
-        <form id="signinForm" class="mt-5 space-y-3.5">
-          <div>
-            <label for="authUsername" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
-              Username
-            </label>
-            <input id="authUsername" type="text" class="auth-input" placeholder="Enter username" autocomplete="username" autocapitalize="none" spellcheck="false">
+        <section id="signinPanel" class="mt-4">
+          <div class="auth-panel-copy">
+            <h2 class="mt-2 text-[1.72rem] font-extrabold text-white">Enter the dashboard</h2>
           </div>
 
-          <div>
-            <label for="authPassword" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
-              Password
-            </label>
-            <div class="password-field-shell">
-              <input id="authPassword" type="password" class="auth-input" placeholder="Enter password" autocomplete="current-password">
-              <button id="togglePasswordVisibility" type="button" class="password-visibility-button" aria-label="Show password" aria-pressed="false">
-                <span id="passwordEyeOpen" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
-                </span>
-                <span id="passwordEyeClosed" class="hidden" aria-hidden="true">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m3 3 18 18"></path>
-                    <path d="M10.6 10.6A3 3 0 0 0 12 15a3 3 0 0 0 2.4-4.4"></path>
-                    <path d="M9.9 5.1A11 11 0 0 1 12 5c6.4 0 10 7 10 7a17.3 17.3 0 0 1-3.1 3.9"></path>
-                    <path d="M6.2 6.2C3.7 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 5.1-1.2"></path>
-                  </svg>
-                </span>
+          <form id="signinForm" class="mt-4 space-y-3">
+            <div>
+              <label for="authIdentifier" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+                Email Address
+              </label>
+              <input id="authIdentifier" type="text" class="auth-input" placeholder="Enter Email Address" autocomplete="username" autocapitalize="none" spellcheck="false">
+            </div>
+
+            <div>
+              <label for="authPassword" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+                Password
+              </label>
+              <div class="password-field-shell">
+                <input id="authPassword" type="password" class="auth-input" placeholder="Enter Password" autocomplete="current-password">
+                <button type="button" class="password-visibility-button" data-password-target="authPassword" aria-label="Show password" aria-pressed="false">
+                  <span class="password-eye-open" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </span>
+                  <span class="password-eye-closed hidden" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m3 3 18 18"></path>
+                      <path d="M10.6 10.6A3 3 0 0 0 12 15a3 3 0 0 0 2.4-4.4"></path>
+                      <path d="M9.9 5.1A11 11 0 0 1 12 5c6.4 0 10 7 10 7a17.3 17.3 0 0 1-3.1 3.9"></path>
+                      <path d="M6.2 6.2C3.7 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 5.1-1.2"></path>
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-end">
+              <button id="openForgotPasswordButton" type="button" class="auth-text-button">
+                Forgot password?
               </button>
             </div>
+
+            <p id="authError" class="auth-error hidden" aria-live="polite"></p>
+            <p id="authStatus" class="auth-status hidden" aria-live="polite"></p>
+
+            <button type="submit" class="auth-submit-button w-full rounded-2xl px-5 py-3 text-sm font-black tracking-[0.08em]">
+              Login
+            </button>
+          </form>
+        </section>
+
+        <section id="signupPanel" class="mt-4 hidden">
+          <div class="auth-panel-copy">
+            <h2 class="mt-2 text-[1.62rem] font-extrabold text-white">Set up your account</h2>
           </div>
 
-          <p id="authError" class="auth-error hidden" aria-live="polite"></p>
+          <form id="signupForm" class="mt-4 space-y-3">
+            <div class="auth-fields-grid auth-fields-grid-two">
+              <div>
+                <label for="signupFirstName" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+                  First Name<span class="required-star">*</span>
+                </label>
+                <input id="signupFirstName" type="text" class="auth-input" placeholder="Enter First Name" autocomplete="given-name">
+                <p id="signupFirstNameError" class="auth-field-error hidden" aria-live="polite"></p>
+              </div>
 
-          <button type="submit" class="auth-submit-button w-full rounded-2xl px-5 py-3 text-sm font-black tracking-[0.08em]">
-            Login
-          </button>
-        </form>
+              <div>
+                <label for="signupLastName" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+                  Last Name
+                </label>
+                <input id="signupLastName" type="text" class="auth-input" placeholder="Enter Last Name" autocomplete="family-name">
+                <p id="signupLastNameError" class="auth-field-error hidden" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="auth-fields-grid">
+              <div>
+                <label for="signupEmail" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+                  Email Address<span class="required-star">*</span>
+                </label>
+                <input id="signupEmail" type="email" class="auth-input" placeholder="Enter Email Address" autocomplete="email" autocapitalize="none" spellcheck="false">
+                <p id="signupEmailError" class="auth-field-error hidden" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="auth-fields-grid auth-fields-grid-two">
+              <div>
+                <label for="signupPassword" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+                  Password<span class="required-star">*</span>
+                </label>
+                <div class="password-field-shell">
+                  <input id="signupPassword" type="password" class="auth-input" placeholder="Enter Password" autocomplete="new-password">
+                  <button type="button" class="password-visibility-button" data-password-target="signupPassword" aria-label="Show password" aria-pressed="false">
+                    <span class="password-eye-open" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    </span>
+                    <span class="password-eye-closed hidden" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 3 18 18"></path>
+                        <path d="M10.6 10.6A3 3 0 0 0 12 15a3 3 0 0 0 2.4-4.4"></path>
+                        <path d="M9.9 5.1A11 11 0 0 1 12 5c6.4 0 10 7 10 7a17.3 17.3 0 0 1-3.1 3.9"></path>
+                        <path d="M6.2 6.2C3.7 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 5.1-1.2"></path>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label for="signupConfirmPassword" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+                  Re-enter Password<span class="required-star">*</span>
+                </label>
+                <div class="password-field-shell">
+                  <input id="signupConfirmPassword" type="password" class="auth-input" placeholder="Re-enter password" autocomplete="new-password">
+                  <button type="button" class="password-visibility-button" data-password-target="signupConfirmPassword" aria-label="Show password" aria-pressed="false">
+                    <span class="password-eye-open" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                      </svg>
+                    </span>
+                    <span class="password-eye-closed hidden" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 3 18 18"></path>
+                        <path d="M10.6 10.6A3 3 0 0 0 12 15a3 3 0 0 0 2.4-4.4"></path>
+                        <path d="M9.9 5.1A11 11 0 0 1 12 5c6.4 0 10 7 10 7a17.3 17.3 0 0 1-3.1 3.9"></path>
+                        <path d="M6.2 6.2C3.7 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 5.1-1.2"></path>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <p id="signupConfirmPasswordError" class="auth-field-error hidden" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <p id="signupError" class="auth-error hidden" aria-live="polite"></p>
+
+            <button type="submit" class="auth-submit-button w-full rounded-2xl px-5 py-3 text-sm font-black tracking-[0.08em]">
+              Create Account
+            </button>
+          </form>
+        </section>
+
+        <section id="signupSuccessPanel" class="mt-4 hidden">
+          <div class="landing-chip rounded-[1.35rem] px-5 py-6 text-center">
+            <p class="text-[0.72rem] font-black uppercase tracking-[0.18em] text-emerald-200/75">Account Created</p>
+            <h2 id="signupSuccessTitle" class="mt-3 text-[1.52rem] font-extrabold text-white">Successfully created your account</h2>
+            <p id="signupSuccessCopy" class="mt-3 text-sm leading-6 text-zinc-300/85">
+              Your account is ready. Click Sign In to continue to the dashboard.
+            </p>
+            <button id="signupSuccessSigninButton" type="button" class="auth-submit-button mt-5 inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-black tracking-[0.08em]">
+              Sign In
+            </button>
+          </div>
+        </section>
       </aside>
     </div>
   </div>
@@ -1589,6 +1887,148 @@
   </div>
 </div>
 
+<div id="forgotPasswordDialog" class="dialog-backdrop fixed inset-0 z-[10000] hidden items-center justify-center px-4">
+  <div class="dialog-card modal-pop rounded-2xl p-6">
+    <p class="dialog-kicker">Forgot Password</p>
+    <h2 class="mt-3 text-[1.5rem] font-extrabold text-white">Verify your email</h2>
+    <p class="mt-3 text-sm leading-6 text-zinc-300/82">
+      We will send a verification link to your registered email address. Open that link on this same device to create a new password.
+    </p>
+
+    <form id="forgotPasswordForm" class="mt-5 space-y-3">
+      <div>
+        <label for="forgotPasswordEmail" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+          Registered Email Address
+        </label>
+        <input id="forgotPasswordEmail" type="email" class="auth-input" placeholder="Enter Email Address" autocomplete="email" autocapitalize="none" spellcheck="false">
+      </div>
+
+      <p id="forgotPasswordError" class="auth-error hidden" aria-live="polite"></p>
+      <p id="forgotPasswordStatus" class="auth-status hidden" aria-live="polite"></p>
+
+      <div class="mt-5 flex flex-wrap justify-end gap-3">
+        <button id="forgotPasswordCancel" type="button" class="secondary-button rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Cancel
+        </button>
+        <button type="submit" class="primary-button rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Start Recovery
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="resetPasswordDialog" class="dialog-backdrop fixed inset-0 z-[10000] hidden items-center justify-center px-4">
+  <div class="dialog-card modal-pop rounded-2xl p-6">
+    <p class="dialog-kicker">Create New Password</p>
+    <h2 class="mt-3 text-[1.5rem] font-extrabold text-white">Set a new password</h2>
+    <p class="mt-3 text-sm leading-6 text-zinc-300/82">
+      Your email verification is complete. Set a new password to continue.
+    </p>
+
+    <form id="resetPasswordForm" class="mt-5 space-y-3">
+      <div>
+        <label for="resetPassword" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+          New Password
+        </label>
+        <div class="password-field-shell">
+          <input id="resetPassword" type="password" class="auth-input" placeholder="Create new password" autocomplete="new-password">
+          <button type="button" class="password-visibility-button" data-password-target="resetPassword" aria-label="Show password" aria-pressed="false">
+            <span class="password-eye-open" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </span>
+            <span class="password-eye-closed hidden" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 3 18 18"></path>
+                <path d="M10.6 10.6A3 3 0 0 0 12 15a3 3 0 0 0 2.4-4.4"></path>
+                <path d="M9.9 5.1A11 11 0 0 1 12 5c6.4 0 10 7 10 7a17.3 17.3 0 0 1-3.1 3.9"></path>
+                <path d="M6.2 6.2C3.7 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 5.1-1.2"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label for="resetPasswordConfirm" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+          Confirm New Password
+        </label>
+        <div class="password-field-shell">
+          <input id="resetPasswordConfirm" type="password" class="auth-input" placeholder="Re-enter new password" autocomplete="new-password">
+          <button type="button" class="password-visibility-button" data-password-target="resetPasswordConfirm" aria-label="Show password" aria-pressed="false">
+            <span class="password-eye-open" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </span>
+            <span class="password-eye-closed hidden" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 3 18 18"></path>
+                <path d="M10.6 10.6A3 3 0 0 0 12 15a3 3 0 0 0 2.4-4.4"></path>
+                <path d="M9.9 5.1A11 11 0 0 1 12 5c6.4 0 10 7 10 7a17.3 17.3 0 0 1-3.1 3.9"></path>
+                <path d="M6.2 6.2C3.7 8 2 12 2 12s3.6 7 10 7a10.7 10.7 0 0 0 5.1-1.2"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <p id="resetPasswordError" class="auth-error hidden" aria-live="polite"></p>
+
+      <div class="mt-5 flex flex-wrap justify-end gap-3">
+        <button id="resetPasswordCancel" type="button" class="secondary-button rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Cancel
+        </button>
+        <button type="submit" class="primary-button rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Update Password
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="changeEmailDialog" class="dialog-backdrop fixed inset-0 z-[10000] hidden items-center justify-center px-4">
+  <div class="dialog-card modal-pop rounded-2xl p-6">
+    <p class="dialog-kicker">Update Email</p>
+    <h2 class="mt-3 text-[1.5rem] font-extrabold text-white">Change your email address</h2>
+    <p class="mt-3 text-sm leading-6 text-zinc-300/82">
+      If you used the wrong email while signing up, update it here. You will need to verify the new email before you can use the dashboard services.
+    </p>
+
+    <form id="changeEmailForm" class="mt-5 space-y-3">
+      <div>
+        <label for="changeEmailCurrent" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+          Current Email
+        </label>
+        <input id="changeEmailCurrent" type="email" class="auth-input" placeholder="Current email" autocomplete="email" readonly>
+      </div>
+
+      <div>
+        <label for="changeEmailNew" class="mb-2 block text-[0.8rem] font-black tracking-[0.04em] text-white/55">
+          New Email Address
+        </label>
+        <input id="changeEmailNew" type="email" class="auth-input" placeholder="Enter new email address" autocomplete="email" autocapitalize="none" spellcheck="false">
+      </div>
+
+      <p id="changeEmailError" class="auth-error hidden" aria-live="polite"></p>
+      <p id="changeEmailStatus" class="auth-status hidden" aria-live="polite"></p>
+
+      <div class="mt-5 flex flex-wrap justify-end gap-3">
+        <button id="changeEmailCancel" type="button" class="secondary-button rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Cancel
+        </button>
+        <button type="submit" class="primary-button rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Save Email
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div id="appShell" class="app-shell is-locked" aria-hidden="true">
 
 <div id="sidePanelBackdrop" class="side-panel-backdrop" aria-hidden="true">
@@ -1604,10 +2044,32 @@
     </div>
 
     <div class="landing-chip mt-6 rounded-[1.35rem] p-4">
-      <p class="text-[0.72rem] font-black uppercase tracking-[0.18em] text-white/45">Session</p>
-      <p class="mt-2 text-sm leading-6 text-zinc-300/82">
-        You are signed in. Use logout whenever you want to return to the login page.
+      <p class="text-[0.72rem] font-black uppercase tracking-[0.18em] text-white/45">Profile</p>
+      <p id="sidePanelProfileName" class="mt-2 text-base font-extrabold text-white">Investor</p>
+      <p id="sidePanelProfileMeta" class="mt-2 text-sm leading-6 text-zinc-300/82">
+        Sign in to manage your account details.
       </p>
+      <p id="sidePanelEmailStatus" class="mt-2 text-xs font-semibold tracking-[0.04em] text-emerald-200/80">
+        Email sign-in ready
+      </p>
+      <div class="mt-3 flex items-center gap-2">
+        <span id="sidePanelVerifiedBadge" class="hidden inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/12 px-3 py-1 text-[0.72rem] font-black uppercase tracking-[0.14em] text-emerald-100">
+          <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-300 text-[0.78rem] font-black text-slate-950">&#10003;</span>
+          Verified
+        </span>
+      </div>
+      <div class="mt-4 grid gap-3 sm:grid-cols-3">
+        <button id="profileButton" type="button" class="secondary-button rounded-xl px-4 py-2.5 text-sm font-semibold">
+          Profile
+        </button>
+        <button id="changeEmailButton" type="button" class="secondary-button rounded-xl px-4 py-2.5 text-sm font-semibold">
+          Change Email
+        </button>
+        <button id="verifyEmailButton" type="button" class="secondary-button inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold">
+          <span id="verifyEmailButtonTick" class="hidden inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-300 text-[0.78rem] font-black text-slate-950">&#10003;</span>
+          <span id="verifyEmailButtonLabel">Verify Email</span>
+        </button>
+      </div>
     </div>
 
     <button id="logoutButton" type="button" class="primary-button mt-auto w-full rounded-2xl px-5 py-3 text-sm font-black uppercase tracking-[0.18em]">
@@ -1632,9 +2094,11 @@
           </span>
         </button>
 
-        <h1 class="portfolio-title min-w-0 text-[1.85rem] font-bold leading-none text-zinc-50 sm:text-[2.05rem]">
-          All Stocks Portfolio &#x1F4B9;
-        </h1>
+        <div class="portfolio-brand min-w-0">
+          <h1 class="portfolio-title min-w-0 text-[1.85rem] font-bold leading-none text-zinc-50 sm:text-[2.05rem]">
+            All Stocks Portfolio
+          </h1>
+        </div>
       </div>
 
       <div class="ml-auto flex items-center gap-3 flex-wrap justify-end lg:shrink-0">
@@ -1649,9 +2113,9 @@
           <p id="headerTotalPnl" class="metric-value text-sm font-semibold profit-neutral text-center whitespace-nowrap">&#8377;0.00</p>
         </div>
 
-        <div class="metric-card px-4 py-1.5 rounded-lg flex flex-col items-center justify-center">
-          <p class="metric-label text-xs">Account</p>
-          <p id="welcomeMessage" class="metric-value text-sm font-semibold text-center whitespace-nowrap">Welcome, Admin!</p>
+        <div class="welcome-panel px-1 py-1 flex flex-col items-center justify-center">
+          <p class="welcome-panel-label">Welcome!</p>
+          <p id="welcomeMessage" class="welcome-user">Investor</p>
         </div>
 
       </div>
@@ -1686,6 +2150,22 @@
 
   </div>
 
+</div>
+
+<div id="emailVerificationBanner" class="hidden max-w-[1400px] mx-auto px-4 pt-3">
+  <div class="rounded-[1.35rem] border border-amber-300/25 bg-amber-500/10 px-4 py-4">
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <p class="text-[0.72rem] font-black uppercase tracking-[0.18em] text-amber-200/85">Verification Required</p>
+        <p id="emailVerificationBannerMessage" class="mt-2 text-sm leading-6 text-amber-50/92">
+          Verify your email to explore dashboard services.
+        </p>
+      </div>
+      <button id="emailVerificationBannerAction" type="button" class="secondary-button rounded-xl px-4 py-2.5 text-sm font-semibold">
+        Open Quick Menu
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="table-section max-w-[1400px] mx-auto px-4">
@@ -1791,13 +2271,57 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+  setDoc,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const STOCK_SHEET_URL = "https://docs.google.com/spreadsheets/d/17B4IEGfyIwoWGwEsdadqFzwXvn5LNW5-8E8ZeGvZKrE/gviz/tq?tqx=out:json";
 const RUPEE = "\u20B9";
 const DEFAULT_DEMAT = "";
 const DEMAT_SELECT_LABEL = "Select";
 const DEMAT_FILTER_ALL = "__ALL__";
+const AUTH_STORAGE_KEY = "allstocksportfolio-authenticated";
+const AUTH_PROFILE_STORAGE_KEY = "allstocksportfolio-auth-profile";
+const USERS_COLLECTION_NAME = "allstocksportfolio-users";
+const PORTFOLIO_COLLECTION_NAME = "portfolio";
+const DEFAULT_ACCOUNT_NAME = "Investor";
+const DEFAULT_TEST_USER = Object.freeze({
+  docId: "local-admin-test-user",
+  uniqueNumber: "ASP-ADMIN",
+  firstName: "Admin",
+  lastName: "",
+  email: "",
+  username: "admin",
+  passwordHash: "a26da93b528584744b62d444f5290969acd277f7bd308a905ed0d040119b4e51",
+  createdAt: "2026-04-27T00:00:00.000Z",
+  source: "local-test"
+});
+const PASSWORD_RESET_SESSION_KEY = "allstocksportfolio-password-reset-session";
+const EMAIL_LINK_AUTH_SESSION_KEY = "allstocksportfolio-email-link-session";
+const SIGNUP_DRAFT_STORAGE_KEY = "allstocksportfolio-signup-draft";
+const PASSWORD_RESET_SESSION_TTL_MS = 30 * 60 * 1000;
+const EMAIL_LINK_AUTH_SESSION_TTL_MS = 30 * 60 * 1000;
+const PASSWORD_RESET_LINK_INTENT = "password-reset";
+const SIGNUP_EMAIL_LINK_INTENT = "signup-email-verify";
+const SIGNIN_EMAIL_LINK_INTENT = "signin-email-link";
+const ACCOUNT_EMAIL_VERIFY_INTENT = "account-email-verify";
+const LEGACY_REMOVED_USERS = Object.freeze([]);
 const DEMAT_OPTIONS = [
   DEFAULT_DEMAT,
   "Anand Rathi",
@@ -1827,9 +2351,6 @@ const AVG_PRICE_INPUT_WIDTH = "118px";
 const QUANTITY_DIGITS = 6;
 const MAX_WHOLE_DIGITS = 6;
 const MAX_DECIMAL_DIGITS = 2;
-const AUTH_USERNAME = "admin";
-const AUTH_PASSWORD = "admin";
-const AUTH_STORAGE_KEY = "divtracker-authenticated";
 const indianIntegerFormatter = new Intl.NumberFormat("en-IN", {
   maximumFractionDigits: 0
 });
@@ -1838,7 +2359,7 @@ const indianCurrencyFormatter = new Intl.NumberFormat("en-IN", {
   maximumFractionDigits: 2
 });
 
-const firebaseConfig = {
+const portfolioFirebaseConfig = {
   apiKey: "AIzaSyCqhcJC6m4qdETVgDCIVlZX55451UYRq1o",
   authDomain: "divtracker-f5c6e.firebaseapp.com",
   projectId: "divtracker-f5c6e",
@@ -1848,8 +2369,9 @@ const firebaseConfig = {
   measurementId: "G-E244PEKHVN"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const portfolioApp = initializeApp(portfolioFirebaseConfig);
+const db = getFirestore(portfolioApp);
+const auth = getAuth(portfolioApp);
 
 let highlightedIndex = -1;
 let currentMatches = [];
@@ -1859,6 +2381,15 @@ let currentDematFilter = DEMAT_FILTER_ALL;
 let pendingValueDialogRowId = "";
 let pendingDeleteRowId = "";
 let rowCounter = 0;
+let currentAuthMode = "signin";
+let signupEmailVerificationState = {
+  email: "",
+  verified: false
+};
+let signupSuccessState = {
+  email: "",
+  firstName: ""
+};
 
 const addedStocks = new Set();
 const masterStocks = {};
@@ -1908,18 +2439,38 @@ function formatQuantity(value) {
   return indianIntegerFormatter.format(parseQuantity(value));
 }
 
-function formatUserDisplayName(username) {
-  const normalizedName = String(username ?? "").trim();
+function formatNamePart(value) {
+  const normalizedValue = sanitizeNameInputValue(value).trim();
 
-  if (!normalizedName) {
-    return "Admin";
+  if (!normalizedValue) {
+    return "";
   }
 
-  return normalizedName
+  return normalizedValue
     .split(/\s+/)
     .filter(Boolean)
     .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
     .join(" ");
+}
+
+function formatUserDisplayName(username) {
+  const formattedName = formatNamePart(username);
+
+  if (!formattedName) {
+    return DEFAULT_ACCOUNT_NAME;
+  }
+
+  return formattedName;
+}
+
+function sanitizeNameInputValue(value) {
+  return String(value ?? "")
+    .replace(/[^A-Za-z\s]/g, "")
+    .replace(/\s{2,}/g, " ");
+}
+
+function isValidNameValue(value) {
+  return /^[A-Za-z]+(?:\s+[A-Za-z]+)*$/.test(String(value ?? "").trim());
 }
 
 function escapeHtml(value) {
@@ -2400,12 +2951,74 @@ function setAppShellLocked(isLocked) {
   appShell.setAttribute("aria-hidden", String(isLocked));
 }
 
+function parseGvizResponse(text) {
+  return JSON.parse(text.substring(47, text.length - 2));
+}
+
+function normalizeEmail(value) {
+  return String(value ?? "").trim().toLowerCase();
+}
+
+function normalizeAuthIdentifier(value) {
+  return String(value ?? "").trim().toLowerCase();
+}
+
+function isValidGmailAddress(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(normalizeEmail(value));
+}
+
+function setFieldError(elementId, message = "") {
+  const target = document.getElementById(elementId);
+
+  if (!target) {
+    return;
+  }
+
+  target.textContent = message;
+  target.classList.toggle("hidden", !message);
+}
+
+function setAuthStatus(message = "") {
+  const authStatus = document.getElementById("authStatus");
+
+  if (!authStatus) {
+    return;
+  }
+
+  authStatus.textContent = message;
+  authStatus.classList.toggle("hidden", !message);
+}
+
 function getStoredAuthState() {
   try {
     return window.localStorage.getItem(AUTH_STORAGE_KEY) === "true";
   } catch (error) {
     return false;
   }
+}
+
+function getStoredAuthProfile() {
+  try {
+    const rawProfile = window.localStorage.getItem(AUTH_PROFILE_STORAGE_KEY);
+    return rawProfile ? JSON.parse(rawProfile) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function setStoredAuthProfile(profile) {
+  try {
+    if (profile) {
+      window.localStorage.setItem(AUTH_PROFILE_STORAGE_KEY, JSON.stringify(profile));
+    } else {
+      window.localStorage.removeItem(AUTH_PROFILE_STORAGE_KEY);
+    }
+  } catch (error) {
+    // Ignore storage access issues and keep the in-memory flow working.
+  }
+
+  updateQuickMenuProfile(profile);
+  updateEmailVerificationBanner(profile);
 }
 
 function setStoredAuthState(isAuthenticated) {
@@ -2457,17 +3070,292 @@ function handleSidePanelBackdropClick(event) {
   }
 }
 
-function handleGlobalKeydown(event) {
-  if (event.key === "Escape") {
-    closeSidePanel();
+function updateQuickMenuProfile(profile = getStoredAuthProfile()) {
+  const profileName = document.getElementById("sidePanelProfileName");
+  const profileMeta = document.getElementById("sidePanelProfileMeta");
+  const emailStatus = document.getElementById("sidePanelEmailStatus");
+  const verifiedBadge = document.getElementById("sidePanelVerifiedBadge");
+  const profileButton = document.getElementById("profileButton");
+  const changeEmailButton = document.getElementById("changeEmailButton");
+  const verifyEmailButton = document.getElementById("verifyEmailButton");
+  const verifyEmailButtonTick = document.getElementById("verifyEmailButtonTick");
+  const verifyEmailButtonLabel = document.getElementById("verifyEmailButtonLabel");
+  const safeProfile = profile && typeof profile === "object" ? profile : null;
+  const displayName = formatUserDisplayName(safeProfile?.firstName || safeProfile?.username || DEFAULT_ACCOUNT_NAME);
+  const detailParts = [
+    safeProfile?.email ? normalizeEmail(safeProfile.email) : ""
+  ].filter(Boolean);
+  const hasEmail = Boolean(safeProfile?.email);
+  const isEmailVerified = Boolean(safeProfile?.emailVerified);
+
+  if (profileName) {
+    profileName.textContent = displayName;
+  }
+
+  if (profileMeta) {
+    profileMeta.textContent = detailParts.length
+      ? detailParts.join(" | ")
+      : "Sign in to manage your account details.";
+  }
+
+  if (emailStatus) {
+    emailStatus.textContent = !hasEmail
+      ? "Add an email address to enable email sign-in."
+      : isEmailVerified
+        ? "Email verified. Full dashboard access unlocked."
+        : "Verify this email to unlock dashboard services.";
+  }
+
+  verifiedBadge?.classList.toggle("hidden", !isEmailVerified);
+
+  if (profileButton) {
+    profileButton.disabled = !safeProfile?.userId;
+  }
+
+  if (changeEmailButton) {
+    changeEmailButton.disabled = !safeProfile?.userId;
+  }
+
+  if (verifyEmailButton) {
+    verifyEmailButton.disabled = !safeProfile?.userId || !hasEmail || isEmailVerified;
+  }
+
+  verifyEmailButtonTick?.classList.toggle("hidden", !isEmailVerified);
+
+  if (verifyEmailButtonLabel) {
+    verifyEmailButtonLabel.textContent = isEmailVerified ? "Verified" : "Verify Email";
   }
 }
 
-function setPasswordVisibility(isVisible) {
-  const passwordInput = document.getElementById("authPassword");
-  const togglePasswordVisibilityButton = document.getElementById("togglePasswordVisibility");
-  const passwordEyeOpen = document.getElementById("passwordEyeOpen");
-  const passwordEyeClosed = document.getElementById("passwordEyeClosed");
+function buildProfileDialogContent(profile = {}) {
+  const displayName = escapeHtml(formatUserDisplayName(profile.firstName || profile.username || DEFAULT_ACCOUNT_NAME));
+  const uniqueNumber = escapeHtml(String(profile.uniqueNumber || "Not assigned"));
+  const email = escapeHtml(normalizeEmail(profile.email || "") || "Not available");
+  const emailStatus = profile.emailVerified ? "Verified" : "Not verified";
+
+  return `
+    <div class="space-y-3 text-left">
+      <div><span class="dialog-field-name">Name</span><br><span>${displayName}</span></div>
+      <div><span class="dialog-field-name">Email</span><br><span>${email}</span></div>
+      <div><span class="dialog-field-name">Account ID</span><br><span>${uniqueNumber}</span></div>
+      <div><span class="dialog-field-name">Email Status</span><br><span>${emailStatus}</span></div>
+    </div>
+  `;
+}
+
+function handleProfileButtonClick() {
+  const profile = getStoredAuthProfile();
+
+  if (!profile?.userId) {
+    showValueDialog("Please sign in to view your profile.");
+    return;
+  }
+
+  showValueDialog(buildProfileDialogContent(profile));
+}
+
+async function sendAccountVerificationLink(profile, { showSuccessToast = true } = {}) {
+  if (!profile?.userId) {
+    throw new Error("Please sign in to verify your email address.");
+  }
+
+  const email = normalizeEmail(profile.email || "");
+
+  if (!email) {
+    throw new Error("No email address is linked to this account yet.");
+  }
+
+  if (!isOtpOriginSupported()) {
+    throw new Error("Email verification requires the app to be served from a web server on http or https. Opening index.html directly with file:// will not work.");
+  }
+
+  await sendSignInLinkToEmail(auth, email, {
+    url: buildEmailLinkUrl(ACCOUNT_EMAIL_VERIFY_INTENT),
+    handleCodeInApp: true
+  });
+  setEmailLinkAuthSession({
+    flow: "account-verify",
+    userId: profile.userId,
+    email,
+    startedAt: Date.now()
+  });
+
+  if (showSuccessToast) {
+    showToast(`Verification link sent to ${email}.`, "success");
+  }
+}
+
+async function handleVerifyEmailButtonClick() {
+  const profile = getStoredAuthProfile();
+
+  if (!profile?.userId) {
+    showValueDialog("Please sign in to verify your email address.");
+    return;
+  }
+
+  if (!profile?.email) {
+    showValueDialog("No email address is linked to this account yet.");
+    return;
+  }
+
+  if (profile.emailVerified) {
+    showToast("This email address is already verified.", "success");
+    return;
+  }
+
+  try {
+    await sendAccountVerificationLink(profile);
+  } catch (error) {
+    showValueDialog(getFriendlyFirebaseErrorMessage(error, {
+      flow: "email-link"
+    }));
+  }
+}
+
+function clearChangeEmailFeedback() {
+  setFieldError("changeEmailError", "");
+  setFieldError("changeEmailStatus", "");
+}
+
+function showChangeEmailDialog() {
+  const profile = getStoredAuthProfile();
+
+  if (!profile?.userId) {
+    showValueDialog("Please sign in to update your email address.");
+    return;
+  }
+
+  const currentInput = document.getElementById("changeEmailCurrent");
+  const newInput = document.getElementById("changeEmailNew");
+
+  if (currentInput) {
+    currentInput.value = normalizeEmail(profile.email || "");
+  }
+
+  if (newInput) {
+    newInput.value = "";
+  }
+
+  clearChangeEmailFeedback();
+  openDialog("changeEmailDialog");
+  requestAnimationFrame(() => newInput?.focus());
+}
+
+function hideChangeEmailDialog({ clearFields = false } = {}) {
+  closeDialog("changeEmailDialog");
+  clearChangeEmailFeedback();
+
+  if (!clearFields) {
+    return;
+  }
+
+  const currentInput = document.getElementById("changeEmailCurrent");
+  const newInput = document.getElementById("changeEmailNew");
+
+  if (currentInput) {
+    currentInput.value = "";
+  }
+
+  if (newInput) {
+    newInput.value = "";
+  }
+}
+
+async function handleChangeEmailSubmit(event) {
+  event.preventDefault();
+
+  const profile = getStoredAuthProfile();
+  const newEmailInput = document.getElementById("changeEmailNew");
+  const newEmail = normalizeEmail(newEmailInput?.value || "");
+  const currentEmail = normalizeEmail(profile?.email || "");
+
+  clearChangeEmailFeedback();
+
+  if (!profile?.userId) {
+    setFieldError("changeEmailError", "Please sign in again and try updating your email address.");
+    return;
+  }
+
+  if (!isValidGmailAddress(newEmail)) {
+    setFieldError("changeEmailError", "Enter a valid email ID.");
+    newEmailInput?.focus();
+    return;
+  }
+
+  if (newEmail === currentEmail) {
+    setFieldError("changeEmailError", "Enter a different email address, or use Verify Email for the current one.");
+    newEmailInput?.focus();
+    newEmailInput?.select();
+    return;
+  }
+
+  try {
+    const knownUsers = await getAllKnownUsers();
+    const conflictUser = knownUsers.find(user => user.docId !== profile.userId && user.email === newEmail);
+
+    if (conflictUser) {
+      setFieldError("changeEmailError", "Another account already exists with this email address.");
+      newEmailInput?.focus();
+      newEmailInput?.select();
+      return;
+    }
+
+    setFieldError("changeEmailStatus", "Updating your email address...");
+    await updateDoc(doc(db, USERS_COLLECTION_NAME, profile.userId), {
+      email: newEmail,
+      emailVerified: false,
+      emailVerifiedAt: "",
+      updatedAt: new Date().toISOString()
+    });
+
+    const updatedProfile = {
+      ...profile,
+      email: newEmail,
+      emailVerified: false,
+      emailVerifiedAt: ""
+    };
+
+    setStoredAuthProfile(updatedProfile);
+    await loadPortfolioFromFirebase().catch(() => {});
+
+    try {
+      await sendAccountVerificationLink(updatedProfile, {
+        showSuccessToast: false
+      });
+      hideChangeEmailDialog({
+        clearFields: true
+      });
+      showToast(`Email updated to ${newEmail}. Verify it to unlock the dashboard.`, "warning");
+    } catch (verificationError) {
+      hideChangeEmailDialog({
+        clearFields: true
+      });
+      showValueDialog(`Email updated to ${escapeHtml(newEmail)}. ${escapeHtml(getFriendlyFirebaseErrorMessage(verificationError, {
+        flow: "email-link"
+      }))}`);
+    }
+  } catch (error) {
+    setFieldError("changeEmailStatus", "");
+    setFieldError("changeEmailError", getFriendlyFirebaseErrorMessage(error));
+  }
+}
+
+function handleGlobalKeydown(event) {
+  if (event.key === "Escape") {
+    closeSidePanel();
+    hideForgotPasswordDialog({
+      clearFields: false
+    });
+    hideResetPasswordDialog();
+    hideChangeEmailDialog();
+  }
+}
+
+function setPasswordVisibility(targetId, isVisible) {
+  const passwordInput = document.getElementById(targetId);
+  const togglePasswordVisibilityButton = document.querySelector(`[data-password-target="${targetId}"]`);
+  const passwordEyeOpen = togglePasswordVisibilityButton?.querySelector(".password-eye-open");
+  const passwordEyeClosed = togglePasswordVisibilityButton?.querySelector(".password-eye-closed");
 
   if (!passwordInput || !togglePasswordVisibilityButton || !passwordEyeOpen || !passwordEyeClosed) {
     return;
@@ -2480,44 +3368,114 @@ function setPasswordVisibility(isVisible) {
   passwordEyeClosed.classList.toggle("hidden", !isVisible);
 }
 
-function togglePasswordVisibility() {
-  const passwordInput = document.getElementById("authPassword");
+function togglePasswordVisibility(event) {
+  const targetId = event.currentTarget?.dataset?.passwordTarget;
+  const passwordInput = targetId ? document.getElementById(targetId) : null;
   const shouldShowPassword = passwordInput?.type === "password";
 
-  setPasswordVisibility(Boolean(shouldShowPassword));
+  if (!targetId) {
+    return;
+  }
+
+  setPasswordVisibility(targetId, Boolean(shouldShowPassword));
 }
 
 function clearAuthInputs() {
-  const usernameInput = document.getElementById("authUsername");
-  const passwordInput = document.getElementById("authPassword");
+  [
+    "authIdentifier",
+    "authPassword",
+    "signupFirstName",
+    "signupLastName",
+    "signupEmail",
+    "signupPassword",
+    "signupConfirmPassword",
+    "forgotPasswordEmail",
+    "resetPassword",
+    "resetPasswordConfirm"
+  ].forEach(inputId => {
+    const input = document.getElementById(inputId);
 
-  if (usernameInput) {
-    usernameInput.value = "";
-  }
+    if (input) {
+      input.value = "";
+    }
+  });
 
-  if (passwordInput) {
-    passwordInput.value = "";
-  }
+  document.querySelectorAll("[data-password-target]").forEach(button => {
+    const targetId = button.getAttribute("data-password-target");
 
-  setPasswordVisibility(false);
+    if (targetId) {
+      setPasswordVisibility(targetId, false);
+    }
+  });
+
   setAuthError("");
+  setAuthStatus("");
+  setFieldError("signupFirstNameError", "");
+  setFieldError("signupLastNameError", "");
+  setFieldError("signupEmailError", "");
+  setFieldError("signupConfirmPasswordError", "");
+  setFieldError("signupError", "");
+  resetSignupEmailVerificationState();
+  resetSignupSuccessState();
+  clearForgotPasswordFeedback();
+  clearResetPasswordFeedback();
 }
 
-function showLandingOverlay({ focusUsername = true, resetFields = true } = {}) {
+function switchAuthMode(mode, { focusField = true, resetErrors = false } = {}) {
+  currentAuthMode = mode === "signup" || mode === "signup-success"
+    ? mode
+    : "signin";
+
+  const signinPanel = document.getElementById("signinPanel");
+  const signupPanel = document.getElementById("signupPanel");
+  const signupSuccessPanel = document.getElementById("signupSuccessPanel");
+  const showSigninOption = document.getElementById("showSigninOption");
+  const showSignupOption = document.getElementById("showSignupOption");
+  const isSigninMode = currentAuthMode === "signin";
+  const isSignupMode = currentAuthMode === "signup";
+  const isSignupSuccessMode = currentAuthMode === "signup-success";
+
+  signinPanel?.classList.toggle("hidden", !isSigninMode);
+  signupPanel?.classList.toggle("hidden", !isSignupMode);
+  signupSuccessPanel?.classList.toggle("hidden", !isSignupSuccessMode);
+  showSigninOption?.classList.toggle("is-active", isSigninMode);
+  showSignupOption?.classList.toggle("is-active", isSignupMode || isSignupSuccessMode);
+
+  if (resetErrors) {
+    setAuthError("");
+    setAuthStatus("");
+    setFieldError("signupEmailError", "");
+    setFieldError("signupConfirmPasswordError", "");
+    setFieldError("signupError", "");
+  }
+
+  if (!focusField) {
+    return;
+  }
+
+  const focusTarget = currentAuthMode === "signup"
+    ? document.getElementById("signupFirstName")
+    : currentAuthMode === "signup-success"
+      ? document.getElementById("signupSuccessSigninButton")
+      : document.getElementById("authIdentifier");
+
+  requestAnimationFrame(() => focusTarget?.focus());
+}
+
+function showLandingOverlay({ focusField = true, resetFields = true, mode = "signin" } = {}) {
   const overlay = document.getElementById("landingOverlay");
-  const authUsername = document.getElementById("authUsername");
 
   setAppShellLocked(true);
   closeSidePanel();
   if (resetFields) {
     clearAuthInputs();
   }
+  switchAuthMode(mode, {
+    focusField,
+    resetErrors: true
+  });
   overlay.classList.remove("hidden");
   overlay.classList.add("flex");
-
-  if (focusUsername) {
-    requestAnimationFrame(() => authUsername?.focus());
-  }
 }
 
 function hideLandingOverlay() {
@@ -2526,6 +3484,84 @@ function hideLandingOverlay() {
   overlay.classList.add("hidden");
   overlay.classList.remove("flex");
   setAppShellLocked(false);
+}
+
+function resetSignupSuccessState() {
+  signupSuccessState = {
+    email: "",
+    firstName: ""
+  };
+
+  const title = document.getElementById("signupSuccessTitle");
+  const copy = document.getElementById("signupSuccessCopy");
+
+  if (title) {
+    title.textContent = "Successfully created your account";
+  }
+
+  if (copy) {
+    copy.textContent = "Your account is ready. Click Sign In, verify your email, and then continue to the dashboard.";
+  }
+}
+
+function setSignupSuccessState({ email = "", firstName = "" } = {}) {
+  const normalizedEmail = normalizeEmail(email);
+  const formattedFirstName = formatNamePart(firstName);
+  const title = document.getElementById("signupSuccessTitle");
+  const copy = document.getElementById("signupSuccessCopy");
+
+  signupSuccessState = {
+    email: normalizedEmail,
+    firstName: formattedFirstName
+  };
+
+  if (title) {
+    title.textContent = formattedFirstName
+      ? `${formattedFirstName}, your account is ready`
+      : "Successfully created your account";
+  }
+
+  if (copy) {
+    copy.textContent = normalizedEmail
+      ? `Your account for ${normalizedEmail} was created successfully. Click Sign In, verify your email, and then continue to the dashboard.`
+      : "Your account is ready. Click Sign In, verify your email, and then continue to the dashboard.";
+  }
+}
+
+function showSignupSuccessPanel({ email = "", firstName = "" } = {}) {
+  clearAuthInputs();
+  setStoredAuthState(false);
+  setStoredAuthProfile(null);
+  clearEmailLinkAuthSession();
+  clearSignupDraft();
+  updateWelcomeMessage(DEFAULT_ACCOUNT_NAME);
+  setSignupSuccessState({
+    email,
+    firstName
+  });
+  showLandingOverlay({
+    focusField: true,
+    resetFields: false,
+    mode: "signup-success"
+  });
+}
+
+function handleSignupSuccessSigninClick() {
+  const successEmail = normalizeEmail(signupSuccessState.email || "");
+  const identifierInput = document.getElementById("authIdentifier");
+
+  clearAuthInputs();
+  switchAuthMode("signin", {
+    focusField: false,
+    resetErrors: true
+  });
+
+  if (identifierInput && successEmail) {
+    identifierInput.value = successEmail;
+  }
+
+  setAuthStatus("Account created successfully. Use your email address and password to continue.");
+  requestAnimationFrame(() => identifierInput?.focus());
 }
 
 function setAuthError(message = "") {
@@ -2539,57 +3575,1214 @@ function setAuthError(message = "") {
   authError.classList.toggle("hidden", !message);
 }
 
-function handleSignupOption() {
-  setAuthError("");
-  showValueDialog("Sign up feature is yet to be added.");
+function isLegacyRemovedUserIdentity({ email = "", phone = "" } = {}) {
+  const normalizedEmail = normalizeEmail(email);
+
+  return LEGACY_REMOVED_USERS.some(user => (
+    normalizedEmail && user.email === normalizedEmail
+  ));
 }
 
-function updateWelcomeMessage(username = AUTH_USERNAME) {
+function buildNormalizedUserRecord(sourceRecord = {}, source = "firebase", docId = "") {
+  return {
+    docId: String(docId || sourceRecord.docId || sourceRecord.userId || "").trim(),
+    uniqueNumber: String(sourceRecord.uniqueNumber ?? sourceRecord.unique_number ?? sourceRecord.id ?? "").trim(),
+    firstName: formatNamePart(sourceRecord.firstName ?? sourceRecord.first_name ?? ""),
+    lastName: formatNamePart(sourceRecord.lastName ?? sourceRecord.last_name ?? ""),
+    email: normalizeEmail(sourceRecord.email ?? sourceRecord.emailId ?? sourceRecord["E-mail"] ?? ""),
+    username: normalizeAuthIdentifier(sourceRecord.username ?? sourceRecord.userName ?? sourceRecord.user_name ?? ""),
+    passwordHash: String(sourceRecord.passwordHash ?? sourceRecord.password_hash ?? sourceRecord.password ?? "").trim(),
+    emailVerified: Boolean(sourceRecord.emailVerified ?? sourceRecord.email_verified),
+    emailVerifiedAt: String(sourceRecord.emailVerifiedAt ?? sourceRecord.email_verified_at ?? "").trim(),
+    createdAt: String(sourceRecord.createdAt ?? sourceRecord.created_at ?? "").trim(),
+    source
+  };
+}
+
+function buildStoredAuthProfile(user = {}) {
+  return {
+    userId: String(user.docId ?? "").trim(),
+    uniqueNumber: String(user.uniqueNumber ?? "").trim(),
+    firstName: formatNamePart(user.firstName ?? ""),
+    lastName: formatNamePart(user.lastName ?? ""),
+    email: normalizeEmail(user.email ?? ""),
+    username: normalizeAuthIdentifier(user.username ?? ""),
+    emailVerified: Boolean(user.emailVerified),
+    emailVerifiedAt: String(user.emailVerifiedAt ?? "").trim()
+  };
+}
+
+function getCurrentSignedInProfile() {
+  return getStoredAuthProfile();
+}
+
+function getCurrentSignedInUserId() {
+  return String(getCurrentSignedInProfile()?.userId || "").trim();
+}
+
+function isCurrentUserEmailVerified(profile = getCurrentSignedInProfile()) {
+  return Boolean(profile?.emailVerified);
+}
+
+function getEmailVerificationReminderMessage() {
+  return "Verify your email to explore dashboard services. Use Quick Menu to change or verify your email address.";
+}
+
+function getUnverifiedDashboardMessage() {
+  return "Verify your email to explore dashboard services. Open Quick Menu to change or verify your email address.";
+}
+
+function updateEmailVerificationBanner(profile = getStoredAuthProfile()) {
+  const banner = document.getElementById("emailVerificationBanner");
+  const message = document.getElementById("emailVerificationBannerMessage");
+  const safeProfile = profile && typeof profile === "object" ? profile : null;
+  const shouldShow = Boolean(safeProfile?.userId && !safeProfile?.emailVerified);
+
+  if (!banner || !message) {
+    return;
+  }
+
+  if (!shouldShow) {
+    banner.classList.add("hidden");
+    return;
+  }
+
+  const email = normalizeEmail(safeProfile?.email || "");
+
+  message.textContent = email
+    ? `Verify ${email} to explore dashboard services. If this email is wrong, open Quick Menu and change it first.`
+    : getUnverifiedDashboardMessage();
+  banner.classList.remove("hidden");
+}
+
+function ensureVerifiedEmailAccess({ showFeedback = true } = {}) {
+  const profile = getCurrentSignedInProfile();
+
+  if (!profile?.userId) {
+    return false;
+  }
+
+  if (profile.emailVerified) {
+    return true;
+  }
+
+  updateEmailVerificationBanner(profile);
+
+  if (showFeedback) {
+    showToast(getEmailVerificationReminderMessage(), "warning");
+  }
+
+  return false;
+}
+
+async function sha256Hex(value) {
+  const encodedValue = new TextEncoder().encode(String(value ?? ""));
+  const digest = await crypto.subtle.digest("SHA-256", encodedValue);
+
+  return Array.from(new Uint8Array(digest))
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function isMatchingIdentifier(user, identifier) {
+  const authIdentifier = normalizeAuthIdentifier(identifier);
+  const email = normalizeEmail(identifier);
+
+  return Boolean(
+    (email && user.email === email) ||
+    (authIdentifier && normalizeAuthIdentifier(user.username) === authIdentifier)
+  );
+}
+
+function doesPasswordMatch(user, passwordHash, plainPassword) {
+  const storedValue = String(user.passwordHash ?? "").trim();
+
+  if (!storedValue) {
+    return false;
+  }
+
+  if (/^[a-f0-9]{64}$/i.test(storedValue)) {
+    return storedValue.toLowerCase() === passwordHash.toLowerCase();
+  }
+
+  return storedValue === plainPassword;
+}
+
+async function loadUsersFromFirebase() {
+  const querySnapshot = await getDocs(collection(db, USERS_COLLECTION_NAME));
+  const users = [];
+
+  querySnapshot.forEach(docSnap => {
+    const user = buildNormalizedUserRecord(docSnap.data(), "firebase", docSnap.id);
+
+    if ((user.email || user.username) && !isLegacyRemovedUserIdentity(user)) {
+      users.push(user);
+    }
+  });
+
+  return users;
+}
+
+async function getAllKnownUsers() {
+  const firebaseUsers = await loadUsersFromFirebase();
+  const mergedUsers = [DEFAULT_TEST_USER];
+
+  firebaseUsers.forEach(user => {
+    const alreadyAdded = mergedUsers.some(existingUser => (
+      (existingUser.docId && existingUser.docId === user.docId) ||
+      (existingUser.email && existingUser.email === user.email) ||
+      (existingUser.username && existingUser.username === user.username)
+    ));
+
+    if (!alreadyAdded) {
+      mergedUsers.push(user);
+    }
+  });
+
+  return mergedUsers;
+}
+
+function findUserByIdentifier(users, identifier) {
+  return users.find(user => isMatchingIdentifier(user, identifier));
+}
+
+function findUserByEmail(users, email) {
+  const normalizedEmail = normalizeEmail(email);
+
+  return users.find(user => user.email === normalizedEmail);
+}
+
+async function cleanupLegacyRemovedUsers() {
+  if (!LEGACY_REMOVED_USERS.length) {
+    return;
+  }
+
+  try {
+    const querySnapshot = await getDocs(collection(db, USERS_COLLECTION_NAME));
+    const deletions = [];
+
+    querySnapshot.forEach(docSnap => {
+      const user = buildNormalizedUserRecord(docSnap.data(), "firebase", docSnap.id);
+
+      if (isLegacyRemovedUserIdentity(user)) {
+        deletions.push(deleteDoc(doc(db, USERS_COLLECTION_NAME, docSnap.id)));
+      }
+    });
+
+    await Promise.allSettled(deletions);
+  } catch (error) {
+    // Ignore cleanup failures and keep the main app flow working.
+  }
+}
+
+function validateSignupPasswordMatch({ showError = false } = {}) {
+  const signupPassword = String(document.getElementById("signupPassword")?.value || "");
+  const confirmPassword = String(document.getElementById("signupConfirmPassword")?.value || "");
+
+  if (!confirmPassword) {
+    if (showError) {
+      setFieldError("signupConfirmPasswordError", "");
+    }
+
+    return true;
+  }
+
+  if (signupPassword !== confirmPassword) {
+    if (showError) {
+      setFieldError("signupConfirmPasswordError", "Re-entered password is incorrect.");
+    }
+
+    return false;
+  }
+
+  setFieldError("signupConfirmPasswordError", "");
+  return true;
+}
+
+function validateSignupForm() {
+  const firstName = formatNamePart(document.getElementById("signupFirstName")?.value || "");
+  const lastName = formatNamePart(document.getElementById("signupLastName")?.value || "");
+  const email = normalizeEmail(document.getElementById("signupEmail")?.value || "");
+  const password = String(document.getElementById("signupPassword")?.value || "");
+  const confirmPassword = String(document.getElementById("signupConfirmPassword")?.value || "");
+  let isValid = true;
+
+  setFieldError("signupFirstNameError", "");
+  setFieldError("signupLastNameError", "");
+  setFieldError("signupEmailError", "");
+  setFieldError("signupConfirmPasswordError", "");
+  setFieldError("signupError", "");
+
+  if (!firstName || !email || !password || !confirmPassword) {
+    setFieldError("signupError", "Please fill in all required signup fields.");
+    isValid = false;
+  }
+
+  if (!firstName) {
+    setFieldError("signupFirstNameError", "First name cannot be empty.");
+    isValid = false;
+  } else if (!isValidNameValue(firstName)) {
+    setFieldError("signupFirstNameError", "Enter a valid First Name.");
+    isValid = false;
+  }
+
+  if (lastName && !isValidNameValue(lastName)) {
+    setFieldError("signupLastNameError", "Enter a valid Last Name.");
+    isValid = false;
+  }
+
+  if (!isValidGmailAddress(email)) {
+    setFieldError("signupEmailError", "Enter a valid email ID.");
+    isValid = false;
+  }
+
+  if (password.length < 8) {
+    setFieldError("signupError", "Password must be at least 8 characters long.");
+    isValid = false;
+  }
+
+  if (!validateSignupPasswordMatch({
+    showError: true
+  })) {
+    isValid = false;
+  }
+
+  return {
+    isValid,
+    firstName,
+    lastName,
+    email,
+    password
+  };
+}
+
+function getSignupConflict(users, email) {
+  const normalizedEmail = normalizeEmail(email);
+  const emailMatch = normalizedEmail ? findUserByEmail(users, normalizedEmail) : null;
+
+  return {
+    emailMatch
+  };
+}
+
+function applySignupConflictFeedback(conflict = {}) {
+  const { emailMatch } = conflict;
+
+  if (!emailMatch) {
+    return false;
+  }
+
+  setFieldError("signupEmailError", "An account already exists with this email address. Please sign in instead.");
+  setFieldError("signupError", "An account already exists with this email address. Please sign in instead.");
+
+  return true;
+}
+
+function handleSignupEmailInput(event) {
+  event.target.value = normalizeEmail(event.target.value);
+  if (
+    signupEmailVerificationState.email &&
+    signupEmailVerificationState.email !== event.target.value
+  ) {
+    resetSignupEmailVerificationState();
+  }
+  setFieldError("signupEmailError", "");
+  setFieldError("signupError", "");
+}
+
+function handleSignupNameInput(event) {
+  event.target.value = sanitizeNameInputValue(event.target.value);
+  setFieldError(event.target.id === "signupFirstName" ? "signupFirstNameError" : "signupLastNameError", "");
+  setFieldError("signupError", "");
+}
+
+function handleSignupNameBlur(event) {
+  event.target.value = formatNamePart(event.target.value);
+}
+
+function handleSignupPasswordInput() {
+  validateSignupPasswordMatch({
+    showError: Boolean(document.getElementById("signupConfirmPassword")?.value)
+  });
+  setFieldError("signupError", "");
+}
+
+function updateWelcomeMessage(username = DEFAULT_ACCOUNT_NAME) {
   const welcomeMessage = document.getElementById("welcomeMessage");
 
   if (!welcomeMessage) {
     return;
   }
 
-  welcomeMessage.innerText = `Welcome, ${formatUserDisplayName(username)}!`;
+  welcomeMessage.innerText = formatUserDisplayName(username || DEFAULT_ACCOUNT_NAME);
 }
 
-function handleSignInSubmit(event) {
+function updateSignupEmailVerificationButton({ verified = false, busy = false } = {}) {
+  const verifyButton = document.getElementById("signupEmailVerifyButton");
+
+  if (!verifyButton) {
+    return;
+  }
+
+  verifyButton.disabled = busy || verified;
+  verifyButton.textContent = verified ? "Verified" : busy ? "Sending..." : "Verify Email";
+  verifyButton.classList.toggle("is-verified", verified);
+}
+
+function setSignupEmailStatus(message = "") {
+  const status = document.getElementById("signupEmailStatus");
+
+  if (!status) {
+    return;
+  }
+
+  status.textContent = message;
+  status.classList.toggle("hidden", !message);
+}
+
+function resetSignupEmailVerificationState() {
+  signupEmailVerificationState = {
+    email: "",
+    verified: false
+  };
+
+  const verifiedStatus = document.getElementById("signupEmailVerifiedStatus");
+
+  verifiedStatus?.classList.add("hidden");
+  setSignupEmailStatus("");
+  updateSignupEmailVerificationButton();
+}
+
+function markSignupEmailVerified(email) {
+  const normalizedEmail = normalizeEmail(email);
+  const verifiedStatus = document.getElementById("signupEmailVerifiedStatus");
+
+  signupEmailVerificationState = {
+    email: normalizedEmail,
+    verified: true
+  };
+
+  verifiedStatus?.classList.remove("hidden");
+  setSignupEmailStatus(`Email verified for ${normalizedEmail}.`);
+  setFieldError("signupEmailError", "");
+  updateSignupEmailVerificationButton({
+    verified: true
+  });
+}
+
+function isCurrentSignupEmailVerified() {
+  const currentEmail = normalizeEmail(document.getElementById("signupEmail")?.value || "");
+
+  return Boolean(
+    signupEmailVerificationState.verified &&
+    signupEmailVerificationState.email &&
+    signupEmailVerificationState.email === currentEmail
+  );
+}
+
+function clearForgotPasswordFeedback() {
+  setFieldError("forgotPasswordError", "");
+  setFieldError("forgotPasswordStatus", "");
+}
+
+function clearResetPasswordFeedback() {
+  setFieldError("resetPasswordError", "");
+}
+
+function openDialog(dialogId) {
+  const dialog = document.getElementById(dialogId);
+
+  dialog?.classList.remove("hidden");
+  dialog?.classList.add("flex");
+}
+
+function closeDialog(dialogId) {
+  const dialog = document.getElementById(dialogId);
+
+  dialog?.classList.add("hidden");
+  dialog?.classList.remove("flex");
+}
+
+function showForgotPasswordDialog({ email = "", status = "", error = "" } = {}) {
+  const emailInput = document.getElementById("forgotPasswordEmail");
+
+  if (emailInput) {
+    emailInput.value = normalizeEmail(email || emailInput.value);
+  }
+
+  setFieldError("forgotPasswordError", error);
+  setFieldError("forgotPasswordStatus", status);
+  openDialog("forgotPasswordDialog");
+}
+
+function hideForgotPasswordDialog({ clearFields = false } = {}) {
+  closeDialog("forgotPasswordDialog");
+
+  if (!clearFields) {
+    return;
+  }
+
+  const emailInput = document.getElementById("forgotPasswordEmail");
+
+  if (emailInput) {
+    emailInput.value = "";
+  }
+
+  clearForgotPasswordFeedback();
+}
+
+function showResetPasswordDialog() {
+  clearResetPasswordFeedback();
+  const resetPassword = document.getElementById("resetPassword");
+  const resetPasswordConfirm = document.getElementById("resetPasswordConfirm");
+
+  if (resetPassword) {
+    resetPassword.value = "";
+  }
+
+  if (resetPasswordConfirm) {
+    resetPasswordConfirm.value = "";
+  }
+
+  setPasswordVisibility("resetPassword", false);
+  setPasswordVisibility("resetPasswordConfirm", false);
+  openDialog("resetPasswordDialog");
+  requestAnimationFrame(() => resetPassword?.focus());
+}
+
+function hideResetPasswordDialog() {
+  closeDialog("resetPasswordDialog");
+  clearResetPasswordFeedback();
+}
+
+function getPasswordResetSession() {
+  try {
+    const rawValue = window.localStorage.getItem(PASSWORD_RESET_SESSION_KEY);
+
+    if (!rawValue) {
+      return null;
+    }
+
+    const parsedSession = JSON.parse(rawValue);
+    const startedAt = Number(parsedSession?.startedAt || 0);
+
+    if (!startedAt || (Date.now() - startedAt) > PASSWORD_RESET_SESSION_TTL_MS) {
+      window.localStorage.removeItem(PASSWORD_RESET_SESSION_KEY);
+      return null;
+    }
+
+    return parsedSession;
+  } catch (error) {
+    return null;
+  }
+}
+
+function setPasswordResetSession(session) {
+  try {
+    window.localStorage.setItem(PASSWORD_RESET_SESSION_KEY, JSON.stringify(session));
+  } catch (error) {
+    // Ignore storage access issues and keep the in-memory flow working.
+  }
+}
+
+function clearPasswordResetSession() {
+  try {
+    window.localStorage.removeItem(PASSWORD_RESET_SESSION_KEY);
+  } catch (error) {
+    // Ignore storage access issues and keep the in-memory flow working.
+  }
+}
+
+function getEmailLinkAuthSession() {
+  try {
+    const rawValue = window.localStorage.getItem(EMAIL_LINK_AUTH_SESSION_KEY);
+
+    if (!rawValue) {
+      return null;
+    }
+
+    const parsedSession = JSON.parse(rawValue);
+    const startedAt = Number(parsedSession?.startedAt || 0);
+
+    if (!startedAt || (Date.now() - startedAt) > EMAIL_LINK_AUTH_SESSION_TTL_MS) {
+      window.localStorage.removeItem(EMAIL_LINK_AUTH_SESSION_KEY);
+      return null;
+    }
+
+    return parsedSession;
+  } catch (error) {
+    return null;
+  }
+}
+
+function setEmailLinkAuthSession(session) {
+  try {
+    window.localStorage.setItem(EMAIL_LINK_AUTH_SESSION_KEY, JSON.stringify(session));
+  } catch (error) {
+    // Ignore storage access issues and keep the in-memory flow working.
+  }
+}
+
+function clearEmailLinkAuthSession() {
+  try {
+    window.localStorage.removeItem(EMAIL_LINK_AUTH_SESSION_KEY);
+  } catch (error) {
+    // Ignore storage access issues and keep the in-memory flow working.
+  }
+}
+
+function getSignupDraft() {
+  try {
+    const rawValue = window.localStorage.getItem(SIGNUP_DRAFT_STORAGE_KEY);
+    return rawValue ? JSON.parse(rawValue) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function setSignupDraft(draft) {
+  try {
+    window.localStorage.setItem(SIGNUP_DRAFT_STORAGE_KEY, JSON.stringify(draft));
+  } catch (error) {
+    // Ignore storage access issues and keep the in-memory flow working.
+  }
+}
+
+function clearSignupDraft() {
+  try {
+    window.localStorage.removeItem(SIGNUP_DRAFT_STORAGE_KEY);
+  } catch (error) {
+    // Ignore storage access issues and keep the in-memory flow working.
+  }
+}
+
+function buildSignupDraftFromInputs() {
+  return {
+    firstName: String(document.getElementById("signupFirstName")?.value || "").trim(),
+    lastName: String(document.getElementById("signupLastName")?.value || "").trim(),
+    email: String(document.getElementById("signupEmail")?.value || "").trim()
+  };
+}
+
+function restoreSignupDraft(draft = getSignupDraft()) {
+  if (!draft) {
+    return;
+  }
+
+  const firstNameInput = document.getElementById("signupFirstName");
+  const lastNameInput = document.getElementById("signupLastName");
+  const emailInput = document.getElementById("signupEmail");
+
+  if (firstNameInput && draft.firstName) {
+    firstNameInput.value = sanitizeNameInputValue(draft.firstName);
+  }
+
+  if (lastNameInput && draft.lastName) {
+    lastNameInput.value = sanitizeNameInputValue(draft.lastName);
+  }
+
+  if (emailInput && draft.email) {
+    emailInput.value = normalizeEmail(draft.email);
+  }
+}
+
+function buildEmailLinkUrl(intent) {
+  const currentUrl = new URL(window.location.href);
+
+  currentUrl.search = "";
+  currentUrl.hash = "";
+  currentUrl.searchParams.set("intent", intent);
+  return currentUrl.toString();
+}
+
+function buildPasswordResetLinkUrl() {
+  return buildEmailLinkUrl(PASSWORD_RESET_LINK_INTENT);
+}
+
+function isOtpOriginSupported() {
+  return /^https?:$/i.test(window.location.protocol);
+}
+
+function getFirebaseErrorCode(error) {
+  return String(error?.code || "").trim().toLowerCase();
+}
+
+function getFriendlyFirebaseErrorMessage(error, {
+  flow = "general"
+} = {}) {
+  const code = getFirebaseErrorCode(error);
+
+  if (!code) {
+    return error?.message || "Unable to complete this Firebase action right now. Please try again.";
+  }
+
+  if (code === "auth/configuration-not-found") {
+    if (flow === "phone") {
+      return "Phone verification is not available right now.";
+    }
+
+    return "Firebase Authentication is missing required provider setup for this feature. Check Authentication -> Sign-in method in Firebase Console.";
+  }
+
+  if (code === "auth/operation-not-allowed") {
+    if (flow === "phone") {
+      return "Phone verification is not available right now.";
+    }
+
+    if (flow === "email-link") {
+      return "Email link sign-in is disabled in Firebase Console. Enable both Email/Password and Email link in Authentication -> Sign-in method.";
+    }
+
+    return "This Firebase Authentication provider is disabled. Enable it in Authentication -> Sign-in method.";
+  }
+
+  if (code === "auth/unauthorized-domain") {
+    return "This domain is not authorized in Firebase Authentication. Add your app domain in Authentication -> Settings -> Authorized domains, then try again.";
+  }
+
+  if (code === "auth/invalid-app-credential" || code === "auth/missing-app-credential" || code === "auth/captcha-check-failed") {
+    return "Phone verification is not available right now.";
+  }
+
+  if (code === "auth/invalid-phone-number") {
+    return "Enter a valid phone number.";
+  }
+
+  if (code === "auth/billing-not-enabled") {
+    return "Phone verification is not available right now. Use email verification instead.";
+  }
+
+  if (code === "auth/invalid-continue-uri" || code === "auth/unauthorized-continue-uri") {
+    return "The email verification return URL is not authorized in Firebase. Add your app domain in Authentication -> Settings -> Authorized domains.";
+  }
+
+  if (code === "auth/network-request-failed") {
+    return "Firebase could not reach the network. Check your internet connection and try again.";
+  }
+
+  if (code === "auth/too-many-requests") {
+    return flow === "phone"
+      ? "Firebase temporarily blocked more OTP requests from this device or number. Wait a little and try again."
+      : "Too many requests right now. Please wait a little and try again.";
+  }
+
+  return error?.message || "Unable to complete this Firebase action right now. Please try again.";
+}
+
+async function finalizeAuthenticatedSession(user, successMessage = "Signed in successfully") {
+  const isEmailVerified = Boolean(user?.emailVerified);
+
+  setStoredAuthState(true);
+  setStoredAuthProfile(buildStoredAuthProfile(user));
+  setAuthError("");
+  setAuthStatus("");
+  clearEmailLinkAuthSession();
+  clearSignupDraft();
+  updateWelcomeMessage(user.firstName);
+  resetSearchInput();
+  clearAuthInputs();
+  hideLandingOverlay();
+
+  if (stockMasterLoaded) {
+    await loadPortfolioFromFirebase();
+  }
+
+  showToast(
+    isEmailVerified
+      ? successMessage
+      : "Signed in. Verify your email to explore dashboard services.",
+    isEmailVerified ? "success" : "warning"
+  );
+}
+
+async function handleSignupEmailVerifyClick() {
+  const email = normalizeEmail(document.getElementById("signupEmail")?.value || "");
+
+  if (!isValidGmailAddress(email)) {
+    setFieldError("signupEmailError", "Enter a valid email ID.");
+    return;
+  }
+
+  if (isCurrentSignupEmailVerified()) {
+    setSignupEmailStatus("Email address already verified.");
+    return;
+  }
+
+  try {
+    if (!isOtpOriginSupported()) {
+      throw new Error("Email verification requires the app to be served from a web server on http or https. Opening index.html directly with file:// will not work.");
+    }
+
+    setFieldError("signupEmailError", "");
+    setFieldError("signupError", "");
+    const knownUsers = await getAllKnownUsers();
+
+    if (knownUsers.some(user => user.email === email)) {
+      setFieldError("signupEmailError", "This email address is already signed up.");
+      return;
+    }
+
+    updateSignupEmailVerificationButton({
+      busy: true
+    });
+    setSignupDraft(buildSignupDraftFromInputs());
+    setSignupEmailStatus("Sending verification link...");
+    await sendSignInLinkToEmail(auth, email, {
+      url: buildEmailLinkUrl(SIGNUP_EMAIL_LINK_INTENT),
+      handleCodeInApp: true
+    });
+    setEmailLinkAuthSession({
+      flow: "signup-verify",
+      email,
+      startedAt: Date.now()
+    });
+    setSignupEmailStatus(`Verification link sent to ${email}. Open it on this device to finish verification.`);
+    updateSignupEmailVerificationButton();
+  } catch (error) {
+    setSignupEmailStatus("");
+    setFieldError("signupEmailError", getFriendlyFirebaseErrorMessage(error, {
+      flow: "email-link"
+    }));
+    updateSignupEmailVerificationButton();
+  }
+}
+
+async function handleSignInWithGmailLinkClick() {
+  const identifierInput = document.getElementById("authIdentifier");
+  const email = normalizeEmail(identifierInput?.value || "");
+
+  if (!isValidGmailAddress(email)) {
+    setAuthStatus("");
+    setAuthError("Enter a valid Email Address.");
+    identifierInput?.focus();
+    identifierInput?.select();
+    return;
+  }
+
+  try {
+    if (!isOtpOriginSupported()) {
+      throw new Error("Email sign-in requires the app to be served from a web server on http or https. Opening index.html directly with file:// will not work.");
+    }
+
+    setAuthError("");
+    setAuthStatus("");
+    const users = await getAllKnownUsers();
+    const matchedUser = findUserByEmail(users, email);
+
+    if (!matchedUser?.docId) {
+      setAuthError("Please sign up to continue.");
+      identifierInput?.focus();
+      identifierInput?.select();
+      return;
+    }
+
+    await sendSignInLinkToEmail(auth, matchedUser.email, {
+      url: buildEmailLinkUrl(SIGNIN_EMAIL_LINK_INTENT),
+      handleCodeInApp: true
+    });
+    setEmailLinkAuthSession({
+      flow: "signin-link",
+      email: matchedUser.email,
+      startedAt: Date.now()
+    });
+    setAuthStatus(`Sign-in link sent to ${matchedUser.email}. Open it on this device to continue.`);
+  } catch (error) {
+    setAuthStatus("");
+    setAuthError(getFriendlyFirebaseErrorMessage(error, {
+      flow: "email-link"
+    }));
+  }
+}
+
+function validateForgotPasswordForm() {
+  const email = normalizeEmail(document.getElementById("forgotPasswordEmail")?.value || "");
+  let isValid = true;
+
+  clearForgotPasswordFeedback();
+
+  if (!email) {
+    setFieldError("forgotPasswordError", "Enter your registered email address.");
+    isValid = false;
+  }
+
+  if (email && !isValidGmailAddress(email)) {
+    setFieldError("forgotPasswordError", "Enter a valid email ID.");
+    isValid = false;
+  }
+
+  return {
+    isValid,
+    email
+  };
+}
+
+async function handleForgotPasswordSubmit(event) {
   event.preventDefault();
 
-  const usernameInput = document.getElementById("authUsername");
-  const passwordInput = document.getElementById("authPassword");
-  const username = String(usernameInput?.value || "").trim();
-  const password = String(passwordInput?.value || "");
+  const recoveryData = validateForgotPasswordForm();
 
-  if (username === AUTH_USERNAME && password === AUTH_PASSWORD) {
-    setStoredAuthState(true);
-    setAuthError("");
-    updateWelcomeMessage(username);
-    resetSearchInput();
-    hideLandingOverlay();
-    showToast("Signed in successfully", "success");
+  if (!recoveryData.isValid) {
     return;
   }
 
-  setAuthError(`Use "${AUTH_USERNAME}" for both username and password.`);
+  try {
+    if (!isOtpOriginSupported()) {
+      throw new Error("Forgot password verification requires the app to be served from a web server on http or https. Opening index.html directly with file:// will not work.");
+    }
 
-  if (username !== AUTH_USERNAME) {
-    usernameInput?.focus();
-    usernameInput?.select();
-    return;
+    const knownUsers = await getAllKnownUsers();
+    const matchedUser = findUserByEmail(knownUsers, recoveryData.email);
+
+    if (!matchedUser?.docId) {
+      setFieldError("forgotPasswordError", "We could not find an account with that email address.");
+      return;
+    }
+
+    const actionCodeSettings = {
+      url: buildPasswordResetLinkUrl(),
+      handleCodeInApp: true
+    };
+
+    await sendSignInLinkToEmail(auth, matchedUser.email, actionCodeSettings);
+
+    setPasswordResetSession({
+      userId: matchedUser.docId,
+      email: matchedUser.email,
+      startedAt: Date.now(),
+      emailVerified: false
+    });
+
+    setFieldError("forgotPasswordStatus", `Verification link sent to ${matchedUser.email}.`);
+  } catch (error) {
+    setFieldError("forgotPasswordStatus", "");
+    setFieldError("forgotPasswordError", getFriendlyFirebaseErrorMessage(error, {
+      flow: "email-link"
+    }));
   }
-
-  passwordInput?.focus();
-  passwordInput?.select();
 }
 
-function handleLogout() {
+async function handleIncomingEmailLinkAction() {
+  if (!isSignInWithEmailLink(auth, window.location.href)) {
+    return;
+  }
+
+  const linkIntent = new URL(window.location.href).searchParams.get("intent");
+  const session = getPasswordResetSession();
+  const emailLinkSession = getEmailLinkAuthSession();
+  const isPasswordResetLink = linkIntent === PASSWORD_RESET_LINK_INTENT || Boolean(!linkIntent && session?.email && !emailLinkSession?.email);
+  const cleanupUrl = new URL(window.location.href);
+
+  cleanupUrl.search = "";
+  cleanupUrl.hash = "";
+
+  try {
+    if (isPasswordResetLink) {
+      if (!session?.email) {
+        throw new Error("Password recovery session not found. Start the forgot password flow again on this device.");
+      }
+
+      await signInWithEmailLink(auth, session.email, window.location.href);
+      setPasswordResetSession({
+        ...session,
+        emailVerified: true,
+        emailVerifiedAt: new Date().toISOString()
+      });
+      showToast("Email verified. You can now create a new password.", "success");
+    } else {
+      if (!emailLinkSession?.email) {
+        throw new Error("Email verification session expired. Please try again.");
+      }
+
+      await signInWithEmailLink(auth, emailLinkSession.email, window.location.href);
+
+      if (emailLinkSession.flow === "signup-verify") {
+        await signOut(auth).catch(() => {});
+        showLandingOverlay({
+          focusField: false,
+          resetFields: false,
+          mode: "signup"
+        });
+        switchAuthMode("signup", {
+          focusField: false,
+          resetErrors: true
+        });
+        restoreSignupDraft();
+        markSignupEmailVerified(emailLinkSession.email);
+        clearEmailLinkAuthSession();
+        showToast("Email verified. You can now create your account.", "success");
+        return;
+      }
+
+      if (emailLinkSession.flow === "signin-link") {
+        const users = await getAllKnownUsers();
+        const matchedUser = findUserByEmail(users, emailLinkSession.email);
+
+        if (!matchedUser?.docId) {
+          clearEmailLinkAuthSession();
+          showLandingOverlay({
+            focusField: false,
+            resetFields: false,
+            mode: "signup"
+          });
+          setAuthStatus("");
+          setAuthError("Please sign up to continue.");
+          return;
+        }
+
+        await signOut(auth).catch(() => {});
+        clearEmailLinkAuthSession();
+        await finalizeAuthenticatedSession(matchedUser, "Signed in successfully");
+        return;
+      }
+
+      if (emailLinkSession.flow === "account-verify") {
+        const users = await getAllKnownUsers();
+        const matchedUser = users.find(user => user.docId === emailLinkSession.userId) || findUserByEmail(users, emailLinkSession.email);
+
+        if (!matchedUser?.docId) {
+          clearEmailLinkAuthSession();
+          throw new Error("We could not find this account anymore. Please sign in again.");
+        }
+
+        const emailVerifiedAt = new Date().toISOString();
+
+        await updateDoc(doc(db, USERS_COLLECTION_NAME, matchedUser.docId), {
+          emailVerified: true,
+          emailVerifiedAt
+        });
+
+        clearEmailLinkAuthSession();
+        await finalizeAuthenticatedSession({
+          ...matchedUser,
+          emailVerified: true,
+          emailVerifiedAt
+        }, "Email verified successfully.");
+        return;
+      }
+
+      throw new Error("Email verification session expired. Please try again.");
+    }
+  } catch (error) {
+    if (isPasswordResetLink) {
+      clearPasswordResetSession();
+    } else {
+      clearEmailLinkAuthSession();
+    }
+    showValueDialog(getFriendlyFirebaseErrorMessage(error, {
+      flow: "email-link"
+    }));
+  } finally {
+    window.history.replaceState({}, document.title, cleanupUrl.toString());
+    await signOut(auth).catch(() => {});
+  }
+
+  if (isPasswordResetLink) {
+    const updatedSession = getPasswordResetSession();
+
+    if (!updatedSession) {
+      return;
+    }
+
+    hideForgotPasswordDialog({
+      clearFields: false
+    });
+    showResetPasswordDialog();
+  }
+}
+
+function validateResetPasswordForm() {
+  const password = String(document.getElementById("resetPassword")?.value || "");
+  const confirmPassword = String(document.getElementById("resetPasswordConfirm")?.value || "");
+
+  clearResetPasswordFeedback();
+
+  if (!password || !confirmPassword) {
+    setFieldError("resetPasswordError", "Enter and confirm your new password.");
+    return null;
+  }
+
+  if (password.length < 8) {
+    setFieldError("resetPasswordError", "Password must be at least 8 characters long.");
+    return null;
+  }
+
+  if (password !== confirmPassword) {
+    setFieldError("resetPasswordError", "New password and confirmation password must match.");
+    return null;
+  }
+
+  return password;
+}
+
+async function handleResetPasswordSubmit(event) {
+  event.preventDefault();
+
+  const newPassword = validateResetPasswordForm();
+
+  if (!newPassword) {
+    return;
+  }
+
+  const session = getPasswordResetSession();
+
+  if (!session?.userId || !session?.emailVerified) {
+    setFieldError("resetPasswordError", "Password recovery verification is incomplete. Start the forgot password flow again.");
+    return;
+  }
+
+  try {
+    const passwordHash = await sha256Hex(newPassword);
+    await updateDoc(doc(db, USERS_COLLECTION_NAME, session.userId), {
+      passwordHash,
+      passwordUpdatedAt: new Date().toISOString()
+    });
+
+    hideResetPasswordDialog();
+    clearPasswordResetSession();
+    clearAuthInputs();
+    switchAuthMode("signin", {
+      focusField: false,
+      resetErrors: true
+    });
+
+    const identifierInput = document.getElementById("authIdentifier");
+
+    if (identifierInput) {
+      identifierInput.value = session.email;
+    }
+
+    showValueDialog("Password updated successfully. Sign in with your new password.");
+  } catch (error) {
+    setFieldError("resetPasswordError", getFriendlyFirebaseErrorMessage(error));
+  }
+}
+
+async function handleSignInSubmit(event) {
+  event.preventDefault();
+
+  const identifierInput = document.getElementById("authIdentifier");
+  const passwordInput = document.getElementById("authPassword");
+  const identifier = normalizeAuthIdentifier(identifierInput?.value || "");
+  const password = String(passwordInput?.value || "");
+  const isDefaultUsernameLogin = identifier === DEFAULT_TEST_USER.username;
+
+  setAuthStatus("");
+
+  if (!identifier || !password) {
+    setAuthError("Enter your email address and password to continue.");
+    identifierInput?.focus();
+    return;
+  }
+
+  if (!isDefaultUsernameLogin && !isValidGmailAddress(identifier)) {
+    setAuthError("Enter a valid Email Address.");
+    identifierInput?.focus();
+    identifierInput?.select();
+    return;
+  }
+
+  try {
+    const users = await getAllKnownUsers();
+    const matchedUser = findUserByIdentifier(users, identifier);
+
+    if (!matchedUser?.docId) {
+      setAuthError("Please sign up to continue.");
+      identifierInput?.focus();
+      identifierInput?.select();
+      return;
+    }
+
+    const passwordHash = await sha256Hex(password);
+
+    if (!doesPasswordMatch(matchedUser, passwordHash, password)) {
+      setAuthError("Wrong Password.");
+      passwordInput?.focus();
+      passwordInput?.select();
+      return;
+    }
+
+    await finalizeAuthenticatedSession(matchedUser);
+  } catch (error) {
+    setAuthError("Unable to complete sign in right now. Please try again.");
+  }
+}
+
+async function handleSignUpSubmit(event) {
+  event.preventDefault();
+
+  const signupData = validateSignupForm();
+
+  if (!signupData.isValid) {
+    return;
+  }
+
+  try {
+    const knownUsers = await getAllKnownUsers();
+    const conflict = getSignupConflict(knownUsers, signupData.email);
+
+    if (applySignupConflictFeedback(conflict)) {
+      document.getElementById("signupEmail")?.focus();
+      return;
+    }
+
+    const passwordHash = await sha256Hex(signupData.password);
+    const uniqueNumber = `ASP-${Date.now()}`;
+    const createdAt = new Date().toISOString();
+    const userRef = await addDoc(collection(db, USERS_COLLECTION_NAME), {
+      uniqueNumber,
+      firstName: signupData.firstName,
+      lastName: signupData.lastName,
+      email: signupData.email,
+      passwordHash,
+      emailVerified: false,
+      emailVerifiedAt: "",
+      createdAt
+    });
+
+    const createdUser = {
+      docId: userRef.id,
+      uniqueNumber,
+      firstName: signupData.firstName,
+      lastName: signupData.lastName,
+      email: signupData.email,
+      emailVerified: false,
+      emailVerifiedAt: ""
+    };
+
+    await signOut(auth).catch(() => {});
+    showSignupSuccessPanel({
+      firstName: createdUser.firstName,
+      email: createdUser.email
+    });
+    showToast("Account created successfully. Sign in to continue.", "success");
+  } catch (error) {
+    setFieldError("signupError", getFriendlyFirebaseErrorMessage(error));
+  }
+}
+
+async function handleLogout() {
   setStoredAuthState(false);
+  setStoredAuthProfile(null);
+  clearPasswordResetSession();
+  clearEmailLinkAuthSession();
+  clearSignupDraft();
+  updateWelcomeMessage(DEFAULT_ACCOUNT_NAME);
   resetSearchInput();
+  await signOut(auth).catch(() => {});
+  hideForgotPasswordDialog({
+    clearFields: true
+  });
+  hideResetPasswordDialog();
+  hideChangeEmailDialog({
+    clearFields: true
+  });
+  clearPortfolioTable({
+    message: "Sign in to load your saved portfolio."
+  });
   showLandingOverlay({
-    focusUsername: true,
-    resetFields: true
+    focusField: true,
+    resetFields: true,
+    mode: "signin"
   });
 }
 
@@ -2721,11 +4914,36 @@ function applyPortfolioTheme(totalPnl) {
   }
 }
 
+function buildPortfolioDocId(userId, symbol) {
+  return `${String(userId || "").trim()}__${encodeURIComponent(String(symbol || "").trim().toUpperCase())}`;
+}
+
+function clearPortfolioTable({
+  message = "Add a stock to tracker to start building your dashboard.",
+  renderEmptyState = true
+} = {}) {
+  const tbody = document.getElementById("tableBody");
+
+  if (tbody) {
+    tbody.innerHTML = "";
+  }
+
+  addedStocks.clear();
+  currentDematFilter = DEMAT_FILTER_ALL;
+  updateSummary();
+  updateSortedHeader();
+  renderDematFilterMenu();
+
+  if (renderEmptyState) {
+    renderEmptyStateRow(message);
+  }
+}
+
 async function loadStockMaster() {
   try {
     const response = await fetch(STOCK_SHEET_URL);
     const text = await response.text();
-    const json = JSON.parse(text.substring(47, text.length - 2));
+    const json = parseGvizResponse(text);
 
     json.table.rows.forEach(row => {
       const cols = row.c;
@@ -2750,36 +4968,67 @@ async function loadStockMaster() {
 }
 
 async function loadPortfolioFromFirebase() {
-  const querySnapshot = await getDocs(collection(db, "portfolio"));
-  const savedStocks = new Map();
-  const staleDocIds = [];
+  clearPortfolioTable({
+    renderEmptyState: false
+  });
 
-  currentDematFilter = DEMAT_FILTER_ALL;
+  const userId = getCurrentSignedInUserId();
 
-  querySnapshot.forEach((docSnap) => {
-    const savedStock = docSnap.data();
-    const symbol = String(savedStock.symbol ?? "").trim().toUpperCase();
-    const quantity = parseQuantity(savedStock.quantity ?? savedStock.shares ?? 0);
-    const avgPrice = parseMoney(savedStock.avgPrice ?? 0);
-    const demat = normalizeDemat(savedStock.demat);
+  if (!userId) {
+    renderEmptyStateRow("Sign in to load your saved portfolio.");
+    updateSummary();
+    return;
+  }
 
-    if (symbol && quantity > 0 && avgPrice > 0 && demat) {
-      savedStocks.set(symbol, savedStock);
-    } else if (symbol) {
-      staleDocIds.push(docSnap.id);
+  if (!isCurrentUserEmailVerified()) {
+    renderEmptyStateRow(getUnverifiedDashboardMessage());
+    updateSummary();
+    return;
+  }
+
+  try {
+    const querySnapshot = await getDocs(query(
+      collection(db, PORTFOLIO_COLLECTION_NAME),
+      where("userId", "==", userId)
+    ));
+    const savedStocks = new Map();
+    const staleDocIds = [];
+
+    querySnapshot.forEach((docSnap) => {
+      const savedStock = docSnap.data();
+      const symbol = String(savedStock.symbol ?? "").trim().toUpperCase();
+      const quantity = parseQuantity(savedStock.quantity ?? savedStock.shares ?? 0);
+      const avgPrice = parseMoney(savedStock.avgPrice ?? 0);
+      const demat = normalizeDemat(savedStock.demat);
+
+      if (symbol && quantity > 0 && avgPrice > 0 && demat && !savedStocks.has(symbol)) {
+        savedStocks.set(symbol, savedStock);
+      } else if (symbol) {
+        staleDocIds.push(docSnap.id);
+      }
+    });
+
+    await Promise.all(staleDocIds.map(docId => deleteDoc(doc(db, PORTFOLIO_COLLECTION_NAME, docId)).catch(() => {})));
+
+    Array.from(savedStocks.values())
+      .sort((a, b) => String(a.symbol ?? "").localeCompare(String(b.symbol ?? "")))
+      .forEach(stock => addStockFromSaved(stock));
+
+    if (savedStocks.size === 0) {
+      renderEmptyStateRow("Your portfolio is empty. Add your first stock to start tracking it.");
+      updateSummary();
+      return;
     }
-  });
 
-  staleDocIds.forEach(docId => {
-    deleteDoc(doc(db, "portfolio", docId));
-  });
-
-  Array.from(savedStocks.values())
-    .sort((a, b) => String(a.symbol ?? "").localeCompare(String(b.symbol ?? "")))
-    .forEach(stock => addStockFromSaved(stock));
-
-  updateSummary();
-  applyCurrentSort();
+    updateSummary();
+    applyCurrentSort();
+  } catch {
+    clearPortfolioTable({
+      message: "Unable to load your saved portfolio right now. Please try again.",
+      renderEmptyState: true
+    });
+    showToast("Unable to load your portfolio", "error");
+  }
 }
 
 function addStock() {
@@ -2787,6 +5036,10 @@ function addStock() {
   const symbol = symbolInput.value.trim().toUpperCase();
 
   if (!symbol) return;
+
+  if (!ensureVerifiedEmailAccess()) {
+    return;
+  }
 
   if (!stockMasterLoaded) {
     showToast("Loading stock data...", "warning");
@@ -3075,7 +5328,7 @@ function renderEmptyStateRow(message, { preserveRows = false } = {}) {
   tbody.innerHTML = emptyStateMarkup;
 }
 
-function saveExpandedRowValues(index) {
+async function saveExpandedRowValues(index) {
   const row = getRowByIndex(index);
 
   if (!row) return;
@@ -3134,11 +5387,16 @@ function saveExpandedRowValues(index) {
     currentPrice
   };
 
-  if (isSavedRow) {
-    updatePortfolioInFirebase(symbol, persistencePayload);
-  } else {
-    saveToFirebase(persistencePayload);
-    row.dataset.isSaved = "true";
+  try {
+    if (isSavedRow) {
+      await updatePortfolioInFirebase(symbol, persistencePayload);
+    } else {
+      await saveToFirebase(persistencePayload);
+      row.dataset.isSaved = "true";
+    }
+  } catch (error) {
+    showToast(error?.message || "Unable to save this stock right now", "error");
+    return;
   }
 
   setEditorRowExpanded(index, false);
@@ -3177,7 +5435,9 @@ function removePortfolioRow(index) {
   showToast(symbol + " removed", "error");
 
   if (isSavedRow) {
-    deleteFromFirebase(symbol);
+    deleteFromFirebase(symbol).catch(() => {
+      showToast("Unable to remove the saved stock right now", "error");
+    });
   }
 }
 
@@ -3572,33 +5832,68 @@ function showToast(message, type = "success") {
 }
 
 async function saveToFirebase(stock) {
-  await addDoc(collection(db, "portfolio"), {
+  const userId = getCurrentSignedInUserId();
+
+  if (!userId) {
+    throw new Error("Sign in to save your portfolio.");
+  }
+
+  if (!ensureVerifiedEmailAccess({
+    showFeedback: false
+  })) {
+    throw new Error(getEmailVerificationReminderMessage());
+  }
+
+  const timestamp = new Date().toISOString();
+
+  await setDoc(doc(db, PORTFOLIO_COLLECTION_NAME, buildPortfolioDocId(userId, stock.symbol)), {
+    userId,
     symbol: stock.symbol,
     stockName: stock.stockName,
     avgPrice: parseMoney(stock.avgPrice),
     demat: normalizeDemat(stock.demat),
     quantity: parseQuantity(stock.quantity),
-    currentPrice: parseMoney(stock.currentPrice)
+    currentPrice: parseMoney(stock.currentPrice),
+    createdAt: timestamp,
+    updatedAt: timestamp
+  }, {
+    merge: true
   });
 }
 
 async function deleteFromFirebase(symbol) {
-  const querySnapshot = await getDocs(collection(db, "portfolio"));
+  const userId = getCurrentSignedInUserId();
 
-  querySnapshot.forEach(async (docSnap) => {
-    if (docSnap.data().symbol === symbol) {
-      await deleteDoc(doc(db, "portfolio", docSnap.id));
-    }
-  });
+  if (!userId) {
+    return;
+  }
+
+  if (!ensureVerifiedEmailAccess()) {
+    return;
+  }
+
+  await deleteDoc(doc(db, PORTFOLIO_COLLECTION_NAME, buildPortfolioDocId(userId, symbol)));
 }
 
 async function updatePortfolioInFirebase(symbol, changes) {
-  const querySnapshot = await getDocs(collection(db, "portfolio"));
+  const userId = getCurrentSignedInUserId();
 
-  querySnapshot.forEach(async (docSnap) => {
-    if (docSnap.data().symbol === symbol) {
-      await updateDoc(doc(db, "portfolio", docSnap.id), changes);
-    }
+  if (!userId) {
+    throw new Error("Sign in to update your portfolio.");
+  }
+
+  if (!ensureVerifiedEmailAccess({
+    showFeedback: false
+  })) {
+    throw new Error(getEmailVerificationReminderMessage());
+  }
+
+  await setDoc(doc(db, PORTFOLIO_COLLECTION_NAME, buildPortfolioDocId(userId, symbol)), {
+    userId,
+    ...changes,
+    updatedAt: new Date().toISOString()
+  }, {
+    merge: true
   });
 }
 
@@ -3675,37 +5970,127 @@ function handleBeforeUnload(event) {
   return warningMessage;
 }
 
-function initializeEvents() {
+async function initializeEvents() {
   const symbolInput = document.getElementById("symbol");
   const signinForm = document.getElementById("signinForm");
-  const authUsername = document.getElementById("authUsername");
+  const signupForm = document.getElementById("signupForm");
+  const authIdentifier = document.getElementById("authIdentifier");
   const authPassword = document.getElementById("authPassword");
-  const togglePasswordVisibilityButton = document.getElementById("togglePasswordVisibility");
+  const openForgotPasswordButton = document.getElementById("openForgotPasswordButton");
+  const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+  const forgotPasswordEmail = document.getElementById("forgotPasswordEmail");
+  const forgotPasswordCancel = document.getElementById("forgotPasswordCancel");
+  const resetPasswordForm = document.getElementById("resetPasswordForm");
+  const resetPasswordCancel = document.getElementById("resetPasswordCancel");
+  const signupFirstName = document.getElementById("signupFirstName");
+  const signupLastName = document.getElementById("signupLastName");
+  const signupEmail = document.getElementById("signupEmail");
+  const signupPassword = document.getElementById("signupPassword");
+  const signupConfirmPassword = document.getElementById("signupConfirmPassword");
+  const signupSuccessSigninButton = document.getElementById("signupSuccessSigninButton");
+  const passwordToggleButtons = Array.from(document.querySelectorAll("[data-password-target]"));
   const showSigninOption = document.getElementById("showSigninOption");
   const showSignupOption = document.getElementById("showSignupOption");
   const openSidePanelButton = document.getElementById("openSidePanelButton");
   const closeSidePanelButton = document.getElementById("closeSidePanelButton");
   const sidePanelBackdrop = document.getElementById("sidePanelBackdrop");
+  const profileButton = document.getElementById("profileButton");
+  const changeEmailButton = document.getElementById("changeEmailButton");
+  const verifyEmailButton = document.getElementById("verifyEmailButton");
+  const emailVerificationBannerAction = document.getElementById("emailVerificationBannerAction");
+  const changeEmailForm = document.getElementById("changeEmailForm");
+  const changeEmailNew = document.getElementById("changeEmailNew");
+  const changeEmailCancel = document.getElementById("changeEmailCancel");
   const logoutButton = document.getElementById("logoutButton");
   const valueDialogOk = document.getElementById("valueDialogOk");
   const deleteConfirmCancel = document.getElementById("deleteConfirmCancel");
   const deleteConfirmOk = document.getElementById("deleteConfirmOk");
   const isAuthenticated = getStoredAuthState();
+  const storedProfile = getStoredAuthProfile();
 
   symbolInput.addEventListener("keydown", handleSymbolKeydown);
   symbolInput.addEventListener("click", openSearchDropdown);
   signinForm.addEventListener("submit", handleSignInSubmit);
-  authUsername.addEventListener("input", () => setAuthError(""));
-  authPassword.addEventListener("input", () => setAuthError(""));
-  togglePasswordVisibilityButton.addEventListener("click", togglePasswordVisibility);
-  showSigninOption.addEventListener("click", () => {
+  signupForm.addEventListener("submit", handleSignUpSubmit);
+  forgotPasswordForm.addEventListener("submit", handleForgotPasswordSubmit);
+  resetPasswordForm.addEventListener("submit", handleResetPasswordSubmit);
+  authIdentifier.addEventListener("input", event => {
+    event.target.value = normalizeAuthIdentifier(event.target.value);
     setAuthError("");
-    authUsername.focus();
+    setAuthStatus("");
   });
-  showSignupOption.addEventListener("click", handleSignupOption);
+  authPassword.addEventListener("input", () => {
+    setAuthError("");
+    setAuthStatus("");
+  });
+  signupFirstName.addEventListener("input", handleSignupNameInput);
+  signupLastName.addEventListener("input", handleSignupNameInput);
+  signupFirstName.addEventListener("blur", handleSignupNameBlur);
+  signupLastName.addEventListener("blur", handleSignupNameBlur);
+  signupEmail.addEventListener("input", handleSignupEmailInput);
+  changeEmailNew?.addEventListener("input", event => {
+    event.target.value = normalizeEmail(event.target.value);
+    clearChangeEmailFeedback();
+  });
+  signupPassword.addEventListener("input", handleSignupPasswordInput);
+  signupConfirmPassword.addEventListener("input", handleSignupPasswordInput);
+  signupSuccessSigninButton.addEventListener("click", handleSignupSuccessSigninClick);
+  signupConfirmPassword.addEventListener("blur", () => {
+    validateSignupPasswordMatch({
+      showError: true
+    });
+  });
+  openForgotPasswordButton.addEventListener("click", () => {
+    const currentIdentifier = normalizeAuthIdentifier(authIdentifier?.value || "");
+    const emailCandidate = isValidGmailAddress(currentIdentifier) ? normalizeEmail(currentIdentifier) : "";
+
+    showForgotPasswordDialog({
+      email: emailCandidate
+    });
+  });
+  forgotPasswordEmail.addEventListener("input", event => {
+    event.target.value = normalizeEmail(event.target.value);
+    clearForgotPasswordFeedback();
+  });
+  forgotPasswordCancel.addEventListener("click", () => {
+    hideForgotPasswordDialog({
+      clearFields: true
+    });
+  });
+  resetPasswordForm.addEventListener("input", () => {
+    setFieldError("resetPasswordError", "");
+  });
+  resetPasswordCancel.addEventListener("click", () => {
+    hideResetPasswordDialog();
+    clearPasswordResetSession();
+  });
+  passwordToggleButtons.forEach(button => button.addEventListener("click", togglePasswordVisibility));
+  showSigninOption.addEventListener("click", () => {
+    switchAuthMode("signin", {
+      focusField: true,
+      resetErrors: true
+    });
+  });
+  showSignupOption.addEventListener("click", () => {
+    switchAuthMode("signup", {
+      focusField: true,
+      resetErrors: true
+    });
+    restoreSignupDraft();
+  });
   openSidePanelButton.addEventListener("click", openSidePanel);
   closeSidePanelButton.addEventListener("click", closeSidePanel);
   sidePanelBackdrop.addEventListener("click", handleSidePanelBackdropClick);
+  profileButton?.addEventListener("click", handleProfileButtonClick);
+  changeEmailButton?.addEventListener("click", showChangeEmailDialog);
+  verifyEmailButton?.addEventListener("click", handleVerifyEmailButtonClick);
+  emailVerificationBannerAction?.addEventListener("click", openSidePanel);
+  changeEmailForm?.addEventListener("submit", handleChangeEmailSubmit);
+  changeEmailCancel?.addEventListener("click", () => {
+    hideChangeEmailDialog({
+      clearFields: true
+    });
+  });
   logoutButton.addEventListener("click", handleLogout);
   valueDialogOk.addEventListener("click", hideValueDialog);
   deleteConfirmCancel.addEventListener("click", hideDeleteConfirmDialog);
@@ -3714,20 +6099,39 @@ function initializeEvents() {
   document.addEventListener("keydown", handlePageRefreshKeydown);
   document.addEventListener("keydown", handleGlobalKeydown);
   window.addEventListener("beforeunload", handleBeforeUnload);
+  await cleanupLegacyRemovedUsers();
   currentDematFilter = DEMAT_FILTER_ALL;
   updateSortedHeader();
   renderDematFilterMenu();
-  updateWelcomeMessage(AUTH_USERNAME);
-  setPasswordVisibility(false);
   clearAuthInputs();
-  if (isAuthenticated) {
+  switchAuthMode("signin", {
+    focusField: false,
+    resetErrors: true
+  });
+  const hasValidStoredSession = Boolean(isAuthenticated && storedProfile?.userId);
+
+  updateWelcomeMessage(storedProfile?.firstName || DEFAULT_ACCOUNT_NAME);
+  updateQuickMenuProfile(storedProfile);
+  updateEmailVerificationBanner(storedProfile);
+  clearPortfolioTable({
+    message: hasValidStoredSession && !storedProfile?.emailVerified
+      ? getUnverifiedDashboardMessage()
+      : "Sign in to load your saved portfolio."
+  });
+
+  if (hasValidStoredSession) {
     hideLandingOverlay();
   } else {
+    setStoredAuthState(false);
+    setStoredAuthProfile(null);
+    updateWelcomeMessage(DEFAULT_ACCOUNT_NAME);
     showLandingOverlay({
-      focusUsername: true,
-      resetFields: false
+      focusField: true,
+      resetFields: false,
+      mode: "signin"
     });
   }
+  await handleIncomingEmailLinkAction();
   loadStockMaster();
 }
 
